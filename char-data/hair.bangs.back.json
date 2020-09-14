@@ -1,0 +1,68 @@
+{ "frames": {
+   "pixel-rosella 0.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 120, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 120, "h": 36 },
+    "sourceSize": { "w": 120, "h": 36 },
+    "duration": 4000
+   },
+   "pixel-rosella 1.aseprite": {
+    "frame": { "x": 120, "y": 0, "w": 120, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 120, "h": 36 },
+    "sourceSize": { "w": 120, "h": 36 },
+    "duration": 100
+   },
+   "pixel-rosella 2.aseprite": {
+    "frame": { "x": 240, "y": 0, "w": 120, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 120, "h": 36 },
+    "sourceSize": { "w": 120, "h": 36 },
+    "duration": 150
+   },
+   "pixel-rosella 3.aseprite": {
+    "frame": { "x": 360, "y": 0, "w": 120, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 120, "h": 36 },
+    "sourceSize": { "w": 120, "h": 36 },
+    "duration": 150
+   },
+   "pixel-rosella 4.aseprite": {
+    "frame": { "x": 480, "y": 0, "w": 120, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 120, "h": 36 },
+    "sourceSize": { "w": 120, "h": 36 },
+    "duration": 150
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.25",
+  "image": "hair.bangs.back.png",
+  "format": "RGBA8888",
+  "size": { "w": 600, "h": 36 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "blink", "from": 0, "to": 1, "direction": "forward" },
+   { "name": "walk", "from": 2, "to": 4, "direction": "pingpong" }
+  ],
+  "layers": [
+   { "name": "hair.bangs.back", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+   { "name": "south", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 0, "y": 0, "w": 24, "h": 36 } }] },
+   { "name": "Slice 1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 24, "y": 0, "w": 24, "h": 36 } }] },
+   { "name": "Slice 2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 48, "y": 0, "w": 24, "h": 36 } }] },
+   { "name": "Slice 3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 72, "y": 0, "w": 24, "h": 36 } }] },
+   { "name": "Slice 4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 96, "y": 0, "w": 24, "h": 36 } }] },
+   { "name": "southeast", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 852419, "y": -1610414080, "w": 1216013898, "h": 101375403 } }] },
+   { "name": "east", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": -1431685908, "y": -1431655766, "w": -1431655766, "h": -1431655766 } }] },
+   { "name": "northeast", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 3329, "y": 1252000520, "w": -1421313306, "h": -2147087651 } }] }
+  ]
+ }
+}
