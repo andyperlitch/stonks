@@ -5,9 +5,11 @@ import express, {
 } from 'express'
 import { readFileSync } from 'fs'
 import bodyParser from 'body-parser'
-import { RegisterRoutes } from '../build/routes'
 import swaggerUi from 'swagger-ui-express'
 import { ValidateError } from 'tsoa'
+
+import { RegisterRoutes } from '../build/routes'
+import authRoutes from './routes/auth-routes'
 export const app = express()
 
 // Use body parser to read sent json payloads
@@ -37,6 +39,9 @@ app.get('/avatar.json', (req, res) => {
   const avatarJson = readFileSync('./artwork/avatar.json', 'utf8')
   res.json(JSON.parse(avatarJson))
 })
+
+// Auth routes
+app.use('/auth', authRoutes)
 
 // Register auto-generated routes from tsoa
 RegisterRoutes(app)

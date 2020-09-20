@@ -1,3 +1,4 @@
+import { IonSlide, IonSlides } from '@ionic/react'
 import React, { useMemo, useRef, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import useAvatarTemplate, { FrameMeta } from '../hooks/useAvatarTemplate'
@@ -23,7 +24,7 @@ type AvatarComponent =
 
 interface AvatarMetadata {
   components: {
-    [key in AvatarComponent]: AvatarComponentMeta
+    [key: string]: AvatarComponentMeta
   }
 }
 
@@ -73,6 +74,7 @@ const useStyles = createUseStyles({
   },
   stage: {
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -81,35 +83,35 @@ const useStyles = createUseStyles({
 export const MyAvatar = () => {
   const classes = useStyles()
   const cnvRef = useRef<HTMLCanvasElement>(null)
-  const { image, templateMeta /* , error, loading */ } = useAvatarTemplate()
+  const slidesRef = useRef(null)
+  const {
+    image,
+    frames: allFrames /* , error, loading */,
+  } = useAvatarTemplate()
 
   const [avatar] = useState<AvatarMetadata>(DEFAULT_AVATAR_META)
   const [animationName] = useState('blink')
-  const [sliceName, setSliceName] = useState('southwest')
+  const [sliceName] = useState('southwest')
   const [frameNumber] = useState(0)
 
   const frames = useMemo(() => {
     let frames: FrameMeta[] = []
-    if (avatar && templateMeta && image) {
-      frames = Object.keys(avatar.components)
-        .reduce<FrameMeta[]>((acc, componentType) => {
-          const componentMeta =
-            avatar.components[componentType as AvatarComponent]
-
-          const f =
-            templateMeta[componentType][componentMeta.name][sliceName][
-              animationName
-            ]
-          acc.push(...f)
-          return acc
-        }, [])
+    if (avatar && allFrames?.length && image) {
+      frames = allFrames
+        .filter((f) =>
+          Object.keys(avatar.components).some(
+            (cKey) =>
+              f.partType === cKey &&
+              f.partName === avatar.components[cKey].name,
+          ),
+        )
+        .filter((f) => f.sliceName === sliceName)
+        .filter((f) => f.animationName === animationName)
         .filter((f) => f.frameNumber === frameNumber)
         .sort((f1, f2) => f1.index - f2.index)
     }
     return frames
-  }, [animationName, sliceName, avatar, templateMeta, image, frameNumber])
-
-  console.log(`frames`, frames)
+  }, [animationName, sliceName, avatar, image, frameNumber, allFrames])
 
   if (cnvRef.current && frames?.length) {
     const ctx = cnvRef.current?.getContext('2d')
@@ -139,22 +141,29 @@ export const MyAvatar = () => {
     }
   }
 
+  const slideOpts = {
+    initialSlide: 0,
+    autoplay: false,
+  }
+
   return (
     <ToolbarPage>
       <h1 className={classes.title}>My Avatar</h1>
-      <div className={classes.stage}>
-        <canvas ref={cnvRef} width={24 * MULTIPLIER} height={36 * MULTIPLIER} />
-      </div>
-      <div>
-        <button onClick={() => setSliceName('north')}>north</button>
-        <button onClick={() => setSliceName('northwest')}>northwest</button>
-        <button onClick={() => setSliceName('west')}>west</button>
-        <button onClick={() => setSliceName('southwest')}>southwest</button>
-        <button onClick={() => setSliceName('south')}>south</button>
-        <button onClick={() => setSliceName('southeast')}>southeast</button>
-        <button onClick={() => setSliceName('east')}>east</button>
-        <button onClick={() => setSliceName('northeast')}>northeast</button>
-      </div>
+      <IonSlides ref={slidesRef} options={slideOpts}>
+        <IonSlide>
+          <div className={classes.stage}>
+            <canvas
+              ref={cnvRef}
+              width={24 * MULTIPLIER}
+              height={36 * MULTIPLIER}
+            />
+          </div>
+        </IonSlide>
+        <IonSlide>Slide 2</IonSlide>
+        <IonSlide>Slide 3</IonSlide>
+        <IonSlide>Slide 4</IonSlide>
+        <IonSlide>Slide 5</IonSlide>
+      </IonSlides>
     </ToolbarPage>
   )
 }

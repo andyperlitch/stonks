@@ -10,6 +10,7 @@ import { Menu } from './components/Menu'
 
 /* Pages */
 import { Home } from './pages/Home'
+import { Login } from './pages/Login'
 import { MyAvatar } from './pages/MyAvatar'
 
 /* Core CSS required for Ionic components to work properly */
@@ -30,6 +31,8 @@ import '@ionic/react/css/display.css'
 
 /* Theme variables */
 import './theme/variables.css'
+import { AuthProvider } from './auth/AuthProvider'
+import { PrivateRoute } from './components/PrivateRoute'
 
 /* Set up theme */
 const useTheme = createUseStyles(rootStyles)
@@ -37,18 +40,25 @@ const useTheme = createUseStyles(rootStyles)
 const App: React.FC = () => {
   const theme = useTheme()
   return (
-    <ThemeProvider theme={theme}>
-      <IonApp>
-        <IonReactRouter>
-          <Menu />
-          <IonRouterOutlet id="content">
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/my-avatar" component={MyAvatar} />
-            <Route exact path="/" render={() => <Redirect to="/home" />} />
-          </IonRouterOutlet>
-        </IonReactRouter>
-      </IonApp>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <IonApp>
+          <IonReactRouter>
+            <Menu />
+            <IonRouterOutlet id="content">
+              <Route exact path="/home">
+                <Home />
+              </Route>
+              <PrivateRoute exact path="/my-avatar">
+                <MyAvatar />
+              </PrivateRoute>
+              <Route exact path="/" render={() => <Redirect to="/home" />} />
+              <Route exact path="/login" component={Login} />
+            </IonRouterOutlet>
+          </IonReactRouter>
+        </IonApp>
+      </ThemeProvider>
+    </AuthProvider>
   )
 }
 
