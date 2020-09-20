@@ -3,6 +3,7 @@ import express, {
   Request as ExRequest,
   NextFunction,
 } from 'express'
+import { readFileSync } from 'fs'
 import bodyParser from 'body-parser'
 import { RegisterRoutes } from '../build/routes'
 import swaggerUi from 'swagger-ui-express'
@@ -31,6 +32,14 @@ if (process.env.NODE_ENV !== 'production') {
     },
   )
 }
+
+app.get('/avatar.json', (req, res) => {
+  const avatarJson = readFileSync('./artwork/avatar.json', 'utf8')
+  res.json(JSON.parse(avatarJson))
+})
+
+// Register auto-generated routes from tsoa
+RegisterRoutes(app)
 
 // Not found routes
 app.use(function notFoundHandler(_req, res: ExResponse) {
@@ -61,6 +70,3 @@ app.use(function errorHandler(
 
   next()
 })
-
-// Register auto-generated routes from tsoa
-RegisterRoutes(app)
