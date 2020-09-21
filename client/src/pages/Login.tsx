@@ -7,8 +7,7 @@ import {
   IonCardTitle,
 } from '@ionic/react'
 import { createUseStyles } from 'react-jss'
-import GoogleButton from 'react-google-button'
-import { Link } from 'react-router-dom'
+import { GoogleLogin, GoogleLoginResponse } from 'react-google-login'
 
 const useStyles = createUseStyles({
   title: {
@@ -24,6 +23,17 @@ const useStyles = createUseStyles({
 
 export const Login = () => {
   const classes = useStyles()
+
+  const onGoogleSuccess = (gr: GoogleLoginResponse) => {
+    fetch('/auth/verify', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        Authorization: `Bearer ${gr.tokenId}`,
+      },
+    })
+  }
+
   return (
     <ToolbarPage>
       <IonCard>
@@ -31,9 +41,13 @@ export const Login = () => {
           <IonCardTitle className={classes.title}>Login</IonCardTitle>
         </IonCardHeader>
         <IonCardContent className={classes.loginContent}>
-          <Link to="/auth/google">
-            <GoogleButton />
-          </Link>
+          <GoogleLogin
+            clientId="991021471135-t2j25if3lpp8ji5691ufqje5ogt3l3ok.apps.googleusercontent.com"
+            buttonText="Login with Google"
+            onSuccess={onGoogleSuccess as any}
+            cookiePolicy={'single_host_origin'}
+            isSignedIn={true}
+          />
         </IonCardContent>
       </IonCard>
     </ToolbarPage>

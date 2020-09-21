@@ -1,0 +1,31 @@
+version: '3'
+services:
+  vcrpg_redis:
+    image: redis:alpine
+    hostname: vcrpg_redis
+    command: redis-server --requirepass yourenotwrongyourejustanasshole
+    ports:
+      - '6379:6379'
+    volumes:
+      - $PWD/.redis-data:/var/lib/redis
+    environment:
+      - REDIS_REPLICATION_MODE=master
+  vcrpg_postgres:
+    image: postgres
+    hostname: vcrpg_postgres
+    volumes:
+      - $PWD/.postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: itreallytiedtheroomtogether
+      POSTGRES_USER: localdev
+      POSTGRES_DB: vcrpg
+    ports:
+      - '5432:5432'
+
+  adminer:
+    image: adminer
+    hostname: vcrpg_adminer
+    ports:
+      - '8080:8080'
+    depends_on:
+      - vcrpg_postgres

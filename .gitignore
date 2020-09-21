@@ -2,3 +2,7 @@ node_modules
 /dist-server
 /dist-client
 /build
+
+.env
+.postgres-data
+.redis-data
