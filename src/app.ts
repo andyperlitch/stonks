@@ -1,5 +1,6 @@
 import { createConnection } from 'typeorm'
 import express, { Response as ExResponse } from 'express'
+import expressSession from 'express-session'
 import { readFileSync } from 'fs'
 import bodyParser from 'body-parser'
 import bearerToken from 'express-bearer-token'
@@ -14,6 +15,9 @@ export async function initApp() {
   }
 
   const app = express()
+
+  // create session
+  app.use(expressSession())
 
   // parse bearer token
   app.use(bearerToken())
