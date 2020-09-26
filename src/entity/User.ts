@@ -1,10 +1,20 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, Index } from 'typeorm'
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number
 
+  @Index({ unique: true })
   @Column()
-  email: string
+  email?: string
+
+  @Column()
+  username: string
+
+  @Column()
+  googleId: string
+
+  @Column()
+  thumbnail: string
 }

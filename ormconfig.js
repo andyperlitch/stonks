@@ -1,7 +1,4 @@
-const config = require('./config')
-
 module.exports = {
-  ...config.dbConfig,
   synchronize: true,
   logging: false,
   entities: ['src/entity/**/*.ts'],

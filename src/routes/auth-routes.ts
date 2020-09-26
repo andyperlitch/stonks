@@ -1,33 +1,21 @@
 import { Router } from 'express'
-import jwt from 'jwt-simple'
+import passport from 'passport'
 
 const router = Router()
 
-router.post('/user', (req, res) => {
-  console.log('FUUUUUUCK', req.token)
-  res.json({
-    success: true,
-  })
-  // if (!req.token) {
-  //   res.status(500).json({
-  //     success: false,
-  //     message: 'No token found in Authorization header',
-  //   })
-  // }
-  // console.log(`req.token`, req.token)
-  // try {
-  //   const decoded = jwt.decode(req.token as string, 'F9qU7M-gueNrGVUIW8jbAuku')
-  //   console.log(`decoded`, decoded)
-  //   res.json({
-  //     success: true,
-  //   })
-  // } catch (e) {
-  //   console.error('Error decoding jwt', e)
-  //   res.status(500).json({
-  //     success: false,
-  //     message: 'Error decoding jwt',
-  //   })
-  // }
+// auth with google
+router.get(
+  '/google',
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+  }),
+)
+
+// callback route for google to redirect to
+// hand control to passport to use code to grab profile info
+router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+  // res.send(req.user);
+  res.redirect('/home')
 })
 
 export default router

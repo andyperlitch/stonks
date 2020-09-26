@@ -1,26 +1,19 @@
-import { createConnection } from 'typeorm'
 import express, { Response as ExResponse } from 'express'
-import expressSession from 'express-session'
 import { readFileSync } from 'fs'
 import bodyParser from 'body-parser'
-import bearerToken from 'express-bearer-token'
 
 import authRoutes from './routes/auth-routes'
+import { setupAuth } from './setup-auth'
+import { setupDB } from './setup-db'
 
 export async function initApp() {
-  // synchronize database
-  const dbConnection = await createConnection()
-  if (process.env.NODE_ENV !== 'production') {
-    await dbConnection.synchronize()
-  }
+  // set up database
+  await setupDB()
 
   const app = express()
 
-  // create session
-  app.use(expressSession())
-
-  // parse bearer token
-  app.use(bearerToken())
+  // setup passport auth
+  setupAuth(app)
 
   // Use body parser to read sent json payloads
   app.use(
