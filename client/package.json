@@ -19,6 +19,7 @@
     "@types/react-router-dom": "^5.1.3",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
+    "apollo-boost": "^0.4.9",
     "babel-eslint": "10.1.0",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.1.0",
@@ -56,6 +57,7 @@
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "4.0.1",
     "react": "^16.13.0",
+    "react-apollo": "^3.1.5",
     "react-app-polyfill": "^1.0.6",
     "react-dev-utils": "^10.2.1",
     "react-dom": "^16.13.0",
@@ -82,7 +84,8 @@
   "scripts": {
     "dev": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "generate": "apollo client:codegen types --target=typescript --tagName=gql --addTypename --endpoint=http://localhost:4000/graphql"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -104,6 +107,8 @@
     "@types/lodash.groupby": "^4.6.6",
     "@types/react": "^16.9.49",
     "@types/react-jss": "^10.0.0",
+    "apollo": "^2.31.0",
+    "graphql": "^15.3.0",
     "lodash.groupby": "^4.6.0"
   },
   "description": "An Ionic project",

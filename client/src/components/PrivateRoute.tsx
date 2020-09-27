@@ -1,9 +1,9 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router'
-import { useAuth } from '../auth/AuthProvider'
+import { useUserInfo } from '../auth/useUserInfo'
 
 export const PrivateRoute = ({ children, ...rest }: any) => {
-  const auth = useAuth()
+  const auth = useUserInfo()
   console.log(`auth`, auth)
   return (
     <Route
