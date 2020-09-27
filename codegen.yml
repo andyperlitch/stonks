@@ -1,5 +1,24 @@
 schema: http://localhost:4000/graphql
 generates:
-  ./src/types.d.ts:
+  ./src/types/graphql-types.ts:
     plugins:
       - typescript
+      - typescript-resolvers:
+          useIndexSignature: true
+          noSchemaStitching: false
+          wrapFieldDefinitions: true
+          avoidOptionals: false
+          showUnusedMappers: true
+          resolverTypeWrapperSignature: Promise<T> | T
+          federation: false
+          enumPrefix: true
+          optionalResolveType: false
+          immutableTypes: false
+          namespacedImportName: ''
+          resolverTypeSuffix: Resolvers
+          allResolversTypeName: Resolvers
+          # typesPrefix:
+          # typesSuffix:
+          skipTypename: false
+          nonOptionalTypename: false
+          useTypeImports: false

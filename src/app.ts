@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import authRoutes from './routes/auth-routes'
 import { setupAuth } from './setup-auth'
 import { setupDB } from './setup-db'
+import { setupGraphql } from './setup-graphql'
 
 export async function initApp() {
   // set up database
@@ -22,6 +23,9 @@ export async function initApp() {
     }),
   )
   app.use(bodyParser.json())
+
+  // setup graphql server
+  setupGraphql(app)
 
   // Get character data
   app.get('/avatar.json', (req, res) => {

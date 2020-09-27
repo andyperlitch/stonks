@@ -1,25 +1,10 @@
+import { QueryResolvers as _QueryResolvers } from './graphql-types'
 import { Request } from 'express'
+import { IUser } from './passport'
 
 export interface GraphqlContext {
   req: Request
+  user: IUser
 }
-
-export interface GraphQLObjectTypeConfig {
-  name: string
-  description?: string
-  interfaces?: any
-  fields: any
-  isTypeOf?: any
-  extensions?: any
-  astNode?: any
-  extensionASTNodes?: any
-}
-
-export interface ResolverFn<Data = any, Parent = any, Args = any> {
-  (
-    parent: Parent,
-    args: Args,
-    context: GraphqlContext,
-    info?: GraphQLObjectTypeConfig,
-  ): Data
-}
+export type QueryResolvers = _QueryResolvers<GraphqlContext>
+export type MeResolver = QueryResolvers['me']
