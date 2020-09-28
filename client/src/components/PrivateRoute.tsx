@@ -1,17 +1,21 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router'
 import { useUserInfo } from '../auth/useUserInfo'
+import { Loading } from '../pages/Loading'
 
 export const PrivateRoute = ({ children, ...rest }: any) => {
   const auth = useUserInfo()
-  console.log(`auth`, auth)
   return (
     <Route
       {...rest}
-      render={({ location }) =>
-        auth.isAuthenticated ? (
-          children
-        ) : (
+      render={({ location }) => {
+        if (auth.isAuthenticating) {
+          return <Loading />
+        }
+        if (auth.isAuthenticated) {
+          return children
+        }
+        return (
           <Redirect
             to={{
               pathname: '/login',
@@ -19,7 +23,7 @@ export const PrivateRoute = ({ children, ...rest }: any) => {
             }}
           />
         )
-      }
+      }}
     />
   )
 }

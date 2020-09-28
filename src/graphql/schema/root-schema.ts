@@ -9,7 +9,33 @@ export const typeDefs = gql`
     googleId: String
     thumbnail: String
   }
+
   type Query {
-    me: User
+    me: User!
+    avatarTemplate: AvatarTemplate!
+  }
+
+  type AvatarTemplate {
+    imageUrl: String!
+    frames: [AvatarTemplateFrame!]!
+  }
+
+  type AvatarTemplateFrame {
+    index: Int!
+    animationName: String!
+    frameNumber: Int!
+    partType: String!
+    partName: String!
+    subPartName: String
+    sliceName: String!
+    flipped: Boolean!
+    coordinates: Box!
+  }
+
+  type Box {
+    w: Float!
+    h: Float!
+    x: Float!
+    y: Float!
   }
 `

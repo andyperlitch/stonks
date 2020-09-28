@@ -1,8 +1,31 @@
 # VCRPG Backend Server
 
+## Adding to GraphQL
+
+1. Add the schema changes to `src/graphql/schema/*-schema.ts` files
+1. Ensure the server is running
+1. Run `npm run generate`
+1. Import `QueryResolvers` from `src/types/graphql-types.ts`, reference the correct resolver with bracket notation, e.g. `QueryResolvers['me']`
+1. Attach to `src/graphql/resolvers/root-resolver.ts`
+
+## Bugs
+
+[ ] Weird callstack exceeded intermittently... probably auth-related
+
 ## TODOs
 
-[ ] better error handling/redirect when oauth fails
+[X] move avatar template json to graphql
+[X] move avatar template json logic from client to server
+[ ] render profile info in nav
+[ ] avatars page with "new" button
+[ ] create avatar db model
+[ ] "create avatar" mutation
+[ ] "update avatar" mutation
+[ ] cycle through animations
+[ ] skin color choice screen
+[ ] eye color choice screen
+
+## Nice-to-haves
+
 [ ] redis-based session storage
-[ ] move avatar template json to better endpoint
-[ ] move avatar template json logic from client to server
+[ ] better error handling/redirect when oauth fails

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "debug": "ts-node-dev --inspect -- src/index.ts",
+    "debug": "ts-node-dev --project ./tsconfig.json --inspect -- src/index.ts",
     "dev": "ts-node-dev --project ./tsconfig.json src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsoa": "tsoa spec-and-routes",

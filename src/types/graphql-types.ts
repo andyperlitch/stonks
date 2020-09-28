@@ -24,7 +24,35 @@ export type User = {
 
 export type Query = {
   __typename?: 'Query';
-  me?: Maybe<User>;
+  me: User;
+  avatarTemplate: AvatarTemplate;
+};
+
+export type AvatarTemplate = {
+  __typename?: 'AvatarTemplate';
+  imageUrl: Scalars['String'];
+  frames: Array<AvatarTemplateFrame>;
+};
+
+export type AvatarTemplateFrame = {
+  __typename?: 'AvatarTemplateFrame';
+  index: Scalars['Int'];
+  animationName: Scalars['String'];
+  frameNumber: Scalars['Int'];
+  partType: Scalars['String'];
+  partName: Scalars['String'];
+  subPartName?: Maybe<Scalars['String']>;
+  sliceName: Scalars['String'];
+  flipped: Scalars['Boolean'];
+  coordinates: Box;
+};
+
+export type Box = {
+  __typename?: 'Box';
+  w: Scalars['Float'];
+  h: Scalars['Float'];
+  x: Scalars['Float'];
+  y: Scalars['Float'];
 };
 
 export enum CacheControlScope {
@@ -116,6 +144,11 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Query: ResolverTypeWrapper<{}>;
+  AvatarTemplate: ResolverTypeWrapper<AvatarTemplate>;
+  AvatarTemplateFrame: ResolverTypeWrapper<AvatarTemplateFrame>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  Box: ResolverTypeWrapper<Box>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
   CacheControlScope: CacheControlScope;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
 }>;
@@ -126,6 +159,11 @@ export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
   String: Scalars['String'];
   Query: {};
+  AvatarTemplate: AvatarTemplate;
+  AvatarTemplateFrame: AvatarTemplateFrame;
+  Int: Scalars['Int'];
+  Box: Box;
+  Float: Scalars['Float'];
   Upload: Scalars['Upload'];
 }>;
 
@@ -140,7 +178,35 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 }>;
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  avatarTemplate?: Resolver<ResolversTypes['AvatarTemplate'], ParentType, ContextType>;
+}>;
+
+export type AvatarTemplateResolvers<ContextType = any, ParentType extends ResolversParentTypes['AvatarTemplate'] = ResolversParentTypes['AvatarTemplate']> = ResolversObject<{
+  imageUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  frames?: Resolver<Array<ResolversTypes['AvatarTemplateFrame']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type AvatarTemplateFrameResolvers<ContextType = any, ParentType extends ResolversParentTypes['AvatarTemplateFrame'] = ResolversParentTypes['AvatarTemplateFrame']> = ResolversObject<{
+  index?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  animationName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  frameNumber?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  partType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  partName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  subPartName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  sliceName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  flipped?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  coordinates?: Resolver<ResolversTypes['Box'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type BoxResolvers<ContextType = any, ParentType extends ResolversParentTypes['Box'] = ResolversParentTypes['Box']> = ResolversObject<{
+  w?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  h?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  x?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  y?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 }>;
 
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
@@ -150,6 +216,9 @@ export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
 export type Resolvers<ContextType = any> = ResolversObject<{
   User?: UserResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  AvatarTemplate?: AvatarTemplateResolvers<ContextType>;
+  AvatarTemplateFrame?: AvatarTemplateFrameResolvers<ContextType>;
+  Box?: BoxResolvers<ContextType>;
   Upload?: GraphQLScalarType;
 }>;
 

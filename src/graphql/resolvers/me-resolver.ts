@@ -1,9 +1,13 @@
-import { MeResolver } from '../../types/graphql'
+import { QueryResolvers } from '../../types/graphql'
 
 /**
  * Fetches data of current user
  */
-export const meResolver: MeResolver = async (parent, args, context) => {
+export const meResolver: QueryResolvers['me'] = async (
+  parent,
+  args,
+  context,
+) => {
   const { user } = context
 
   if (user) {

@@ -1,7 +1,7 @@
 import { IonSlide, IonSlides } from '@ionic/react'
 import React, { useMemo, useRef, useState } from 'react'
 import { createUseStyles } from 'react-jss'
-import useAvatarTemplate, { FrameMeta } from '../hooks/useAvatarTemplate'
+import useAvatarTemplate from '../avatar/useAvatarTemplate'
 import { ToolbarPage } from './ToolbarPage'
 
 const MULTIPLIER = 10
@@ -95,20 +95,20 @@ export const MyAvatar = () => {
   const [frameNumber] = useState(0)
 
   const frames = useMemo(() => {
-    let frames: FrameMeta[] = []
+    let frames: any[] = []
     if (avatar && allFrames?.length && image) {
       frames = allFrames
-        .filter((f) =>
+        .filter((f: any) =>
           Object.keys(avatar.components).some(
             (cKey) =>
               f.partType === cKey &&
               f.partName === avatar.components[cKey].name,
           ),
         )
-        .filter((f) => f.sliceName === sliceName)
-        .filter((f) => f.animationName === animationName)
-        .filter((f) => f.frameNumber === frameNumber)
-        .sort((f1, f2) => f1.index - f2.index)
+        .filter((f: any) => f.sliceName === sliceName)
+        .filter((f: any) => f.animationName === animationName)
+        .filter((f: any) => f.frameNumber === frameNumber)
+        .sort((f1: any, f2: any) => f1.index - f2.index)
     }
     return frames
   }, [animationName, sliceName, avatar, image, frameNumber, allFrames])

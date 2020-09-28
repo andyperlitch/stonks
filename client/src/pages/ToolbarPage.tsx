@@ -23,7 +23,7 @@ export const ToolbarPage = ({ children }: { children: ReactNode }) => {
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
+            <IonTitle size="large">VCRPG</IonTitle>
           </IonToolbar>
         </IonHeader>
         {children}

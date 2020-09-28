@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: getUserInfo
+// GraphQL query operation: GetUserInfo
 // ====================================================
 
-export interface getUserInfo_me {
+export interface GetUserInfo_me {
   __typename: "User";
   id: string | null;
   email: string | null;
@@ -17,6 +17,6 @@ export interface getUserInfo_me {
   isAuthenticated: boolean;
 }
 
-export interface getUserInfo {
-  me: getUserInfo_me | null;
+export interface GetUserInfo {
+  me: GetUserInfo_me;
 }

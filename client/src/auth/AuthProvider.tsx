@@ -1,10 +1,10 @@
 import { gql } from 'apollo-boost'
 import React from 'react'
 import { useQuery } from 'react-apollo'
-import { getUserInfo } from './types/getUserInfo'
+import { GetUserInfo } from './types/getUserInfo'
 
 const GET_USER_INFO = gql`
-  query getUserInfo {
+  query GetUserInfo {
     me {
       id
       email
@@ -35,7 +35,7 @@ export const authContext = React.createContext<AuthContextType>({
 })
 
 export const AuthProvider = ({ children }: any) => {
-  const { data, loading } = useQuery<getUserInfo>(GET_USER_INFO)
+  const { data, loading } = useQuery<GetUserInfo>(GET_USER_INFO)
 
   const value: AuthContextType = {
     ...data?.me,
