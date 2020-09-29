@@ -1,6 +1,6 @@
 import { QueryResolvers as _QueryResolvers } from './graphql-types'
 import { Request } from 'express'
-import { IUser } from './passport'
+import { User } from '../entity/User'
 
 export interface GraphQLContext {
   /**
@@ -10,6 +10,6 @@ export interface GraphQLContext {
   /**
    * The user object from passport.
    */
-  user: IUser
+  user: User
 }
 export type QueryResolvers = _QueryResolvers<GraphQLContext>

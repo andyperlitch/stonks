@@ -10,17 +10,17 @@
 
 ## Bugs
 
-[ ] Weird callstack exceeded intermittently... probably auth-related
+[ ] Weird callstack exceeded intermittently... probably auth-related, and auth bugs
 
 ## TODOs
 
 [X] move avatar template json to graphql
 [X] move avatar template json logic from client to server
-[ ] render profile info in nav
-[ ] avatars page with "new" button
 [ ] create avatar db model
 [ ] "create avatar" mutation
 [ ] "update avatar" mutation
+[ ] avatars page with "new" button
+[ ] render profile info in nav
 [ ] cycle through animations
 [ ] skin color choice screen
 [ ] eye color choice screen

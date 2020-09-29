@@ -1,9 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, Column, Index } from 'typeorm'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  Index,
+  OneToMany,
+} from 'typeorm'
+import { Avatar } from './Avatar'
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: number
+  id: string
 
   @Index({ unique: true })
   @Column()
@@ -17,4 +24,7 @@ export class User {
 
   @Column()
   thumbnail: string
+
+  @OneToMany((type) => Avatar, (avatar) => avatar.user)
+  avatars: Avatar[]
 }
