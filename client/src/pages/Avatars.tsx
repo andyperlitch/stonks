@@ -90,7 +90,7 @@ export const Avatars = () => {
           </IonButton>
         )}
         {avatars.map((a) => (
-          <div className={classes.avatarContainer}>
+          <div className={classes.avatarContainer} key={a.id}>
             <AvatarPreview
               multiplier={3}
               avatar={a}
@@ -107,7 +107,7 @@ export const Avatars = () => {
                   <IonIcon icon={checkmark} />
                   {/* <IonText>select</IonText> */}
                 </IonButton>
-                <IonRouterLink routerLink={`/avatars/${a.id}`} key={a.id}>
+                <IonRouterLink routerLink={`/avatars/${a.id}`}>
                   <IonButton
                     title="edit"
                     color="warning"

@@ -7,8 +7,23 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface AvatarComponentMetaInput {
+  optionId: string;
+  type: string;
+  hue: number;
+  saturation: number;
+  lightness: number;
+  contrast: number;
+}
+
 export interface CreateAvatarInput {
   name?: string | null;
+}
+
+export interface UpdateAvatarInput {
+  id: string;
+  name?: string | null;
+  components?: AvatarComponentMetaInput[] | null;
 }
 
 //==============================================================

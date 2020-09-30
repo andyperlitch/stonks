@@ -40,9 +40,9 @@ export async function generateRandomAvatarComponents(): Promise<
   return partsMeta.map((pt) => ({
     optionId: getRandomItem(pt.partIds),
     type: pt.partType,
-    hue: getRandomInteger([-100, 100]),
-    saturation: getRandomInteger([-100, 100]),
-    lightness: getRandomInteger([-100, 100]),
-    contrast: getRandomInteger([-100, 100]),
+    hue: getRandomInteger([-180, 180]),
+    saturation: getRandomInteger([0, 200]),
+    lightness: getRandomInteger([0, 200]),
+    contrast: getRandomInteger([0, 200]),
   }))
 }

@@ -13,7 +13,7 @@ export const PrivateRoute = ({ children, ...rest }: any) => {
           return <Loading />
         }
         if (auth.isAuthenticated) {
-          return children
+          return children(rest)
         }
         return (
           <Redirect

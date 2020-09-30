@@ -17,6 +17,10 @@ import {
   walk,
 } from 'ionicons/icons'
 import { ToolbarPage } from './ToolbarPage'
+import { AvatarPreview } from '../components/AvatarPreview'
+import { useFetchAvatars } from '../avatar/useFetchAvatars'
+import { FetchAvatars_myAvatars } from '../avatar/types/FetchAvatars'
+import { IonRouteComputedMatch } from '../types/ionic'
 
 const useStyles = createUseStyles({
   title: {
@@ -30,7 +34,20 @@ const useStyles = createUseStyles({
   },
 })
 
-export const EditAvatar = () => {
+interface EditAvatarProps {
+  routeInfo: IonRouteComputedMatch
+}
+
+export const EditAvatar = ({ routeInfo }: EditAvatarProps) => {
+  const avatarId = routeInfo.params?.avatarId
+
+  const { error, loading, avatars } = useFetchAvatars()
+
+  let avatar: FetchAvatars_myAvatars | undefined
+  if (avatars && avatars.length) {
+    avatar = avatars.find((a) => a.id === avatarId)
+  }
+
   const classes = useStyles()
   return (
     <ToolbarPage>
@@ -62,6 +79,7 @@ export const EditAvatar = () => {
           <IonIcon slot="icon-only" icon={walk} />
         </IonButton>
       </nav>
+      {avatar && <AvatarPreview multiplier={12} avatar={avatar} />}
     </ToolbarPage>
   )
 }

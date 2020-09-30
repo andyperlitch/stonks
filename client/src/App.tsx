@@ -37,6 +37,7 @@ import './theme/variables.css'
 import { AuthProvider } from './auth/AuthProvider'
 import { NetworkProvider } from './network/NetworkProvider'
 import { EditAvatar } from './pages/EditAvatar'
+import { IonRouteProps } from './types/ionic'
 
 /* Set up theme */
 const useTheme = createUseStyles(rootStyles)
@@ -54,10 +55,12 @@ const App = () => {
                   <Home />
                 </Route>
                 <PrivateRoute exact path="/avatars">
-                  <Avatars />
+                  {() => <Avatars />}
                 </PrivateRoute>
-                <PrivateRoute path="/avatars/:id">
-                  <EditAvatar />
+                <PrivateRoute path="/avatars/:avatarId">
+                  {(props: IonRouteProps) => (
+                    <EditAvatar routeInfo={props.computedMatch} />
+                  )}
                 </PrivateRoute>
                 <Route exact path="/" render={() => <Redirect to="/home" />} />
                 <Route exact path="/login" component={Login} />
