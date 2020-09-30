@@ -9,11 +9,7 @@ export const typeDefs = gql`
     """
     The avatars that the current user has created.
     """
-    avatars: [AvatarMeta!]!
-    """
-    The id of the current user's selected avatar
-    """
-    currentAvatar: ID!
+    myAvatars: [AvatarMeta!]!
     """
     Data about the template for avatars
     """
@@ -26,7 +22,7 @@ export const typeDefs = gql`
   }
 
   input CreateAvatarInput {
-    name: String!
+    name: String
   }
 
   input UpdateAvatarInput {
@@ -48,7 +44,7 @@ export const typeDefs = gql`
     """
     The id of the option being used for the given component type
     """
-    id: String!
+    optionId: String!
     """
     The type of the component
     """
@@ -90,7 +86,7 @@ export const typeDefs = gql`
     """
     The id of the option being used for the given component type
     """
-    id: String!
+    optionId: String!
     """
     The type of the component
     """
@@ -120,6 +116,10 @@ export const typeDefs = gql`
     username: String
     googleId: String
     thumbnail: String
+    """
+    The id of the current user's selected avatar
+    """
+    currentAvatar: String
   }
 
   type AvatarTemplate {

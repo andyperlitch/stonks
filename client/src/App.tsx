@@ -1,6 +1,6 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
-import { IonApp, IonRouterOutlet } from '@ionic/react'
+import { IonApp, IonRouterOutlet, iosTransitionAnimation } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
 import { createUseStyles, ThemeProvider } from 'react-jss'
 import { rootStyles } from './rootStyles'
@@ -11,7 +11,7 @@ import { Menu } from './components/Menu'
 /* Pages */
 import { Home } from './pages/Home'
 import { Login } from './pages/Login'
-import { MyAvatar } from './pages/MyAvatar'
+import { Avatars } from './pages/Avatars'
 import { PrivateRoute } from './components/PrivateRoute'
 
 /* Core CSS required for Ionic components to work properly */
@@ -36,11 +36,11 @@ import './theme/variables.css'
 /* Providers */
 import { AuthProvider } from './auth/AuthProvider'
 import { NetworkProvider } from './network/NetworkProvider'
+import { EditAvatar } from './pages/EditAvatar'
 
 /* Set up theme */
 const useTheme = createUseStyles(rootStyles)
-
-const App: React.FC = () => {
+const App = () => {
   const theme = useTheme()
   return (
     <NetworkProvider>
@@ -49,12 +49,15 @@ const App: React.FC = () => {
           <IonApp>
             <IonReactRouter>
               <Menu />
-              <IonRouterOutlet id="content">
+              <IonRouterOutlet id="content" animation={iosTransitionAnimation}>
                 <Route exact path="/home">
                   <Home />
                 </Route>
-                <PrivateRoute exact path="/my-avatar">
-                  <MyAvatar />
+                <PrivateRoute exact path="/avatars">
+                  <Avatars />
+                </PrivateRoute>
+                <PrivateRoute path="/avatars/:id">
+                  <EditAvatar />
                 </PrivateRoute>
                 <Route exact path="/" render={() => <Redirect to="/home" />} />
                 <Route exact path="/login" component={Login} />

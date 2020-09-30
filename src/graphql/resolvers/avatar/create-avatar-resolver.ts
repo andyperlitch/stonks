@@ -5,6 +5,8 @@ import { combineResolvers } from 'graphql-resolvers'
 import { GraphQLContext } from './../../../types/graphql'
 import { MutationResolvers } from '../../../types/graphql-types'
 import { isAuthenticated } from '../common/is-authenticated'
+import { generateName } from '../../../utils/generateName'
+import { generateRandomAvatarComponents } from '../../../utils/generateRandomAvatarComponents'
 
 export const createAvatarResolver: MutationResolvers<
   GraphQLContext
@@ -17,7 +19,12 @@ export const createAvatarResolver: MutationResolvers<
   async (root, { input: { name } }, { user }): Promise<Avatar> => {
     const avatarRepo = getRepository(Avatar)
     const newAvatar = new Avatar()
-    newAvatar.name = name
+    if (name) {
+      newAvatar.name = name
+    } else {
+      newAvatar.name = generateName()
+    }
+    newAvatar.components = await generateRandomAvatarComponents()
     newAvatar.user = user
     return await avatarRepo.save(newAvatar)
   },

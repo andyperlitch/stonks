@@ -1,6 +1,4 @@
-import { promises as fs } from 'fs'
-import { resolve } from 'path'
-import { AsepriteFile } from '../../../types/aseprite'
+import { getAvatarTemplateData } from '../../../utils/getAvatarTemplateData'
 import { GraphQLContext } from '../../../types/graphql'
 import {
   AvatarTemplateFrame,
@@ -13,12 +11,7 @@ import {
 export const avatarTemplateResolver: QueryResolvers<
   GraphQLContext
 >['avatarTemplate'] = async () => {
-  const fileContent = await fs.readFile(
-    resolve(__dirname, '../../../artwork/avatar.json'),
-    'utf-8',
-  )
-
-  const metadata: AsepriteFile = JSON.parse(fileContent)
+  const metadata = await getAvatarTemplateData()
 
   const frames: AvatarTemplateFrame[] = Object.keys(metadata.frames).reduce<
     any

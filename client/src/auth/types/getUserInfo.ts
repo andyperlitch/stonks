@@ -18,5 +18,8 @@ export interface GetUserInfo_me {
 }
 
 export interface GetUserInfo {
+  /**
+   * Info about the current user, logged in or not.
+   */
   me: GetUserInfo_me;
 }

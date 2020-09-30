@@ -18,9 +18,7 @@ export type Query = {
   /** Info about the current user, logged in or not. */
   me: User;
   /** The avatars that the current user has created. */
-  avatars: Array<AvatarMeta>;
-  /** The id of the current user's selected avatar */
-  currentAvatar: Scalars['ID'];
+  myAvatars: Array<AvatarMeta>;
   /** Data about the template for avatars */
   avatarTemplate: AvatarTemplate;
 };
@@ -42,7 +40,7 @@ export type MutationUpdateAvatarArgs = {
 };
 
 export type CreateAvatarInput = {
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
 };
 
 export type UpdateAvatarInput = {
@@ -56,7 +54,7 @@ export type UpdateAvatarInput = {
 
 export type AvatarComponentMetaInput = {
   /** The id of the option being used for the given component type */
-  id: Scalars['String'];
+  optionId: Scalars['String'];
   /** The type of the component */
   type: Scalars['String'];
   /** The hue adjustment from the original component. Will be between -100 and 100 */
@@ -82,7 +80,7 @@ export type AvatarMeta = {
 export type AvatarComponentMeta = {
   __typename?: 'AvatarComponentMeta';
   /** The id of the option being used for the given component type */
-  id: Scalars['String'];
+  optionId: Scalars['String'];
   /** The type of the component */
   type: Scalars['String'];
   /** The hue adjustment from the original component. Will be between -100 and 100 */
@@ -103,6 +101,8 @@ export type User = {
   username?: Maybe<Scalars['String']>;
   googleId?: Maybe<Scalars['String']>;
   thumbnail?: Maybe<Scalars['String']>;
+  /** The id of the current user's selected avatar */
+  currentAvatar?: Maybe<Scalars['String']>;
 };
 
 export type AvatarTemplate = {
@@ -218,11 +218,11 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
   Mutation: ResolverTypeWrapper<{}>;
   CreateAvatarInput: CreateAvatarInput;
   String: ResolverTypeWrapper<Scalars['String']>;
   UpdateAvatarInput: UpdateAvatarInput;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   AvatarComponentMetaInput: AvatarComponentMetaInput;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   AvatarMeta: ResolverTypeWrapper<AvatarMeta>;
@@ -240,11 +240,11 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Query: {};
-  ID: Scalars['ID'];
   Mutation: {};
   CreateAvatarInput: CreateAvatarInput;
   String: Scalars['String'];
   UpdateAvatarInput: UpdateAvatarInput;
+  ID: Scalars['ID'];
   AvatarComponentMetaInput: AvatarComponentMetaInput;
   Int: Scalars['Int'];
   AvatarMeta: AvatarMeta;
@@ -260,8 +260,7 @@ export type ResolversParentTypes = ResolversObject<{
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  avatars?: Resolver<Array<ResolversTypes['AvatarMeta']>, ParentType, ContextType>;
-  currentAvatar?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  myAvatars?: Resolver<Array<ResolversTypes['AvatarMeta']>, ParentType, ContextType>;
   avatarTemplate?: Resolver<ResolversTypes['AvatarTemplate'], ParentType, ContextType>;
 }>;
 
@@ -278,7 +277,7 @@ export type AvatarMetaResolvers<ContextType = any, ParentType extends ResolversP
 }>;
 
 export type AvatarComponentMetaResolvers<ContextType = any, ParentType extends ResolversParentTypes['AvatarComponentMeta'] = ResolversParentTypes['AvatarComponentMeta']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  optionId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   hue?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   saturation?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -294,6 +293,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   googleId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   thumbnail?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  currentAvatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 }>;
 

@@ -35,5 +35,8 @@ export interface GetAvatarTemplate_avatarTemplate {
 }
 
 export interface GetAvatarTemplate {
+  /**
+   * Data about the template for avatars
+   */
   avatarTemplate: GetAvatarTemplate_avatarTemplate;
 }

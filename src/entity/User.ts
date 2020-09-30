@@ -25,6 +25,9 @@ export class User {
   @Column()
   thumbnail: string
 
+  @Column({ nullable: true })
+  currentAvatar: string
+
   @OneToMany((type) => Avatar, (avatar) => avatar.user)
-  avatars: Avatar[]
+  avatars: Promise<Avatar[]>
 }

@@ -21,10 +21,14 @@ export const Menu = () => {
       <IonContent>
         <IonList>
           <IonMenuToggle>
-            <IonItem routerLink="/">Home</IonItem>
+            <IonItem routerLink="/" routerDirection="root">
+              Home
+            </IonItem>
           </IonMenuToggle>
           <IonMenuToggle>
-            <IonItem routerLink="/my-avatar">My Avatar</IonItem>
+            <IonItem routerLink="/avatars" routerDirection="root">
+              My Avatars
+            </IonItem>
           </IonMenuToggle>
         </IonList>
       </IonContent>
