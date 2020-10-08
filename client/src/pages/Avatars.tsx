@@ -107,7 +107,7 @@ export const Avatars = () => {
                   <IonIcon icon={checkmark} />
                   {/* <IonText>select</IonText> */}
                 </IonButton>
-                <IonRouterLink routerLink={`/avatars/${a.id}`}>
+                <IonRouterLink routerLink={`/avatars/${a.id}/info`}>
                   <IonButton
                     title="edit"
                     color="warning"

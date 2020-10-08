@@ -1,7 +1,5 @@
 import React from 'react'
-import { Redirect, Route } from 'react-router-dom'
 import { IonApp, IonRouterOutlet, iosTransitionAnimation } from '@ionic/react'
-import { IonReactRouter } from '@ionic/react-router'
 import { createUseStyles, ThemeProvider } from 'react-jss'
 import { rootStyles } from './rootStyles'
 
@@ -13,6 +11,9 @@ import { Home } from './pages/Home'
 import { Login } from './pages/Login'
 import { Avatars } from './pages/Avatars'
 import { PrivateRoute } from './components/PrivateRoute'
+
+/* Routes */
+import { routes } from './routes'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css'
@@ -36,8 +37,8 @@ import './theme/variables.css'
 /* Providers */
 import { AuthProvider } from './auth/AuthProvider'
 import { NetworkProvider } from './network/NetworkProvider'
-import { EditAvatar } from './pages/EditAvatar'
-import { IonRouteProps } from './types/ionic'
+import { EditAvatar } from './pages/EditAvatar/EditAvatar'
+import { Redirect, BrowserRouter as Router, Route } from 'react-router-dom'
 
 /* Set up theme */
 const useTheme = createUseStyles(rootStyles)
@@ -47,26 +48,29 @@ const App = () => {
     <NetworkProvider>
       <AuthProvider>
         <ThemeProvider theme={theme}>
-          <IonApp>
-            <IonReactRouter>
+          <Router>
+            <IonApp>
               <Menu />
               <IonRouterOutlet id="content" animation={iosTransitionAnimation}>
-                <Route exact path="/home">
-                  <Home />
-                </Route>
-                <PrivateRoute exact path="/avatars">
-                  {() => <Avatars />}
+                <Route exact path={routes.HOME} render={() => <Home />} />
+                <PrivateRoute exact path={routes.AVATARS}>
+                  <Avatars />
                 </PrivateRoute>
-                <PrivateRoute path="/avatars/:avatarId">
-                  {(props: IonRouteProps) => (
-                    <EditAvatar routeInfo={props.computedMatch} />
-                  )}
+                <PrivateRoute path={routes.AVATAR_EDIT}>
+                  <EditAvatar />
                 </PrivateRoute>
-                <Route exact path="/" render={() => <Redirect to="/home" />} />
-                <Route exact path="/login" component={Login} />
+                <PrivateRoute path={routes.AVATAR_EDIT_DETAIL}>
+                  <EditAvatar />
+                </PrivateRoute>
+                <Route
+                  exact
+                  path={routes.ROOT}
+                  render={() => <Redirect to={routes.HOME} />}
+                />
+                <Route exact path={routes.LOGIN} render={() => <Login />} />
               </IonRouterOutlet>
-            </IonReactRouter>
-          </IonApp>
+            </IonApp>
+          </Router>
         </ThemeProvider>
       </AuthProvider>
     </NetworkProvider>

@@ -6,8 +6,8 @@
   "dependencies": {
     "@babel/core": "7.9.0",
     "@capacitor/core": "2.4.1",
-    "@ionic/react": "^5.0.7",
-    "@ionic/react-router": "^5.0.7",
+    "@ionic/react": "^5.3.0-dev.202006222125.df37029",
+    "@ionic/react-router": "^5.3.0-dev.202006222125.df37029",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
@@ -50,6 +50,7 @@
     "jest-watch-typeahead": "0.4.2",
     "mini-css-extract-plugin": "0.9.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
+    "path-to-regexp": "^6.1.0",
     "pnp-webpack-plugin": "1.6.4",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",

@@ -16,10 +16,12 @@
 
 [X] move avatar template json to graphql
 [X] move avatar template json logic from client to server
-[ ] create avatar db model
-[ ] "create avatar" mutation
-[ ] "update avatar" mutation
-[ ] avatars page with "new" button
+[X] create avatar db model
+[X] "create avatar" mutation
+[X] "update avatar" mutation
+[ ] "delete avatar" mutation
+[ ] "select avatar" mutation
+[X] avatars page with "new" button
 [ ] render profile info in nav
 [ ] cycle through animations
 [ ] skin color choice screen

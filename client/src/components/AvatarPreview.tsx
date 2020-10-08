@@ -1,16 +1,14 @@
 import React, { useMemo, useRef, useState } from 'react'
-import {
-  FetchAvatars_myAvatars,
-  FetchAvatars_myAvatars_components,
-} from '../avatar/types/FetchAvatars'
+import { FetchAvatars_myAvatars_components } from '../avatar/types/FetchAvatars'
 import { GetAvatarTemplate_avatarTemplate_frames } from '../avatar/types/getAvatarTemplate'
 import useAvatarTemplate from '../avatar/useAvatarTemplate'
+import { Avatar } from '../pages/EditAvatar/types'
 
 const AVATAR_WIDTH = 24
 const AVATAR_HEIGHT = 36
 
 interface AvatarPreviewProps {
-  avatar: FetchAvatars_myAvatars
+  avatar: Avatar
   multiplier: number
   className?: string
 }
