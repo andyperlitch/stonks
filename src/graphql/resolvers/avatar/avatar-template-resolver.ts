@@ -31,7 +31,6 @@ export const avatarTemplateResolver: QueryResolvers<
         partName,
         subPartName,
         sliceName: slice.name,
-        flipped: false,
         coordinates: {
           w: bounds.w,
           h: bounds.h,
@@ -39,25 +38,6 @@ export const avatarTemplateResolver: QueryResolvers<
           y: frame.frame.y + bounds.y,
         },
       })
-
-      if (['west', 'southwest', 'northwest'].includes(slice.name)) {
-        acc.push({
-          index,
-          animationName,
-          frameNumber,
-          partType,
-          partName,
-          subPartName,
-          sliceName: slice.name.replace('west', 'east'),
-          flipped: true,
-          coordinates: {
-            w: bounds.w,
-            h: bounds.h,
-            x: frame.frame.x + bounds.x,
-            y: frame.frame.y + bounds.y,
-          },
-        })
-      }
     })
 
     return acc

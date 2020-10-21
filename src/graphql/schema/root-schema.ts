@@ -135,7 +135,6 @@ export const typeDefs = gql`
     partName: String!
     subPartName: String
     sliceName: String!
-    flipped: Boolean!
     coordinates: Box!
   }
 

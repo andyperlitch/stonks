@@ -24,7 +24,6 @@ export interface GetAvatarTemplate_avatarTemplate_frames {
   partName: string;
   subPartName: string | null;
   sliceName: string;
-  flipped: boolean;
   coordinates: GetAvatarTemplate_avatarTemplate_frames_coordinates;
 }
 

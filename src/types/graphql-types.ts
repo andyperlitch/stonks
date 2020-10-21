@@ -120,7 +120,6 @@ export type AvatarTemplateFrame = {
   partName: Scalars['String'];
   subPartName?: Maybe<Scalars['String']>;
   sliceName: Scalars['String'];
-  flipped: Scalars['Boolean'];
   coordinates: Box;
 };
 
@@ -311,7 +310,6 @@ export type AvatarTemplateFrameResolvers<ContextType = any, ParentType extends R
   partName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   subPartName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   sliceName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  flipped?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   coordinates?: Resolver<ResolversTypes['Box'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 }>;

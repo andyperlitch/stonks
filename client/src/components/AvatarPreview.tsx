@@ -141,24 +141,17 @@ export const AvatarPreview = ({
       frames.forEach((f) => {
         const adjustedImage = renderFrameWithComponent(f, image)
 
-        if (f.flipped) {
-          ctx.save()
-          ctx.scale(-1, 1)
-        }
         ctx?.drawImage(
           adjustedImage,
-          f.flipped ? AVATAR_WIDTH : 0,
           0,
-          AVATAR_WIDTH * (f.flipped ? -1 : 1),
+          0,
+          AVATAR_WIDTH,
           AVATAR_HEIGHT,
           0,
           0,
-          f.coordinates.w * multiplier * (f.flipped ? -1 : 1),
+          f.coordinates.w * multiplier,
           f.coordinates.h * multiplier,
         )
-        if (f.flipped) {
-          ctx.restore()
-        }
       })
     }
   }

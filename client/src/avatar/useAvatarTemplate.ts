@@ -15,7 +15,6 @@ const GET_AVATAR_TEMPLATE = gql`
         partName
         subPartName
         sliceName
-        flipped
         coordinates {
           x
           y
