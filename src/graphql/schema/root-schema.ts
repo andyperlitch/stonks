@@ -19,6 +19,7 @@ export const typeDefs = gql`
   type Mutation {
     createAvatar(input: CreateAvatarInput!): AvatarMeta!
     updateAvatar(input: UpdateAvatarInput!): AvatarMeta!
+    deleteAvatar(input: DeleteAvatarInput!): AvatarMeta!
   }
 
   input CreateAvatarInput {
@@ -38,6 +39,13 @@ export const typeDefs = gql`
     The components that this avatar instance consists of
     """
     components: [AvatarComponentMetaInput!]
+  }
+
+  input DeleteAvatarInput {
+    """
+    The unique id of this avatar instance
+    """
+    id: ID!
   }
 
   input AvatarComponentMetaInput {

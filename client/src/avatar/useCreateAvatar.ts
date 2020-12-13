@@ -1,4 +1,4 @@
-import { CreateAvatar } from './types/CreateAvatar'
+import { CreateAvatar, CreateAvatarVariables } from './types/CreateAvatar'
 import { gql } from 'apollo-boost'
 import { useMutation } from 'react-apollo'
 
@@ -20,9 +20,10 @@ const CREATE_AVATAR = gql`
 `
 
 export const useCreateAvatar = () => {
-  const [createAvatar, { loading, error }] = useMutation<CreateAvatar>(
-    CREATE_AVATAR,
-  )
+  const [createAvatar, { loading, error }] = useMutation<
+    CreateAvatar,
+    CreateAvatarVariables
+  >(CREATE_AVATAR)
 
   return { createAvatar, loading, error }
 }

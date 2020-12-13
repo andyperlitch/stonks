@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import {
   IonButton,
   IonFab,
@@ -13,6 +13,8 @@ import { ToolbarPage } from './ToolbarPage'
 import { useCreateAvatar } from '../avatar/useCreateAvatar'
 import { useFetchAvatars } from '../avatar/useFetchAvatars'
 import { AvatarPreview } from '../components/AvatarPreview'
+import { useDeleteAvatar } from '../avatar/useDeleteAvatar'
+import { FetchAvatars_myAvatars } from '../avatar/types/FetchAvatars'
 
 const useStyles = createUseStyles({
   title: {
@@ -67,12 +69,23 @@ export const Avatars = () => {
   const classes = useStyles()
   const { avatars, refetch } = useFetchAvatars()
   const { createAvatar } = useCreateAvatar()
+  const { deleteAvatar } = useDeleteAvatar()
   const router = useIonRouter()
 
-  const handleNewAvatar = async () => {
+  const handleNewAvatar = useCallback(async () => {
     const newAvatar = await createAvatar({ variables: { input: {} } })
     refetch()
     router.push(`/avatars/${newAvatar.data?.createAvatar.id}`)
+  }, [createAvatar, refetch, router])
+
+  const handleDeleteAvatar = (a: FetchAvatars_myAvatars) => () => {
+    deleteAvatar({
+      variables: {
+        input: {
+          id: a.id,
+        },
+      },
+    })
   }
 
   return (
@@ -121,6 +134,7 @@ export const Avatars = () => {
                   title="delete"
                   color="danger"
                   className={classes.control}
+                  onClick={handleDeleteAvatar(a)}
                 >
                   <IonIcon icon={trashBin} />
                   {/* <IonText>delete</IonText> */}

@@ -20,6 +20,10 @@ export interface CreateAvatarInput {
   name?: string | null;
 }
 
+export interface DeleteAvatarInput {
+  id: string;
+}
+
 export interface UpdateAvatarInput {
   id: string;
   name?: string | null;

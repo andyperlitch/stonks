@@ -27,6 +27,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createAvatar: AvatarMeta;
   updateAvatar: AvatarMeta;
+  deleteAvatar: AvatarMeta;
 };
 
 
@@ -37,6 +38,11 @@ export type MutationCreateAvatarArgs = {
 
 export type MutationUpdateAvatarArgs = {
   input: UpdateAvatarInput;
+};
+
+
+export type MutationDeleteAvatarArgs = {
+  input: DeleteAvatarInput;
 };
 
 export type CreateAvatarInput = {
@@ -50,6 +56,11 @@ export type UpdateAvatarInput = {
   name?: Maybe<Scalars['String']>;
   /** The components that this avatar instance consists of */
   components?: Maybe<Array<AvatarComponentMetaInput>>;
+};
+
+export type DeleteAvatarInput = {
+  /** The unique id of this avatar instance */
+  id: Scalars['ID'];
 };
 
 export type AvatarComponentMetaInput = {
@@ -222,6 +233,7 @@ export type ResolversTypes = ResolversObject<{
   String: ResolverTypeWrapper<Scalars['String']>;
   UpdateAvatarInput: UpdateAvatarInput;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  DeleteAvatarInput: DeleteAvatarInput;
   AvatarComponentMetaInput: AvatarComponentMetaInput;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   AvatarMeta: ResolverTypeWrapper<AvatarMeta>;
@@ -244,6 +256,7 @@ export type ResolversParentTypes = ResolversObject<{
   String: Scalars['String'];
   UpdateAvatarInput: UpdateAvatarInput;
   ID: Scalars['ID'];
+  DeleteAvatarInput: DeleteAvatarInput;
   AvatarComponentMetaInput: AvatarComponentMetaInput;
   Int: Scalars['Int'];
   AvatarMeta: AvatarMeta;
@@ -266,6 +279,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   createAvatar?: Resolver<ResolversTypes['AvatarMeta'], ParentType, ContextType, RequireFields<MutationCreateAvatarArgs, 'input'>>;
   updateAvatar?: Resolver<ResolversTypes['AvatarMeta'], ParentType, ContextType, RequireFields<MutationUpdateAvatarArgs, 'input'>>;
+  deleteAvatar?: Resolver<ResolversTypes['AvatarMeta'], ParentType, ContextType, RequireFields<MutationDeleteAvatarArgs, 'input'>>;
 }>;
 
 export type AvatarMetaResolvers<ContextType = any, ParentType extends ResolversParentTypes['AvatarMeta'] = ResolversParentTypes['AvatarMeta']> = ResolversObject<{

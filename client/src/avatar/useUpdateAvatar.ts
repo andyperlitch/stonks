@@ -1,6 +1,6 @@
 import { gql } from 'apollo-boost'
 import { useMutation } from 'react-apollo'
-import { UpdateAvatar } from './types/UpdateAvatar'
+import { UpdateAvatar, UpdateAvatarVariables } from './types/UpdateAvatar'
 
 const UPDATE_AVATAR = gql`
   mutation UpdateAvatar($input: UpdateAvatarInput!) {
@@ -20,9 +20,10 @@ const UPDATE_AVATAR = gql`
 `
 
 export const useUpdateAvatar = () => {
-  const [updateAvatar, { loading, error }] = useMutation<UpdateAvatar>(
-    UPDATE_AVATAR,
-  )
+  const [updateAvatar, { loading, error }] = useMutation<
+    UpdateAvatar,
+    UpdateAvatarVariables
+  >(UPDATE_AVATAR)
 
   return { updateAvatar, loading, error }
 }
