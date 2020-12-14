@@ -139,6 +139,10 @@ export const AvatarPreview = ({
       ctx.clearRect(0, 0, AVATAR_WIDTH * multiplier, AVATAR_HEIGHT * multiplier)
       ctx.imageSmoothingEnabled = false
       frames.forEach((f) => {
+        // to debug specific frames:
+        // if (f.partType === 'skin' && f.subPartName === 'head') {
+        //   console.log('frame', f)
+        // }
         const adjustedImage = renderFrameWithComponent(f, image)
 
         ctx?.drawImage(

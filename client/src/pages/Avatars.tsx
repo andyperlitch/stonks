@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   IonButton,
   IonFab,
   IonFabButton,
   IonIcon,
   IonRouterLink,
-  useIonRouter,
 } from '@ionic/react'
 import { add, pencil, checkmark, trashBin } from 'ionicons/icons'
 import { createUseStyles } from 'react-jss'
@@ -70,7 +70,7 @@ export const Avatars = () => {
   const { avatars, refetch } = useFetchAvatars()
   const { createAvatar } = useCreateAvatar()
   const { deleteAvatar } = useDeleteAvatar()
-  const router = useIonRouter()
+  const router = useHistory()
 
   const handleNewAvatar = useCallback(async () => {
     const newAvatar = await createAvatar({ variables: { input: {} } })
@@ -86,6 +86,7 @@ export const Avatars = () => {
         },
       },
     })
+    refetch()
   }
 
   return (

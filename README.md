@@ -10,6 +10,8 @@
 
 ## Bugs
 
+[ ] Routing bug when creating new avatar
+[ ] Weird display bug with new skins
 [ ] Weird callstack exceeded intermittently... probably auth-related, and auth bugs
 
 ## TODOs
@@ -19,7 +21,7 @@
 [X] create avatar db model
 [X] "create avatar" mutation
 [X] "update avatar" mutation
-[ ] "delete avatar" mutation
+[X] "delete avatar" mutation
 [ ] "select avatar" mutation
 [X] avatars page with "new" button
 [ ] render profile info in nav

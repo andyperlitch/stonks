@@ -113,8 +113,6 @@ export const EditAvatar = () => {
     detail?: string
   }>()
 
-  // console.log(`params`, params)
-
   const { avatarId, detail } = params
 
   const [avatar, dispatch] = useReducer<EditAvatarReducer, Avatar>(
@@ -125,8 +123,6 @@ export const EditAvatar = () => {
 
   const { error, loading, avatars } = useFetchAvatars()
 
-  if (avatars && avatars.length) {
-  }
   const foundAvatar = avatars.find((a) => a.id === avatarId)
 
   if (foundAvatar && !avatar.id) {
