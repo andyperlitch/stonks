@@ -10,8 +10,6 @@
 
 ## Bugs
 
-[ ] Routing bug when creating new avatar
-[ ] Weird display bug with new skins
 [ ] Weird callstack exceeded intermittently... probably auth-related, and auth bugs
 
 ## TODOs
