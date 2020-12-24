@@ -43,7 +43,7 @@ export const AvatarEditSkin = ({
   avatar: Avatar
   dispatch: any
 }) => {
-  const type = 'hair'
+  const type = 'skin'
   const classes = useStyles()
   const skinComponent = avatar.components.find((c) => c.type === type)
   const optionId = skinComponent?.optionId
