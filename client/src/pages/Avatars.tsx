@@ -12,6 +12,8 @@ import { createUseStyles } from 'react-jss'
 import { ToolbarPage } from './ToolbarPage'
 import { useCreateAvatar } from '../avatar/useCreateAvatar'
 import { useFetchAvatars } from '../avatar/useFetchAvatars'
+import { useSelectAvatar } from '../avatar/useSelectAvatar'
+import { useUserInfo } from '../auth/useUserInfo'
 import { AvatarPreview } from '../components/AvatarPreview'
 import { useDeleteAvatar } from '../avatar/useDeleteAvatar'
 import { FetchAvatars_myAvatars } from '../avatar/types/FetchAvatars'
@@ -67,9 +69,11 @@ const useStyles = createUseStyles({
 
 export const Avatars = () => {
   const classes = useStyles()
+  const { currentAvatar } = useUserInfo()
   const { avatars, refetch } = useFetchAvatars()
   const { createAvatar } = useCreateAvatar()
   const { deleteAvatar } = useDeleteAvatar()
+  const { selectAvatar } = useSelectAvatar()
   const router = useHistory()
 
   const handleNewAvatar = useCallback(async () => {
@@ -78,16 +82,32 @@ export const Avatars = () => {
     router.push(`/avatars/${newAvatar.data?.createAvatar.id}`)
   }, [createAvatar, refetch, router])
 
-  const handleDeleteAvatar = (a: FetchAvatars_myAvatars) => () => {
-    deleteAvatar({
-      variables: {
-        input: {
-          id: a.id,
+  const handleDeleteAvatar = useCallback(
+    (a: FetchAvatars_myAvatars) => async () => {
+      await deleteAvatar({
+        variables: {
+          input: {
+            id: a.id,
+          },
         },
-      },
-    })
-    refetch()
-  }
+      })
+      refetch()
+    },
+    [refetch, deleteAvatar],
+  )
+
+  const handleSelectAvatar = useCallback(
+    (a: FetchAvatars_myAvatars) => async () => {
+      await selectAvatar({
+        variables: {
+          input: {
+            id: a.id,
+          },
+        },
+      })
+    },
+    [selectAvatar],
+  )
 
   return (
     <ToolbarPage>
@@ -116,7 +136,9 @@ export const Avatars = () => {
                 <IonButton
                   title="select"
                   className={classes.control}
-                  fill="outline"
+                  fill={currentAvatar === a.id ? 'solid' : 'outline'}
+                  disabled={currentAvatar === a.id}
+                  onClick={handleSelectAvatar(a)}
                 >
                   <IonIcon icon={checkmark} />
                   {/* <IonText>select</IonText> */}

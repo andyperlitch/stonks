@@ -28,6 +28,7 @@ export type Mutation = {
   createAvatar: AvatarMeta;
   updateAvatar: AvatarMeta;
   deleteAvatar: AvatarMeta;
+  selectAvatar: User;
 };
 
 
@@ -45,6 +46,11 @@ export type MutationDeleteAvatarArgs = {
   input: DeleteAvatarInput;
 };
 
+
+export type MutationSelectAvatarArgs = {
+  input: SelectAvatarInput;
+};
+
 export type CreateAvatarInput = {
   name?: Maybe<Scalars['String']>;
 };
@@ -60,6 +66,11 @@ export type UpdateAvatarInput = {
 
 export type DeleteAvatarInput = {
   /** The unique id of this avatar instance */
+  id: Scalars['ID'];
+};
+
+export type SelectAvatarInput = {
+  /** The unique id of the avatar to select */
   id: Scalars['ID'];
 };
 
@@ -234,6 +245,7 @@ export type ResolversTypes = ResolversObject<{
   UpdateAvatarInput: UpdateAvatarInput;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   DeleteAvatarInput: DeleteAvatarInput;
+  SelectAvatarInput: SelectAvatarInput;
   AvatarComponentMetaInput: AvatarComponentMetaInput;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   AvatarMeta: ResolverTypeWrapper<AvatarMeta>;
@@ -257,6 +269,7 @@ export type ResolversParentTypes = ResolversObject<{
   UpdateAvatarInput: UpdateAvatarInput;
   ID: Scalars['ID'];
   DeleteAvatarInput: DeleteAvatarInput;
+  SelectAvatarInput: SelectAvatarInput;
   AvatarComponentMetaInput: AvatarComponentMetaInput;
   Int: Scalars['Int'];
   AvatarMeta: AvatarMeta;
@@ -280,6 +293,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createAvatar?: Resolver<ResolversTypes['AvatarMeta'], ParentType, ContextType, RequireFields<MutationCreateAvatarArgs, 'input'>>;
   updateAvatar?: Resolver<ResolversTypes['AvatarMeta'], ParentType, ContextType, RequireFields<MutationUpdateAvatarArgs, 'input'>>;
   deleteAvatar?: Resolver<ResolversTypes['AvatarMeta'], ParentType, ContextType, RequireFields<MutationDeleteAvatarArgs, 'input'>>;
+  selectAvatar?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSelectAvatarArgs, 'input'>>;
 }>;
 
 export type AvatarMetaResolvers<ContextType = any, ParentType extends ResolversParentTypes['AvatarMeta'] = ResolversParentTypes['AvatarMeta']> = ResolversObject<{

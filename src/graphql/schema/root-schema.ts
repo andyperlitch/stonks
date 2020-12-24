@@ -20,6 +20,7 @@ export const typeDefs = gql`
     createAvatar(input: CreateAvatarInput!): AvatarMeta!
     updateAvatar(input: UpdateAvatarInput!): AvatarMeta!
     deleteAvatar(input: DeleteAvatarInput!): AvatarMeta!
+    selectAvatar(input: SelectAvatarInput!): User!
   }
 
   input CreateAvatarInput {
@@ -44,6 +45,13 @@ export const typeDefs = gql`
   input DeleteAvatarInput {
     """
     The unique id of this avatar instance
+    """
+    id: ID!
+  }
+
+  input SelectAvatarInput {
+    """
+    The unique id of the avatar to select
     """
     id: ID!
   }

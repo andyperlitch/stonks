@@ -5,6 +5,7 @@ const ErrorCodes = {
   AVATAR_NOT_FOUND: 'Avatar not found',
   AVATAR_UPDATE_FAILED: 'Failed to update avatar',
   AVATAR_DELETE_FAILED: 'Failed to delete avatar',
+  AVATAR_SELECT_FAILED: 'Failed to select avatar',
 }
 
 type ErrorCode = keyof typeof ErrorCodes

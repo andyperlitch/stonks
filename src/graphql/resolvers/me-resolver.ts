@@ -1,4 +1,5 @@
 import { QueryResolvers } from '../../types/graphql'
+import { fromUser } from './common/db-to-gql'
 
 /**
  * Fetches data of current user
@@ -11,14 +12,7 @@ export const meResolver: QueryResolvers['me'] = async (
   const { user } = context
 
   if (user) {
-    return {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-      googleId: user.googleId,
-      thumbnail: user.thumbnail,
-      isAuthenticated: true,
-    }
+    return fromUser(user)
   }
   return {
     isAuthenticated: false,

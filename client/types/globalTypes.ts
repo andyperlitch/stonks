@@ -24,6 +24,10 @@ export interface DeleteAvatarInput {
   id: string;
 }
 
+export interface SelectAvatarInput {
+  id: string;
+}
+
 export interface UpdateAvatarInput {
   id: string;
   name?: string | null;

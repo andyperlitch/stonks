@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm'
 import { User } from './User'
 
 export interface AvatarComponent {
@@ -19,7 +26,7 @@ export interface AvatarComponent {
 @Entity()
 export class Avatar {
   @PrimaryGeneratedColumn('uuid')
-  id: number
+  id: string
 
   @ManyToOne((type) => User, (user) => user.avatars)
   user: User
@@ -29,4 +36,10 @@ export class Avatar {
 
   @Column('json')
   components: AvatarComponent[]
+
+  @CreateDateColumn()
+  createtAt: Date
+
+  @UpdateDateColumn()
+  lastModified: Date
 }

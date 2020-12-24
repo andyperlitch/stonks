@@ -12,6 +12,7 @@ const GET_USER_INFO = gql`
       googleId
       thumbnail
       isAuthenticated
+      currentAvatar
     }
   }
 `
@@ -23,6 +24,7 @@ export interface AuthContextType {
   email?: string | null
   username?: string | null
   thumbnail?: string | null
+  currentAvatar?: string | null
 }
 
 export const authContext = React.createContext<AuthContextType>({
@@ -32,6 +34,7 @@ export const authContext = React.createContext<AuthContextType>({
   email: '',
   username: '',
   thumbnail: '',
+  currentAvatar: '',
 })
 
 export const AuthProvider = ({ children }: any) => {

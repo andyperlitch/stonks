@@ -17,7 +17,9 @@ export const updateAvatarResolver: MutationResolvers<
   isAuthenticated,
   async (root, { input }, { user }): Promise<Avatar> => {
     const avatarRepo = getRepository(Avatar)
-    const avatarToUpdate = await avatarRepo.findOne(input.id)
+    const avatarToUpdate = await avatarRepo.findOne(input.id, {
+      relations: ['user'],
+    })
 
     if (!avatarToUpdate) {
       throw createError('AVATAR_NOT_FOUND')

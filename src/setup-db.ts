@@ -10,5 +10,6 @@ export async function setupDB() {
   )
   if (process.env.NODE_ENV !== 'production') {
     await dbConnection.synchronize()
+    console.log('Database schema synced')
   }
 }
