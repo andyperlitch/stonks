@@ -1,3 +1,4 @@
+import { SKIN_DEFAULTS } from './../consts/avatar-defaults'
 import { AvatarComponent } from './../entity/Avatar'
 import { getAvatarTemplateData } from './getAvatarTemplateData'
 
@@ -12,6 +13,34 @@ const getRandomItem = (items: any[]) => {
 
 const getRandomInteger = ([min, max]: [number, number]) => {
   return Math.round(Math.random() * (max - min)) + min
+}
+
+/**
+ * Given a part type (such as "skin" or "eyes"), returns an object with
+ * color adjustment properties (`hue`,`saturation`,`brightness`,`contrast`).
+ * @param type The type of the part for which to generate the random color
+ */
+const getRandomPartColorForType = (
+  type: string,
+): {
+  hue: number
+  saturation: number
+  lightness: number
+  contrast: number
+} => {
+  switch (type) {
+    case 'skin': {
+      return getRandomItem(SKIN_DEFAULTS)
+    }
+    default: {
+      return {
+        hue: getRandomInteger([-180, 180]),
+        saturation: getRandomInteger([0, 200]),
+        lightness: getRandomInteger([0, 200]),
+        contrast: getRandomInteger([0, 200]),
+      }
+    }
+  }
 }
 
 export async function generateRandomAvatarComponents(): Promise<
@@ -38,11 +67,10 @@ export async function generateRandomAvatarComponents(): Promise<
     [] as PartMeta[],
   )
   return partsMeta.map((pt) => ({
+    // e.g. "avg"
     optionId: getRandomItem(pt.partIds),
+    // e.g. "skin"
     type: pt.partType,
-    hue: getRandomInteger([-180, 180]),
-    saturation: getRandomInteger([0, 200]),
-    lightness: getRandomInteger([0, 200]),
-    contrast: getRandomInteger([0, 200]),
+    ...getRandomPartColorForType(pt.partType),
   }))
 }
