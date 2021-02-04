@@ -20,12 +20,12 @@
 [X] "create avatar" mutation
 [X] "update avatar" mutation
 [X] "delete avatar" mutation
-[ ] "select avatar" mutation
+[X] "select avatar" mutation
 [X] avatars page with "new" button
-[ ] render profile info in nav
-[ ] cycle through animations
 [ ] skin color choice screen
 [ ] eye color choice screen
+[ ] render profile info in nav
+[ ] cycle through animations
 
 ## Nice-to-haves
 
