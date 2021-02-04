@@ -7,6 +7,16 @@
 // GraphQL query operation: GetAvatarTemplate
 // ====================================================
 
+export interface GetAvatarTemplate_avatarTemplate_skinColors {
+  __typename: "AvatarColorChoice";
+  id: string;
+  previewColor: string;
+  hue: number;
+  saturation: number;
+  lightness: number;
+  contrast: number;
+}
+
 export interface GetAvatarTemplate_avatarTemplate_frames_coordinates {
   __typename: "Box";
   x: number;
@@ -30,6 +40,7 @@ export interface GetAvatarTemplate_avatarTemplate_frames {
 export interface GetAvatarTemplate_avatarTemplate {
   __typename: "AvatarTemplate";
   imageUrl: string;
+  skinColors: GetAvatarTemplate_avatarTemplate_skinColors[];
   frames: GetAvatarTemplate_avatarTemplate_frames[];
 }
 

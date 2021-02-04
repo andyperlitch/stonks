@@ -4,6 +4,7 @@ import { createUseStyles } from 'react-jss'
 import { Avatar } from '../pages/EditAvatar/types'
 import { AvatarPreview } from './AvatarPreview'
 import { avatarComponentChanged } from '../pages/EditAvatar/actions'
+import useAvatarTemplate from '../avatar/useAvatarTemplate'
 const useStyles = createUseStyles({
   root: {
     display: 'flex',
@@ -20,7 +21,32 @@ const useStyles = createUseStyles({
     display: 'flex',
     flexDirection: 'column',
   },
+  color: {
+    width: '50px',
+    height: '50px',
+    borderRadius: '50%',
+    border: '2px solid white',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+  },
+  colorChoices: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
 })
+
+const onChooseColor = (
+  dispatch: any,
+  type: string,
+  componentChanges: { [attr: string]: any },
+  optionId?: string,
+) => () =>
+  dispatch(
+    avatarComponentChanged({
+      type,
+      optionId,
+      ...componentChanges,
+    }),
+  )
 
 const onComponentChange = (
   dispatch: any,
@@ -45,6 +71,7 @@ export const AvatarEditSkin = ({
 }) => {
   const type = 'skin'
   const classes = useStyles()
+  const { skinColors } = useAvatarTemplate()
   const skinComponent = avatar.components.find((c) => c.type === type)
   const optionId = skinComponent?.optionId
   const onSaturationChange = useCallback(
@@ -63,14 +90,23 @@ export const AvatarEditSkin = ({
     onComponentChange(dispatch, type, 'contrast', optionId),
     [dispatch, optionId],
   )
-  // hue: getRandomInteger([-180, 180]),
-  // saturation: getRandomInteger([0, 200]),
-  // lightness: getRandomInteger([0, 200]),
-  // contrast: getRandomInteger([0, 200]),
-  console.log(`avatar`, avatar)
+
   return (
     <div className={classes.root}>
       <AvatarPreview avatar={avatar} multiplier={10} />
+      <div className={classes.colorChoices}>
+        {skinColors?.map((color) => {
+          return (
+            <div
+              key={color.id}
+              title={color.id}
+              className={classes.color}
+              onClick={onChooseColor(dispatch, type, color, optionId)}
+              style={{ backgroundColor: color.previewColor }}
+            ></div>
+          )
+        })}
+      </div>
 
       <IonList className={classes.sliderList}>
         <IonItem className={classes.item}>
@@ -114,6 +150,7 @@ export const AvatarEditSkin = ({
           />
         </IonItem>
       </IonList>
+      <pre>{JSON.stringify(skinComponent, null, 2)}</pre>
     </div>
   )
 }

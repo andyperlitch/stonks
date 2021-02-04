@@ -7,6 +7,14 @@ const GET_AVATAR_TEMPLATE = gql`
   query GetAvatarTemplate {
     avatarTemplate {
       imageUrl
+      skinColors {
+        id
+        previewColor
+        hue
+        saturation
+        lightness
+        contrast
+      }
       frames {
         index
         animationName
@@ -38,6 +46,7 @@ const useAvatarTemplate = () => {
   return {
     image: avatarImage,
     frames: data?.avatarTemplate.frames,
+    skinColors: data?.avatarTemplate.skinColors,
     loading,
     error,
   }

@@ -17,7 +17,7 @@ const getRandomInteger = ([min, max]: [number, number]) => {
 
 /**
  * Given a part type (such as "skin" or "eyes"), returns an object with
- * color adjustment properties (`hue`,`saturation`,`brightness`,`contrast`).
+ * color adjustment properties (`hue`,`saturation`,`lightness`,`contrast`).
  * @param type The type of the part for which to generate the random color
  */
 const getRandomPartColorForType = (
@@ -27,6 +27,7 @@ const getRandomPartColorForType = (
   saturation: number
   lightness: number
   contrast: number
+  previewColor: string
 } => {
   switch (type) {
     case 'skin': {
@@ -34,6 +35,7 @@ const getRandomPartColorForType = (
     }
     default: {
       return {
+        previewColor: '',
         hue: getRandomInteger([-180, 180]),
         saturation: getRandomInteger([0, 200]),
         lightness: getRandomInteger([0, 200]),

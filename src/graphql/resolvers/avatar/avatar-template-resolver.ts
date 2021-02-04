@@ -1,3 +1,4 @@
+import { SKIN_DEFAULTS } from './../../../consts/avatar-defaults'
 import { getAvatarTemplateData } from '../../../utils/getAvatarTemplateData'
 import { GraphQLContext } from '../../../types/graphql'
 import {
@@ -45,5 +46,6 @@ export const avatarTemplateResolver: QueryResolvers<
   return {
     imageUrl: '/assets/avatar.png',
     frames,
+    skinColors: SKIN_DEFAULTS,
   }
 }

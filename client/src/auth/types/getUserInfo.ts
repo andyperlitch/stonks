@@ -15,6 +15,10 @@ export interface GetUserInfo_me {
   googleId: string | null;
   thumbnail: string | null;
   isAuthenticated: boolean;
+  /**
+   * The id of the current user's selected avatar
+   */
+  currentAvatar: string | null;
 }
 
 export interface GetUserInfo {

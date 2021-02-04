@@ -141,6 +141,16 @@ export const typeDefs = gql`
   type AvatarTemplate {
     imageUrl: String!
     frames: [AvatarTemplateFrame!]!
+    skinColors: [AvatarColorChoice!]!
+  }
+
+  type AvatarColorChoice {
+    id: String!
+    previewColor: String!
+    hue: Int!
+    saturation: Int!
+    lightness: Int!
+    contrast: Int!
   }
 
   type AvatarTemplateFrame {
