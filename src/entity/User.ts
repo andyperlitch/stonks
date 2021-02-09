@@ -1,11 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  Index,
-  OneToMany,
-} from 'typeorm'
-import { Avatar } from './Avatar'
+import { Entity, PrimaryGeneratedColumn, Column, Index } from 'typeorm'
 
 @Entity()
 export class User {
@@ -24,10 +17,4 @@ export class User {
 
   @Column()
   thumbnail: string
-
-  @Column({ nullable: true })
-  currentAvatar: string
-
-  @OneToMany((type) => Avatar, (avatar) => avatar.user)
-  avatars: Promise<Avatar[]>
 }

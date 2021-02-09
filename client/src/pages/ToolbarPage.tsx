@@ -17,13 +17,13 @@ export const ToolbarPage = ({ children }: { children: ReactNode }) => {
           <IonButtons slot="start">
             <IonMenuButton></IonMenuButton>
           </IonButtons>
-          <IonTitle>VCRPG</IonTitle>
+          <IonTitle>STONKS</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">VCRPG</IonTitle>
+            <IonTitle size="large">STONKS</IonTitle>
           </IonToolbar>
         </IonHeader>
         {children}

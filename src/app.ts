@@ -27,12 +27,6 @@ export async function initApp() {
   // setup graphql server
   setupGraphql(app)
 
-  // Get character data
-  app.get('/avatar.json', (req, res) => {
-    const avatarJson = readFileSync('./artwork/avatar.json', 'utf8')
-    res.json(JSON.parse(avatarJson))
-  })
-
   // Auth routes
   app.use('/auth', authRoutes)
 

@@ -1,4 +1,4 @@
-# VCRPG Client app
+# Stonks Client app
 
 ## Generating GraphQL Types
 

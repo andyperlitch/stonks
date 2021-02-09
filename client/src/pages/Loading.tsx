@@ -14,7 +14,7 @@ export const Loading = () => {
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">VCRPG</IonTitle>
+            <IonTitle size="large">STONKS!</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonLoading isOpen />

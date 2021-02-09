@@ -1,6 +1,6 @@
 export const SKIN_DEFAULTS = [
   {
-    id: 'GOLD_LIGHTER',
+    variantId: 'GOLD_LIGHTER',
     previewColor: '#fff9d2',
     hue: 10,
     saturation: 108,
@@ -8,7 +8,7 @@ export const SKIN_DEFAULTS = [
     contrast: 41,
   },
   {
-    id: 'GOLD_LIGHT',
+    variantId: 'GOLD_LIGHT',
     previewColor: '#fff3b1',
     hue: 2,
     saturation: 145,
@@ -16,7 +16,7 @@ export const SKIN_DEFAULTS = [
     contrast: 65,
   },
   {
-    id: 'GOLD',
+    variantId: 'GOLD',
     previewColor: '#ffd97e',
     hue: 6,
     saturation: 167,
@@ -24,7 +24,7 @@ export const SKIN_DEFAULTS = [
     contrast: 86,
   },
   {
-    id: 'GOLD_DARK',
+    variantId: 'GOLD_DARK',
     previewColor: '#fbc64f',
     hue: 6,
     saturation: 182,
@@ -32,7 +32,7 @@ export const SKIN_DEFAULTS = [
     contrast: 121,
   },
   {
-    id: 'BEIGE_LIGHTER',
+    variantId: 'BEIGE_LIGHTER',
     previewColor: '#ffdad0',
     hue: -26,
     saturation: 114,
@@ -40,7 +40,7 @@ export const SKIN_DEFAULTS = [
     contrast: 41,
   },
   {
-    id: 'BEIGE_LIGHT',
+    variantId: 'BEIGE_LIGHT',
     previewColor: '#ffd1ce',
     hue: -34,
     saturation: 168,
@@ -48,7 +48,7 @@ export const SKIN_DEFAULTS = [
     contrast: 52,
   },
   {
-    id: 'BEIGE',
+    variantId: 'BEIGE',
     previewColor: '#f9b3ad',
     hue: -32,
     saturation: 100,
@@ -56,7 +56,7 @@ export const SKIN_DEFAULTS = [
     contrast: 112,
   },
   {
-    id: 'BROWN_LIGHTER',
+    variantId: 'BROWN_LIGHTER',
     previewColor: '#e5ab75',
     hue: 0,
     saturation: 124,
@@ -64,7 +64,7 @@ export const SKIN_DEFAULTS = [
     contrast: 109,
   },
   {
-    id: 'BROWN_LIGHT',
+    variantId: 'BROWN_LIGHT',
     previewColor: '#c88c52',
     hue: 0,
     saturation: 157,
@@ -72,7 +72,7 @@ export const SKIN_DEFAULTS = [
     contrast: 99,
   },
   {
-    id: 'BROWN',
+    variantId: 'BROWN',
     previewColor: '#976c40',
     hue: 0,
     saturation: 157,
@@ -80,7 +80,7 @@ export const SKIN_DEFAULTS = [
     contrast: 104,
   },
   {
-    id: 'BURGUNDY_LIGHT',
+    variantId: 'BURGUNDY_LIGHT',
     previewColor: '#ab706a',
     hue: -32,
     saturation: 183,
@@ -88,7 +88,7 @@ export const SKIN_DEFAULTS = [
     contrast: 108,
   },
   {
-    id: 'BURGUNDY',
+    variantId: 'BURGUNDY',
     previewColor: '#7d5248',
     hue: -26,
     saturation: 164,
@@ -96,7 +96,7 @@ export const SKIN_DEFAULTS = [
     contrast: 101,
   },
   {
-    id: 'BLACK_LIGHT',
+    variantId: 'BLACK_LIGHT',
     previewColor: '#402726',
     hue: -32,
     saturation: 173,
@@ -104,7 +104,7 @@ export const SKIN_DEFAULTS = [
     contrast: 91,
   },
   {
-    id: 'BLACK_DARKER',
+    variantId: 'BLACK_DARKER',
     previewColor: '#170f0e',
     hue: -32,
     saturation: 157,

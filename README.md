@@ -1,4 +1,4 @@
-# VCRPG Backend Server
+# Stonks Backend Server
 
 ## Adding to GraphQL
 

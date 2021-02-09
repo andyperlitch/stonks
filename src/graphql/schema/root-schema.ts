@@ -56,6 +56,9 @@ export const typeDefs = gql`
     id: ID!
   }
 
+  """
+  This should mostly be in sync with AvatarComponentMeta below
+  """
   input AvatarComponentMetaInput {
     """
     The id of the option being used for the given component type
@@ -81,6 +84,10 @@ export const typeDefs = gql`
     The contrast adjustment from the original component. Will be between -100 and 100
     """
     contrast: Int!
+    """
+    The id of the variant of the component, as in skin color:
+    """
+    variantId: String
   }
 
   type AvatarMeta {
@@ -123,6 +130,10 @@ export const typeDefs = gql`
     The contrast adjustment from the original component. Will be between -100 and 100
     """
     contrast: Int!
+    """
+    The id of the variant of the component, as in skin color:
+    """
+    variantId: String
   }
 
   type User {

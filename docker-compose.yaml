@@ -1,8 +1,8 @@
 version: '3'
 services:
-  vcrpg_redis:
+  stonks_redis:
     image: redis:alpine
-    hostname: vcrpg_redis
+    hostname: stonks_redis
     command: redis-server --requirepass yourenotwrongyourejustanasshole
     ports:
       - '6379:6379'
@@ -10,22 +10,22 @@ services:
       - $PWD/.redis-data:/var/lib/redis
     environment:
       - REDIS_REPLICATION_MODE=master
-  vcrpg_postgres:
+  stonks_postgres:
     image: postgres
-    hostname: vcrpg_postgres
+    hostname: stonks_postgres
     volumes:
       - $PWD/.postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: itreallytiedtheroomtogether
       POSTGRES_USER: localdev
-      POSTGRES_DB: vcrpg
+      POSTGRES_DB: stonks
     ports:
       - '5432:5432'
 
   adminer:
     image: adminer
-    hostname: vcrpg_adminer
+    hostname: stonks_adminer
     ports:
       - '8080:8080'
     depends_on:
-      - vcrpg_postgres
+      - stonks_postgres

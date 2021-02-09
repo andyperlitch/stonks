@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useCallback, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
 import { createUseStyles } from 'react-jss'
 import {
@@ -20,6 +20,7 @@ import {
 } from 'ionicons/icons'
 import { ToolbarPage } from '../ToolbarPage'
 import { useFetchAvatars } from '../../avatar/useFetchAvatars'
+import { useUpdateAvatar } from '../../avatar/useUpdateAvatar'
 import { routes, buildUrl } from '../../routes'
 
 import { AvatarEditInfo } from '../../components/AvatarEditInfo'
@@ -122,6 +123,22 @@ export const EditAvatar = () => {
   )
 
   const { error, loading, avatars } = useFetchAvatars()
+  const { updateAvatar } = useUpdateAvatar()
+
+  const onSave = useCallback(() => {
+    updateAvatar({
+      variables: {
+        input: {
+          id: avatar.id,
+          name: avatar.name,
+          components: avatar.components.map((c) => {
+            const { __typename, ...rest } = c
+            return rest
+          }),
+        },
+      },
+    })
+  }, [avatar, updateAvatar])
 
   const foundAvatar = avatars.find((a) => a.id === avatarId)
 
@@ -163,6 +180,17 @@ export const EditAvatar = () => {
           TABS.filter((t) => t.id === detail).map((t) => (
             <t.component key={t.id} avatar={avatar} dispatch={dispatch} />
           ))}
+        <button
+          style={{
+            display: 'block',
+            margin: '0 auto',
+            width: '300px',
+            padding: '10px',
+          }}
+          onClick={onSave}
+        >
+          save
+        </button>
       </div>
     </ToolbarPage>
   )

@@ -8,7 +8,7 @@ const config = {
     username: 'localdev',
     // ensures that the inferred type is string, not string | undefined
     password: process.env.DB_PASSWORD || '',
-    database: 'vcrpg',
+    database: 'stonks',
     entities: ['src/entity/**/*.ts'],
     migrations: ['src/migration/**/*.ts'],
     subscribers: ['src/subscriber/**/*.ts'],
