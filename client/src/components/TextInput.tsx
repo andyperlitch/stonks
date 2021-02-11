@@ -21,6 +21,8 @@ const useStyles = createUseStyles({
     display: 'flex',
     flexDirection: 'column',
     marginBottom: '1em',
+    paddingLeft: '0',
+    paddingRight: '0',
   },
   label: {
     marginBottom: '0.5em',
