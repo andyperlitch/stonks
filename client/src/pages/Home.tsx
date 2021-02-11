@@ -1,12 +1,6 @@
 import React from 'react'
-import { ToolbarPage } from './ToolbarPage'
-import ExploreContainer from '../components/ExploreContainer'
-import './Home.css'
+import StartComponent from '../components/StartComponent'
 
 export const Home = () => {
-  return (
-    <ToolbarPage>
-      <ExploreContainer />
-    </ToolbarPage>
-  )
+  return <StartComponent />
 }

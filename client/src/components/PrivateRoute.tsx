@@ -17,7 +17,14 @@ export const PrivateRoute = ({ children, ...rest }: any) => {
           if (auth.isAuthenticated) {
             return children
           }
-          return <Redirect to={routes.LOGIN} />
+          return (
+            <Redirect
+              to={{
+                pathname: routes.LOGIN,
+                search: `?url=${encodeURIComponent(rest.path)}`,
+              }}
+            />
+          )
         }
       }
     />

@@ -9,7 +9,7 @@ import { Menu } from './components/Menu'
 /* Pages */
 import { Home } from './pages/Home'
 import { Login } from './pages/Login'
-import { Avatars } from './pages/Avatars'
+import { NewGame } from './pages/NewGame'
 import { PrivateRoute } from './components/PrivateRoute'
 
 /* Routes */
@@ -37,7 +37,6 @@ import './theme/variables.css'
 /* Providers */
 import { AuthProvider } from './auth/AuthProvider'
 import { NetworkProvider } from './network/NetworkProvider'
-import { EditAvatar } from './pages/EditAvatar/EditAvatar'
 import { Redirect, BrowserRouter as Router, Route } from 'react-router-dom'
 
 /* Set up theme */
@@ -53,14 +52,8 @@ const App = () => {
               <Menu />
               <IonRouterOutlet id="content" animation={iosTransitionAnimation}>
                 <Route exact path={routes.HOME} render={() => <Home />} />
-                <PrivateRoute exact path={routes.AVATARS}>
-                  <Avatars />
-                </PrivateRoute>
-                <PrivateRoute path={routes.AVATAR_EDIT}>
-                  <EditAvatar />
-                </PrivateRoute>
-                <PrivateRoute path={routes.AVATAR_EDIT_DETAIL}>
-                  <EditAvatar />
+                <PrivateRoute exact path={routes.NEW_GAME}>
+                  <NewGame />
                 </PrivateRoute>
                 <Route
                   exact

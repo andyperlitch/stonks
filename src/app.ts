@@ -1,5 +1,4 @@
 import express, { Response as ExResponse } from 'express'
-import { readFileSync } from 'fs'
 import bodyParser from 'body-parser'
 
 import authRoutes from './routes/auth-routes'

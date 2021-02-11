@@ -2,7 +2,7 @@ export const rootStyles = {
   '@global': {
     ':root': {
       '--ion-background-color':
-        'linear-gradient(180deg, #253b40 0%, #000000 100%)', //background color of the app
+        'linear-gradient(180deg, rgba(34,6,50,1) 0%, rgba(33,9,89,1) 82%, rgba(30,28,112,1) 100%)', //background color of the app
       '--ion-color-primary': '#3962c0',
       '--ion-color-primary-rgb': '57,98,192',
       '--ion-color-primary-contrast': '#ffffff',
@@ -65,7 +65,7 @@ export const rootStyles = {
       '--ion-color-light-contrast-rgb': '0,0,0',
       '--ion-color-light-shade': '#d7d8da',
       '--ion-color-light-tint': '#f5f6f9',
-      '--ion-font-family': "'Poppins', sans-serif", //Font-family so don't have to import everytime
+      '--ion-font-family': "'Courier New', 'Poppins', sans-serif", //Font-family so don't have to import everytime
       '--placeholder-color': 'white',
       '--placeholder-opacity': '1',
     },

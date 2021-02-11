@@ -8,6 +8,5 @@ export function fromUser(user: DBUser): GqlUser {
     googleId: user.googleId,
     thumbnail: user.thumbnail,
     isAuthenticated: true,
-    currentAvatar: user.currentAvatar,
   }
 }

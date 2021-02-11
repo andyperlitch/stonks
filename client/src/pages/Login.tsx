@@ -1,11 +1,5 @@
 import React from 'react'
-import { ToolbarPage } from './ToolbarPage'
-import {
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-} from '@ionic/react'
+
 import { createUseStyles } from 'react-jss'
 import { GoogleLoginButton } from 'react-social-login-buttons'
 
@@ -18,6 +12,7 @@ const useStyles = createUseStyles({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    height: '100%',
   },
   button: {
     maxWidth: '300px',
@@ -33,15 +28,9 @@ export const Login = () => {
   }
 
   return (
-    <ToolbarPage>
-      <IonCard>
-        <IonCardHeader>
-          <IonCardTitle className={classes.title}>Login</IonCardTitle>
-        </IonCardHeader>
-        <IonCardContent className={classes.loginContent}>
-          <GoogleLoginButton className={classes.button} onClick={googleLogin} />
-        </IonCardContent>
-      </IonCard>
-    </ToolbarPage>
+    <div className={classes.loginContent}>
+      <h1>Please log in!</h1>
+      <GoogleLoginButton className={classes.button} onClick={googleLogin} />
+    </div>
   )
 }

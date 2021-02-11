@@ -1,91 +1,11 @@
 import randomString from 'crypto-random-string'
 import { EventEmitter } from 'events'
 import * as types from '../types/game'
+import { Stonk } from './Stonk'
+import { Player } from './Player'
 
 const DEFAULT_BUYING_POWER = 1000000
 const MAX_PLAYER_COUNT = 50
-
-export class Player {
-  public name: string
-  public portfolio: types.PlayerPortfolio = {}
-  public buyingPower: number = 0 // in cents
-
-  public canBuy(stonk: Stonk, shares: number) {
-    return shares * stonk.price < this.buyingPower
-  }
-  public buy(stonk: Stonk, shares: number = 1) {
-    this.buyingPower -= shares * stonk.price
-    this.portfolio[stonk.ticker] = {
-      ticker: stonk.ticker,
-      shares: (this.portfolio[stonk.ticker]?.shares || 0) + shares,
-    }
-  }
-  public canSell(stonk: Stonk, shares: number) {
-    return (this.portfolio[stonk.ticker]?.shares || 0) >= shares
-  }
-  public sell(stonk: Stonk, shares: number = 1) {
-    this.buyingPower += shares * stonk.price
-    this.portfolio[stonk.ticker] = {
-      ticker: stonk.ticker,
-      shares: (this.portfolio[stonk.ticker]?.shares || 0) - shares,
-    }
-  }
-  public toJSON(): Pick<types.Player, 'name' | 'portfolio' | 'buyingPower'> {
-    return {
-      name: this.name,
-      portfolio: this.portfolio,
-      buyingPower: this.buyingPower,
-    }
-  }
-  constructor({ name, buyingPower }: { name: string; buyingPower: number }) {
-    this.name = name
-    this.buyingPower = buyingPower
-  }
-}
-
-export class Stonk {
-  /**
-   * How much the stock price changes each time a single stock is bought or sold
-   */
-  public volatility = 0.08
-
-  /**
-   * Number of shares outstanding
-   */
-  public outstanding = 1000
-
-  /**
-   * The share price, in cents
-   */
-  public price = 100
-
-  public get marketCap() {
-    return this.outstanding * this.price
-  }
-
-  /**
-   * Changes the price based on a buy event
-   */
-  public buy(quantity: number) {
-    this.price = this.price + this.volatility * quantity
-  }
-
-  /**
-   * Changes the price based on a sell event
-   */
-  public sell(quantity: number) {
-    this.price = this.price - this.volatility * quantity
-  }
-
-  public toJSON(): types.Stonk {
-    return {
-      price: this.price,
-      outstanding: this.outstanding,
-    }
-  }
-
-  constructor(public ticker: string) {}
-}
 
 export interface GameConfig {
   marketHoursDuration: number
