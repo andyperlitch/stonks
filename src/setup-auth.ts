@@ -1,4 +1,5 @@
 import passport from 'passport'
+import expressSession from 'express-session'
 import { getManager, getRepository } from 'typeorm'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import cookieSession from 'cookie-session'
@@ -37,12 +38,9 @@ export function setupAuth(app: Express) {
           const currentUser = await userRepo.findOne({ googleId: profile.id })
           if (currentUser) {
             // already have this user
-            // LOG:INFO
-            console.log('user is: ', currentUser)
             return done(undefined, currentUser)
           } else {
             // if not, create user in our db
-            console.log(`profile`, profile)
             const newUser = userRepo.create({
               googleId: profile.id,
               username: profile.displayName,
@@ -70,6 +68,7 @@ export function setupAuth(app: Express) {
       keys: [config.session.cookieKey],
     }),
   )
+  app.use(expressSession({ secret: config.session.cookieKey }))
 
   // initialize passport
   app.use(passport.initialize())

@@ -36,6 +36,7 @@ export class Stonk {
 
   public toJSON(): types.Stonk {
     return {
+      ticker: this.ticker,
       price: this.price,
       outstanding: this.outstanding,
     }

@@ -1,9 +1,12 @@
 import { IonButton } from '@ionic/react'
-import React, { useState } from 'react'
-// import { useAsyncCallback } from 'react-async-hook'
+import React, { useCallback, useState } from 'react'
 import { createUseStyles } from 'react-jss'
+import { useHistory } from 'react-router'
 import RadioInput, { RadioInputOption } from '../components/RadioInput'
 import TextInput from '../components/TextInput'
+import { useNumberAsString } from '../hooks/useNumberAsString'
+import { useCreateGame } from '../network/createGame'
+import { buildUrl, routes } from '../routes'
 const useStyles = createUseStyles({
   container: {
     display: 'flex',
@@ -46,33 +49,34 @@ const DAYS_OPTIONS: RadioInputOption[] = [
   { value: '10', label: '10' },
 ]
 
-const useNumberAsStringState = (
-  defaultValue: number,
-): [number, (val: string) => void] => {
-  const [value, setValue] = useState(defaultValue)
-  return [value, (value: string) => setValue(parseFloat(value))]
-}
-
 export const NewGame = () => {
   const classes = useStyles()
-  const [gameName, setGameName] = useState('')
-  const [maxPlayers, setMaxPlayers] = useNumberAsStringState(8)
-  const [numStonks, setNumStonks] = useNumberAsStringState(6)
-  const [numberOfDays, setNumberOfDays] = useNumberAsStringState(5)
+  const history = useHistory()
+  const [maxPlayers, setMaxPlayers] = useNumberAsString(8)
+  const [numberOfStonks, setNumberOfStonks] = useNumberAsString(6)
+  const [numberOfDays, setNumberOfDays] = useNumberAsString(5)
   const [nickname, setNickname] = useState('')
 
-  // const onStartGame = useAsyncCallback()
+  const {
+    createGame,
+    loading: creatingGame,
+    error: createError,
+  } = useCreateGame()
+  const onStartGame = useCallback(() => {
+    createGame({
+      maxPlayers,
+      numberOfDays,
+      numberOfStonks,
+      nickname,
+    }).then((game) => {
+      history.push(buildUrl(routes.GAME, { id: game.id }))
+    })
+  }, [maxPlayers, numberOfDays, numberOfStonks, nickname, createGame, history])
 
   return (
     <div className={classes.container}>
       <form className={classes.form}>
         <h1>GAME GO BRRRRR</h1>
-        <TextInput
-          name="gameName"
-          value={gameName}
-          label="Game Name"
-          onChange={setGameName}
-        />
         <RadioInput
           variant="compact"
           name="maxPlayers"
@@ -84,12 +88,12 @@ export const NewGame = () => {
         />
         <RadioInput
           variant="compact"
-          name="numStonks"
-          value={numStonks.toString()}
+          name="numberOfStonks"
+          value={numberOfStonks.toString()}
           label="# of Stonks"
-          onChange={setNumStonks}
+          onChange={setNumberOfStonks}
           options={TICKER_OPTIONS}
-          optionIdPrefix="numStonks"
+          optionIdPrefix="numberOfStonks"
         />
         <RadioInput
           variant="compact"
@@ -106,7 +110,12 @@ export const NewGame = () => {
           label="Your Nickname"
           onChange={setNickname}
         />
-        <IonButton fill="solid" size="large" onClick={onStartGame}>
+        <IonButton
+          fill="solid"
+          size="large"
+          onClick={onStartGame}
+          disabled={creatingGame}
+        >
           Start Game
         </IonButton>
       </form>

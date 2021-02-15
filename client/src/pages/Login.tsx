@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { createUseStyles } from 'react-jss'
+import { useLocation } from 'react-router'
 import { GoogleLoginButton } from 'react-social-login-buttons'
 
 const useStyles = createUseStyles({
@@ -22,9 +23,10 @@ const useStyles = createUseStyles({
 
 export const Login = () => {
   const classes = useStyles()
+  const location = useLocation()
 
   const googleLogin: () => any = () => {
-    window.location.href = '/auth/google'
+    window.location.href = `/auth/google${location.search}`
   }
 
   return (

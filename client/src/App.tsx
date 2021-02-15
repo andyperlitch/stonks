@@ -10,6 +10,7 @@ import { Menu } from './components/Menu'
 import { Home } from './pages/Home'
 import { Login } from './pages/Login'
 import { NewGame } from './pages/NewGame'
+import { Game } from './pages/Game'
 import { PrivateRoute } from './components/PrivateRoute'
 
 /* Routes */
@@ -38,6 +39,7 @@ import './theme/variables.css'
 import { AuthProvider } from './auth/AuthProvider'
 import { NetworkProvider } from './network/NetworkProvider'
 import { Redirect, BrowserRouter as Router, Route } from 'react-router-dom'
+import JoinGame from './pages/JoinGame'
 
 /* Set up theme */
 const useTheme = createUseStyles(rootStyles)
@@ -55,6 +57,14 @@ const App = () => {
                 <PrivateRoute exact path={routes.NEW_GAME}>
                   <NewGame />
                 </PrivateRoute>
+                <PrivateRoute exact path={routes.GAME}>
+                  <Game />
+                </PrivateRoute>
+                <Route
+                  exact
+                  path={routes.JOIN_GAME}
+                  render={() => <JoinGame />}
+                />
                 <Route
                   exact
                   path={routes.ROOT}

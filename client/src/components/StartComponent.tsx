@@ -80,7 +80,12 @@ const StartComponent = () => {
         >
           Create Game
         </IonButton>
-        <IonButton className={classes.ctaButton} fill="outline" size="large">
+        <IonButton
+          className={classes.ctaButton}
+          fill="outline"
+          size="large"
+          href="/join-game"
+        >
           Join Game
         </IonButton>
       </div>

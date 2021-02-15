@@ -1,49 +1,60 @@
-import randomString from 'crypto-random-string'
-import { EventEmitter } from 'events'
 import * as types from '../types/game'
 import { Stonk } from './Stonk'
 import { Player } from './Player'
+import { generateStonk } from '../utils/generateStonk'
 
-const DEFAULT_BUYING_POWER = 1000000
 const MAX_PLAYER_COUNT = 50
+const DEFAULT_BUYING_POWER = 1000000
+const DEFAULT_MARKET_HOURS_DURATION = 30000
+const MAX_MARKET_HOURS_DURATION = 30000 * 60
+const DEFAULT_AFTER_HOURS_DURATION = 60000
+const MAX_AFTER_HOURS_DURATION = 60000 * 60
+const DEFAULT_NUMBER_OF_DAYS = 5
+const MAX_NUMBER_OF_DAYS = 15
+const DEFAULT_NUMBER_OF_STONKS = 6
+const MAX_NUMBER_OF_STONKS = 8
 
-export interface GameConfig {
-  marketHoursDuration: number
-  afterHoursDuration: number
-  numberOfDays: number
-  maxPlayers: number
-}
+type Players = { [playerName: string]: Player }
+type Stonks = { [ticker: string]: Stonk }
 
-export class Game extends EventEmitter {
-  /**
-   * The passcode for entering the game
-   */
-  public entryCode = randomString({ length: 4 }).toLowerCase()
+export class Game {
   /**
    * The collection of players in this game
    */
-  public players: { [playerName: string]: Player } = {}
-  public stonks: { [ticker: string]: Stonk } = {}
+  public players: Players = {}
+  public stonks: Stonks = {}
   public status: types.GameStatus = 'NOT_STARTED'
   /**
    * Even rounds are open hours, odd are after hours.
    * -1 means the game has stopped, or has not started.
    */
   public round = -1
-  private roundEndTime = Date.now()
-  private roundTimeoutId: NodeJS.Timeout
+  public roundEndTime: number
 
   /**
    * Config options for the game
    */
-  public config: GameConfig
+  public config: types.GameConfig
 
-  constructor(config?: Partial<GameConfig>) {
-    super()
+  constructor(config?: Partial<types.GameConfig>) {
     this.config = {
-      marketHoursDuration: 30000,
-      afterHoursDuration: 60000,
-      numberOfDays: 5,
+      marketHoursDuration: Math.min(
+        config?.marketHoursDuration || DEFAULT_MARKET_HOURS_DURATION,
+        MAX_MARKET_HOURS_DURATION,
+      ),
+      afterHoursDuration: Math.min(
+        config?.afterHoursDuration || DEFAULT_AFTER_HOURS_DURATION,
+        MAX_AFTER_HOURS_DURATION,
+      ),
+      defaultBuyingPower: DEFAULT_BUYING_POWER,
+      numberOfDays: Math.min(
+        config?.numberOfDays || DEFAULT_NUMBER_OF_DAYS,
+        MAX_NUMBER_OF_DAYS,
+      ),
+      numberOfStonks: Math.min(
+        config?.numberOfStonks || DEFAULT_NUMBER_OF_STONKS,
+        MAX_NUMBER_OF_STONKS,
+      ),
       maxPlayers: Math.min(
         config?.maxPlayers || MAX_PLAYER_COUNT,
         MAX_PLAYER_COUNT,
@@ -52,8 +63,17 @@ export class Game extends EventEmitter {
     }
   }
 
-  public get timeTilEndOfRound() {
-    return this.roundEndTime - Date.now()
+  initStonks() {
+    let { numberOfStonks } = this.config
+
+    while (numberOfStonks > 0) {
+      const stonk = generateStonk()
+      if (this.stonks[stonk.ticker]) {
+        continue
+      }
+      this.stonks[stonk.ticker] = stonk
+      --numberOfStonks
+    }
   }
 
   /**
@@ -63,6 +83,9 @@ export class Game extends EventEmitter {
     this.nextRound()
   }
 
+  /**
+   * Proceeds to the next round. Returns epoch of when the new round will end.
+   */
   nextRound() {
     if (this.round + 1 >= this.config.numberOfDays * 2) {
       this.stop('COMPLETE')
@@ -75,27 +98,27 @@ export class Game extends EventEmitter {
         ? this.config.marketHoursDuration
         : this.config.afterHoursDuration
     this.roundEndTime = Date.now() + timeTilNextRound
-    this.roundTimeoutId = setTimeout(() => {
-      this.nextRound()
-    }, timeTilNextRound)
+    return this.roundEndTime
   }
 
+  /**
+   * Stops the game, either by the owner cancelling or it completing all rounds
+   */
   stop(status: 'CANCELLED' | 'COMPLETE') {
-    if (this.roundTimeoutId) {
-      clearTimeout(this.roundTimeoutId)
-    }
     this.status = status
+    this.round = -1
   }
 
   getPlayer(playerName: string) {
     return this.players[playerName]
   }
 
-  addPlayer(playerName: string, buyingPower: number = DEFAULT_BUYING_POWER) {
+  addPlayer(playerName: string) {
     this.players[playerName] = new Player({
       name: playerName,
-      buyingPower,
+      buyingPower: this.config.defaultBuyingPower,
     })
+    return this.players[playerName]
   }
 
   getPlayerEquity(playerName: string): number {
@@ -129,11 +152,12 @@ export class Game extends EventEmitter {
     return true
   }
 
-  toJSON(): types.Game {
+  toJSON(): types.GameState {
     return {
       round: this.round,
       status: this.status,
-      timeTilEndOfRound: this.timeTilEndOfRound,
+      roundEndTime: this.roundEndTime,
+      config: this.config,
       players: Object.keys(this.players).reduce(
         (acc, p) => ({
           ...acc,
@@ -152,5 +176,28 @@ export class Game extends EventEmitter {
         {},
       ),
     }
+  }
+
+  static fromJSON(gameJson: types.GameState): Game {
+    const game = new Game(gameJson.config)
+
+    game.stonks = Object.values(gameJson.stonks).reduce((acc, s) => {
+      const stonk = (acc[s.ticker] = new Stonk(s.ticker))
+      stonk.price = s.price
+      stonk.outstanding = s.outstanding
+      return acc
+    }, {} as Stonks)
+
+    game.players = Object.values(gameJson.players).reduce((acc, p) => {
+      acc[p.name] = new Player(p)
+      return acc
+    }, {} as Players)
+
+    const { round, roundEndTime, status } = gameJson
+    game.round = round
+    game.roundEndTime = roundEndTime
+    game.status = status
+
+    return game
   }
 }
