@@ -114,7 +114,7 @@ export const NewGame = () => {
           fill="solid"
           size="large"
           onClick={onStartGame}
-          disabled={creatingGame}
+          disabled={creatingGame || !nickname}
         >
           Start Game
         </IonButton>

@@ -13,6 +13,9 @@ export const useCreateGame = () => {
       return fetch('/api/games', {
         method: 'POST',
         body: JSON.stringify(options),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
         .then((response) => response.json())
         .then((data) => {

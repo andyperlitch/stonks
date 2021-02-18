@@ -27,6 +27,10 @@ router.post(
 
     const options: NewGameBody = req.body
 
+    if (!options.nickname) {
+      throw new HttpError(400, `Username required`)
+    }
+
     const gameManager = await createGame({ options, user: req.user })
 
     res.json({
