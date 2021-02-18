@@ -10,24 +10,27 @@
 
 ## Bugs
 
-[ ] Weird callstack exceeded intermittently... probably auth-related, and auth bugs
+- [ ] layout not scrolling on home page (ionic-related)
+- [ ] "undefined" as a key in the users
 
 ## TODOs
 
-[X] move avatar template json to graphql
-[X] move avatar template json logic from client to server
-[X] create avatar db model
-[X] "create avatar" mutation
-[X] "update avatar" mutation
-[X] "delete avatar" mutation
-[X] "select avatar" mutation
-[X] avatars page with "new" button
-[ ] skin color choice screen
-[ ] eye color choice screen
-[ ] render profile info in nav
-[ ] cycle through animations
+- [ ] `JoinGame` page
+  - [ ] text area for nickname, text area for code
+  - [ ] submit button
+  - [ ] fetch call for joining a game
+  - [ ] error handling
+  - [ ] on success, go to `Game` page.
+- [ ] `Game` page
+  - [ ] new fetch call for retrieving game information
+  - [ ] show users, info about game
+  - [ ] open socket connection
+  - [ ] close socket connection when leaving page
+- [ ] Handle socket.io connections on server
+  - [ ] create a socket store
+- [ ]
 
 ## Nice-to-haves
 
-[ ] redis-based session storage
-[ ] better error handling/redirect when oauth fails
+- [ ] redis-based session storage
+- [ ] better error handling/redirect when oauth fails
