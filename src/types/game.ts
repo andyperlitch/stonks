@@ -50,6 +50,7 @@ export interface GameState {
   status: GameStatus
   players: GamePlayers
   stonks: GameStonks
+  owner: string
 }
 
 export interface GameHistoricalPoint {
@@ -68,4 +69,5 @@ export interface Game {
   players: GamePlayers
   stonks: GameStonks
   history: GameHistoricalPoint[]
+  owner: string
 }

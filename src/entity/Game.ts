@@ -17,4 +17,10 @@ export class Game {
    */
   @Column('json')
   game: GameJson
+
+  /**
+   * The map of user ids to nicknames
+   */
+  @Column('json')
+  users: { [userId: string]: string }
 }

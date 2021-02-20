@@ -1,7 +1,7 @@
-import { IonButton } from '@ionic/react'
 import React, { useCallback, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import { useHistory } from 'react-router'
+import Button from '../components/Button'
 import RadioInput, { RadioInputOption } from '../components/RadioInput'
 import TextInput from '../components/TextInput'
 import { useNumberAsString } from '../hooks/useNumberAsString'
@@ -110,14 +110,15 @@ export const NewGame = () => {
           label="Your Nickname"
           onChange={setNickname}
         />
-        <IonButton
+        <Button
           fill="solid"
-          size="large"
+          size="lg"
           onClick={onStartGame}
           disabled={creatingGame || !nickname}
+          type="button"
         >
           Start Game
-        </IonButton>
+        </Button>
       </form>
     </div>
   )

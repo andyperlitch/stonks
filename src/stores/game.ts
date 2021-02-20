@@ -17,5 +17,13 @@ export const createGame = async ({
 }
 
 export const getGame = async ({ id }: { id: string }) => {
-  return games.get(id)
+  if (games.get(id)) {
+    return games.get(id)
+  }
+  // check if its not a game in memory
+  try {
+    return await GameManager.hydrateGame({ gameId: id })
+  } catch (e) {
+    return null
+  }
 }

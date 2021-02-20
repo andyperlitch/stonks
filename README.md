@@ -28,7 +28,7 @@
   - [ ] close socket connection when leaving page
 - [ ] Handle socket.io connections on server
   - [ ] create a socket store
-- [ ]
+- [ ] Don't require login to join
 
 ## Nice-to-haves
 

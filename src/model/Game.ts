@@ -22,6 +22,7 @@ export class Game {
    * The collection of players in this game
    */
   public players: Players = {}
+  public owner: Player
   public stonks: Stonks = {}
   public status: types.GameStatus = 'NOT_STARTED'
   /**
@@ -113,11 +114,14 @@ export class Game {
     return this.players[playerName]
   }
 
-  addPlayer(playerName: string) {
+  addPlayer(playerName: string, isOwner = false) {
     this.players[playerName] = new Player({
       name: playerName,
       buyingPower: this.config.defaultBuyingPower,
     })
+    if (isOwner) {
+      this.owner = this.players[playerName]
+    }
     return this.players[playerName]
   }
 
@@ -154,6 +158,7 @@ export class Game {
 
   toJSON(): types.GameState {
     return {
+      owner: this.owner.name,
       round: this.round,
       status: this.status,
       roundEndTime: this.roundEndTime,

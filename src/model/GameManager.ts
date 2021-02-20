@@ -29,9 +29,9 @@ export default class GameManager {
    */
   public record: GameRecord
   /**
-   * Maps user ids to usernames
+   * Maps user ids to nicknames
    */
-  public users: Map<string, string> = new Map()
+  public users: { [userId: string]: string } = {}
 
   public history: types.GameHistoricalPoint[] = []
 
@@ -39,22 +39,13 @@ export default class GameManager {
 
   public async initGame({ options, user, nickname }: InitGameOptions) {
     this.gameState = new GameState(options)
+    this.gameState.initStonks()
     this.addUserPlayer({
       nickname,
       userId: user.id,
+      isOwner: true,
     })
     await this.save()
-  }
-
-  public async hydrateGame({ gameId }: { gameId: string }) {
-    const gameRepo = getRepository(GameRecord)
-    const record = await gameRepo.findOne(gameId)
-
-    if (!record) {
-      throw new Error(`Could not find game with id ${gameId}`)
-    }
-    this.record = record
-    this.gameState = GameState.fromJSON(record.game)
   }
 
   public async save() {
@@ -63,6 +54,7 @@ export default class GameManager {
       id: this.gameId,
       code: this.entryCode,
       game: this.gameToJSON(),
+      users: this.users,
     })
     this.record = await gameRepo.save(game)
     this.gameId = this.record.id
@@ -71,6 +63,7 @@ export default class GameManager {
   public gameToJSON(): types.Game {
     const state = this.gameState.toJSON()
     return {
+      owner: state.owner,
       status: state.status,
       round: state.round,
       roundEndTime: state.roundEndTime,
@@ -82,7 +75,7 @@ export default class GameManager {
   }
 
   public hasUser(userId: string): boolean {
-    return this.users.has(userId)
+    return Boolean(this.users[userId])
   }
 
   public checkCode(code: string): boolean {
@@ -92,17 +85,19 @@ export default class GameManager {
   public addUserPlayer({
     nickname,
     userId,
+    isOwner = false,
   }: {
     nickname: string
     userId: string
+    isOwner?: boolean
   }) {
     if (this.gameState.players[nickname]) {
       throw new Error(
         `Cannot add a player with the same nickname (${nickname})`,
       )
     }
-    this.gameState.addPlayer(nickname)
-    this.users.set(userId, nickname)
+    this.gameState.addPlayer(nickname, isOwner)
+    this.users[userId] = nickname
   }
 
   /**
@@ -123,5 +118,23 @@ export default class GameManager {
       }, {} as types.StonksHistoryPoint),
     }
     this.history.push(point)
+  }
+
+  public static async hydrateGame({
+    gameId,
+  }: {
+    gameId: string
+  }): Promise<GameManager> {
+    const gameRepo = getRepository(GameRecord)
+    const record = await gameRepo.findOne(gameId)
+
+    if (!record) {
+      throw new Error(`Could not find game with id ${gameId}`)
+    }
+    const gameManager = new GameManager()
+    gameManager.record = record
+    gameManager.gameState = GameState.fromJSON(record.game)
+    gameManager.users = record.users
+    return gameManager
   }
 }

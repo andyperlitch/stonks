@@ -40,12 +40,12 @@ const useCompactStyles = createUseStyles({
   optionsContainer: {
     display: 'flex',
     flexDirection: 'row',
-    borderLeft: '1px solid var(--ion-color-primary)',
+    borderLeft: '1px solid var(--color-primary)',
   },
   optionLabel: {
     display: 'block',
     padding: '0.5em 1em',
-    border: '1px solid var(--ion-color-primary)',
+    border: '1px solid var(--color-primary)',
     borderLeft: 'none',
     cursor: 'pointer',
     '&:hover': {

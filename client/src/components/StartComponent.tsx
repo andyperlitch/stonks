@@ -1,6 +1,6 @@
-import { IonButton } from '@ionic/react'
 import React from 'react'
 import { createUseStyles } from 'react-jss'
+import Button from './Button'
 
 const useStyles = createUseStyles({
   title: {
@@ -72,22 +72,22 @@ const StartComponent = () => {
         Just don't get caught being a bagholder!
       </strong>
       <div className={classes.buttons}>
-        <IonButton
+        <Button
           className={classes.ctaButton}
           fill="solid"
-          size="large"
+          size="lg"
           href="/new-game"
         >
           Create Game
-        </IonButton>
-        <IonButton
+        </Button>
+        <Button
           className={classes.ctaButton}
           fill="outline"
-          size="large"
+          size="lg"
           href="/join-game"
         >
           Join Game
-        </IonButton>
+        </Button>
       </div>
     </div>
   )

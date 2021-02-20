@@ -30,7 +30,7 @@ const useStyles = createUseStyles({
   input: {
     fontFamily: "'Courier New'",
     padding: '0.7em',
-    border: '1px solid var(--ion-color-primary)',
+    border: '1px solid var(--color-primary)',
     background: 'rgba(0,0,0,0.1)',
     flexGrow: '1',
   },
@@ -63,6 +63,7 @@ const TextInput = React.memo(
           name={name}
           onChange={handleChange}
           value={value}
+          autoComplete="off"
         />
       </fieldset>
     )

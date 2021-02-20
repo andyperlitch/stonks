@@ -1,4 +1,4 @@
-import { skip } from 'graphql-resolvers'
+import { skip } from 'lib-types/graphql-resolvers'
 import { AuthenticationError } from 'apollo-server'
 import { GraphQLContext } from './../../../types/graphql'
 

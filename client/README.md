@@ -19,3 +19,9 @@ not
 ```
   query getUserInfo {
 ```
+
+
+## TODO
+
+- [ ] Show login button instead of start game / join
+- [ ] 
