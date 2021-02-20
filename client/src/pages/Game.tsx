@@ -14,7 +14,7 @@ const useStyles = createUseStyles({
 export const Game = () => {
   const classes = useStyles()
   const { id } = useParams<{ id: string }>()
-  const { loading, game, error, nickname } = useGame(id)
+  const { loading, game, code, error, nickname } = useGame(id)
 
   const startGame = () => {
     console.log('start game!')
@@ -34,6 +34,7 @@ export const Game = () => {
         game={game}
         nickname={nickname as string}
         startGame={startGame}
+        code={code}
       />
     )
   }

@@ -37,6 +37,12 @@ const useStyles = createUseStyles(
       marginTop: '10px',
       width: '33%',
     },
+    codeBox: {
+      border: '1px solid var(--color-secondary)',
+      padding: '20px',
+      marginBottom: '20px',
+      textAlign: 'center',
+    },
   },
   { name: 'GameLobby' },
 )
@@ -51,14 +57,29 @@ export interface GameLobbyProps {
    */
   nickname: string
   /**
+   * The entry code of the game (only available if the user is the owner)
+   */
+  code: string | null
+  /**
    * The function to start the game
    */
   startGame: () => void
 }
-export const GameLobby = ({ nickname, game, startGame }: GameLobbyProps) => {
+export const GameLobby = ({
+  nickname,
+  game,
+  startGame,
+  code,
+}: GameLobbyProps) => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
+      {code && (
+        <div className={classes.codeBox}>
+          <h3>entry code:</h3>
+          <h2>{code}</h2>
+        </div>
+      )}
       {game.owner === nickname ? (
         <Button fill="solid" size="lg" onClick={startGame}>
           Start Game

@@ -11,6 +11,26 @@ interface InitGameOptions {
   nickname: string
 }
 
+const COMPLETE_STATUSES: types.GameStatus[] = ['CANCELLED', 'COMPLETE']
+
+const generateEntryCode = async (): Promise<string> => {
+  // generate a code
+  const code = randomString({ length: 4, type: 'distinguishable' })
+
+  // check if its a code for any other active game
+  const gameRepo = getRepository(GameRecord)
+  const existing = await gameRepo.find({
+    where: { completed: false, code },
+  })
+  if (existing.length) {
+    // TODO: protect against going too long
+    return generateEntryCode()
+  }
+
+  // otherwise return the generated code
+  return code
+}
+
 export default class GameManager {
   /**
    * The unique id of the game. This will be null until .save() is called for the first time.
@@ -19,7 +39,7 @@ export default class GameManager {
   /**
    * The passcode for entering the game
    */
-  public entryCode = randomString({ length: 4 }).toLowerCase()
+  public entryCode: string
   /**
    * The Game being managed
    */
@@ -45,6 +65,7 @@ export default class GameManager {
       userId: user.id,
       isOwner: true,
     })
+    this.entryCode = await generateEntryCode()
     await this.save()
   }
 
@@ -100,6 +121,10 @@ export default class GameManager {
     this.users[userId] = nickname
   }
 
+  public isCompleted() {
+    return COMPLETE_STATUSES.includes(this.gameState.status)
+  }
+
   /**
    * Creates a new GameHistoricalPoint and adds it to the history
    */
@@ -120,7 +145,7 @@ export default class GameManager {
     this.history.push(point)
   }
 
-  public static async hydrateGame({
+  public static async hydrateGameById({
     gameId,
   }: {
     gameId: string
@@ -135,6 +160,30 @@ export default class GameManager {
     gameManager.record = record
     gameManager.gameState = GameState.fromJSON(record.game)
     gameManager.users = record.users
+    gameManager.entryCode = record.code
+    return gameManager
+  }
+
+  public static async hydrateGameByCode({
+    code,
+  }: {
+    code: string
+  }): Promise<GameManager> {
+    const gameRepo = getRepository(GameRecord)
+    const record = await gameRepo.findOne({
+      where: {
+        code,
+      },
+    })
+
+    if (!record) {
+      throw new Error(`Could not find game with code ${code}`)
+    }
+    const gameManager = new GameManager()
+    gameManager.record = record
+    gameManager.gameState = GameState.fromJSON(record.game)
+    gameManager.users = record.users
+    gameManager.entryCode = record.code
     return gameManager
   }
 }

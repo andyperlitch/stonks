@@ -10,7 +10,7 @@ export const rootStyles = {
       '--color-primary-shade': '#3256a9',
       '--color-primary-tint': '#4d72c6',
 
-      '--color-secondary': '#3dc2ff',
+      '--color-secondary': '#e1c62d',
       '--color-secondary-rgb': '61,194,255',
       '--color-secondary-contrast': '#ffffff',
       '--color-secondary-contrast-rgb': '255,255,255',

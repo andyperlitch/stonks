@@ -8,6 +8,9 @@ const useStyles = createUseStyles(
     solid: {
       border: 'none',
       background: 'var(--color-primary)',
+      '& .disabled': {
+        opacity: '0.5',
+      },
     },
     outline: {
       border: '1px solid var(--color-primary)',
@@ -24,8 +27,8 @@ const useStyles = createUseStyles(
 
 export interface ButtonProps {
   children: ReactNode
-  fill: 'solid' | 'outline'
-  size: 'lg' | 'md' | 'sm' | 'xs'
+  fill?: 'solid' | 'outline'
+  size?: 'lg' | 'md' | 'sm' | 'xs'
   onClick?: () => void
   disabled?: boolean
   type?: 'submit' | 'button' | 'link'
@@ -34,8 +37,8 @@ export interface ButtonProps {
 }
 export const Button = ({
   children,
-  fill,
-  size,
+  fill = 'solid',
+  size = 'lg',
   disabled,
   type = 'button',
   onClick,
@@ -65,7 +68,7 @@ export const Button = ({
         className,
       )}
       disabled={disabled}
-      onClick={onClick}
+      onClick={disabled || !onClick ? () => {} : onClick}
     >
       {children}
     </button>

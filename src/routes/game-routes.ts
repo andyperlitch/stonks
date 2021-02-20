@@ -1,3 +1,4 @@
+import { getGameByCode } from './../stores/game'
 import { Router } from 'express'
 import HttpJsonError, { ErrorCode } from '../errors/HttpJsonError'
 import asyncHandler from '../utils/asyncHandler'
@@ -62,33 +63,36 @@ router.get(
         userId: user.id,
       })
     }
+    const game = gameManager.gameToJSON()
     res.json({
-      game: gameManager.gameToJSON(),
+      game,
       nickname: gameManager.users[user.id],
+      code:
+        gameManager.users[user.id] === game.owner
+          ? gameManager.entryCode
+          : undefined,
     })
   }),
 )
 
 router.post(
-  '/:id/join',
+  '/join',
   protectedRoute(),
   asyncHandler(async (req, res, next) => {
-    const gameId = req.params.id
     const { nickname, code }: JoinGameBody = req.body
     const user = req.user as User
 
-    const gameManager = await getGame({ id: gameId })
+    const gameManager = await getGameByCode({ code })
     if (!gameManager) {
-      throw new HttpJsonError(400, ErrorCode.GAME_NOT_FOUND, { gameId })
+      throw new HttpJsonError(400, ErrorCode.INVALID_GAME_CODE, { code })
     }
     if (gameManager.hasUser(user.id)) {
       throw new HttpJsonError(400, ErrorCode.USER_ALREADY_IN_GAME)
     }
-    if (gameManager.checkCode(code)) {
-      await gameManager.addUserPlayer({ nickname, userId: user.id })
-    }
+    gameManager.addUserPlayer({ nickname, userId: user.id })
+    await gameManager.save()
     res.json({
-      game: gameManager.gameToJSON(),
+      id: gameManager.gameId,
     })
   }),
 )

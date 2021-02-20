@@ -19,7 +19,7 @@ http://ionicframework.com/docs/theming/ */
   --color-primary-tint: #4c8dff;
 
   /** secondary **/
-  --color-secondary: #3dc2ff;
+  --color-secondary: #e1c62d;
   --color-secondary-rgb: 61, 194, 255;
   --color-secondary-contrast: #ffffff;
   --color-secondary-contrast-rgb: 255, 255, 255;
@@ -97,7 +97,7 @@ http://ionicframework.com/docs/theming/ */
     --color-primary-shade: #3a7be0;
     --color-primary-tint: #5598ff;
 
-    --color-secondary: #50c8ff;
+    --color-secondary: #e1c62d;
     --color-secondary-rgb: 80, 200, 255;
     --color-secondary-contrast: #ffffff;
     --color-secondary-contrast-rgb: 255, 255, 255;

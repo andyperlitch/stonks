@@ -6,6 +6,7 @@ export const useGame = (gameId: string) => {
   const [error, setError] = useState<Error | null>(null)
   const [game, setGame] = useState<Game | null>(null)
   const [nickname, setNickname] = useState<string | null>(null)
+  const [code, setCode] = useState<string | null>(null)
 
   useEffect(() => {
     setLoading(true)
@@ -15,9 +16,10 @@ export const useGame = (gameId: string) => {
         return result
       })
       .then((result) => result.json())
-      .then(({ game, nickname }) => {
+      .then(({ game, nickname, code }) => {
         setGame(game)
         setNickname(nickname)
+        setCode(code)
       })
       .catch((err) => setError(err))
       .finally(() => {
@@ -30,5 +32,6 @@ export const useGame = (gameId: string) => {
     error,
     game,
     nickname,
+    code,
   }
 }

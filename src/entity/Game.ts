@@ -1,5 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, Index } from 'typeorm'
-import { Game as GameJson } from './../types/game'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  Index,
+  BeforeInsert,
+} from 'typeorm'
+import { Game as GameJson, GameStatus } from './../types/game'
+
+// TODO: Move to a better spot, de-dup elsewhere
+const COMPLETE_STATUSES: GameStatus[] = ['CANCELLED', 'COMPLETE']
 
 @Entity()
 export class Game {
@@ -9,8 +18,19 @@ export class Game {
   /**
    * The entry code
    */
+  @Index()
   @Column()
   code: string
+
+  /**
+   * The last saved status of the game
+   */
+  @Index()
+  @Column({
+    type: 'bool',
+    default: false,
+  })
+  completed: boolean
 
   /**
    * The serialized game details
@@ -23,4 +43,12 @@ export class Game {
    */
   @Column('json')
   users: { [userId: string]: string }
+
+  /**
+   * Updates the status field
+   */
+  @BeforeInsert()
+  _updateStatus() {
+    this.completed = COMPLETE_STATUSES.includes(this.game.status)
+  }
 }
