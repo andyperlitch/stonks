@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { FormEvent, useCallback, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import { useHistory } from 'react-router'
 import Button from '../components/Button'
@@ -73,9 +73,17 @@ export const NewGame = () => {
     })
   }, [maxPlayers, numberOfDays, numberOfStonks, nickname, createGame, history])
 
+  const onSubmit = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault()
+      onStartGame()
+    },
+    [onStartGame],
+  )
+
   return (
     <div className={classes.container}>
-      <form className={classes.form}>
+      <form className={classes.form} onSubmit={onSubmit}>
         <h1>GAME GO BRRRRR</h1>
         <RadioInput
           variant="compact"

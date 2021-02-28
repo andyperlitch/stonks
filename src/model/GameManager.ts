@@ -1,3 +1,4 @@
+import { Socket, Server } from 'socket.io'
 import randomString from 'crypto-random-string'
 import { getRepository } from 'typeorm'
 import { User } from './../entity/User'
@@ -33,10 +34,6 @@ const generateEntryCode = async (): Promise<string> => {
 
 export default class GameManager {
   /**
-   * The unique id of the game. This will be null until .save() is called for the first time.
-   */
-  public gameId: string
-  /**
    * The passcode for entering the game
    */
   public entryCode: string
@@ -44,6 +41,14 @@ export default class GameManager {
    * The Game being managed
    */
   public gameState: GameState
+  /**
+   * Reference to the map which stores sockets by userId (session id)
+   */
+  public userIdToSocket: Map<string, Socket>
+  /**
+   * The io server object, for use when sending messages
+   */
+  public io: Server
   /**
    * The corresponding typeorm instance of the game
    */
@@ -53,9 +58,19 @@ export default class GameManager {
    */
   public users: { [userId: string]: string } = {}
 
+  public userSockets: { [nickname: string]: Socket } = {}
+
   public history: types.GameHistoricalPoint[] = []
 
-  constructor() {}
+  constructor() {
+    setInterval(() => {
+      if (this.io && this.gameId && !this.isCompleted()) {
+        this.io.to(this.gameId).emit('game:update', {
+          game: this.gameToJSON(),
+        })
+      }
+    }, 2000)
+  }
 
   public async initGame({ options, user, nickname }: InitGameOptions) {
     this.gameState = new GameState(options)
@@ -69,6 +84,10 @@ export default class GameManager {
     await this.save()
   }
 
+  public get gameId() {
+    return this.record?.id
+  }
+
   public async save() {
     const gameRepo = getRepository(GameRecord)
     const game = gameRepo.create({
@@ -78,7 +97,6 @@ export default class GameManager {
       users: this.users,
     })
     this.record = await gameRepo.save(game)
-    this.gameId = this.record.id
   }
 
   public gameToJSON(): types.Game {
@@ -119,10 +137,32 @@ export default class GameManager {
     }
     this.gameState.addPlayer(nickname, isOwner)
     this.users[userId] = nickname
+    const socket = this.userIdToSocket.get(userId)
+    if (socket) {
+      this.subscribeUserToGame(userId, socket)
+    }
   }
 
   public isCompleted() {
     return COMPLETE_STATUSES.includes(this.gameState.status)
+  }
+
+  public subscribeUserToGame(userId: string, socket: Socket) {
+    const nickname = this.users[userId]
+    if (!nickname) {
+      throw new Error(`User with id ${userId} not found in game ${this.gameId}`)
+    }
+    this.userSockets[nickname] = socket
+    socket.join(this.gameId)
+    console.log(`subscribing ${userId} to ${this.gameId}`)
+    this.emitGameUpdate()
+  }
+
+  public emitGameUpdate() {
+    this.io.to(this.gameId).emit('game:update', {
+      id: this.gameId,
+      game: this.gameToJSON(),
+    })
   }
 
   /**
@@ -147,14 +187,19 @@ export default class GameManager {
 
   public static async hydrateGameById({
     gameId,
+    record: _record,
   }: {
     gameId: string
+    record?: GameRecord
   }): Promise<GameManager> {
     const gameRepo = getRepository(GameRecord)
-    const record = await gameRepo.findOne(gameId)
+    let record: GameRecord = _record as GameRecord
 
-    if (!record) {
-      throw new Error(`Could not find game with id ${gameId}`)
+    if (!_record) {
+      record = (await gameRepo.findOne(gameId)) as GameRecord
+      if (!record) {
+        throw new Error(`Could not find game with id ${gameId}`)
+      }
     }
     const gameManager = new GameManager()
     gameManager.record = record

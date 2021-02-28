@@ -4,7 +4,9 @@ import { createUseStyles } from 'react-jss'
 
 const useStyles = createUseStyles(
   {
-    root: {},
+    root: {
+      color: 'white',
+    },
     solid: {
       border: 'none',
       background: 'var(--color-primary)',

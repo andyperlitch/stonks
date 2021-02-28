@@ -35,12 +35,12 @@ const App = () => {
             <PrivateRoute exact path={routes.NEW_GAME}>
               <NewGame />
             </PrivateRoute>
-            <PrivateRoute exact path={routes.GAME}>
+            <Route exact path={routes.GAME}>
               <Game />
-            </PrivateRoute>
-            <PrivateRoute exact path={routes.JOIN_GAME}>
+            </Route>
+            <Route exact path={routes.JOIN_GAME}>
               <JoinGame />
-            </PrivateRoute>
+            </Route>
             <Route
               exact
               path={routes.ROOT}

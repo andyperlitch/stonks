@@ -24,11 +24,8 @@ interface JoinGameBody {
  */
 router.post(
   '/',
+  protectedRoute(),
   asyncHandler(async (req, res) => {
-    if (!req.user) {
-      throw new HttpJsonError(403, ErrorCode.UNAUTHORIZED)
-    }
-
     const options: NewGameBody = req.body
 
     if (!options.nickname) {
@@ -47,28 +44,33 @@ router.post(
 
 router.get(
   '/:id',
-  protectedRoute(),
   asyncHandler(async (req, res, next) => {
     const gameId = req.params.id
     const user = req.user as User
+    const userId = user?.id || req.sessionID
+
+    if (!userId) {
+      throw new HttpJsonError(400, ErrorCode.SESSION_ID_NOT_SET)
+    }
+
     const gameManager = await getGame({ id: gameId })
     if (!gameManager) {
       throw new HttpJsonError(404, ErrorCode.GAME_NOT_FOUND, {
         gameId,
       })
     }
-    if (!gameManager.hasUser(user.id)) {
+    if (!gameManager.hasUser(userId)) {
       throw new HttpJsonError(403, ErrorCode.USER_NOT_IN_GAME, {
         gameId,
-        userId: user.id,
+        userId,
       })
     }
     const game = gameManager.gameToJSON()
     res.json({
       game,
-      nickname: gameManager.users[user.id],
+      nickname: gameManager.users[userId],
       code:
-        gameManager.users[user.id] === game.owner
+        gameManager.users[userId] === game.owner
           ? gameManager.entryCode
           : undefined,
     })
@@ -77,19 +79,26 @@ router.get(
 
 router.post(
   '/join',
-  protectedRoute(),
   asyncHandler(async (req, res, next) => {
     const { nickname, code }: JoinGameBody = req.body
     const user = req.user as User
+    let userId: string = user?.id || req.sessionID || ''
+
+    if (userId === '') {
+      throw new HttpJsonError(500, ErrorCode.SESSION_ID_NOT_SET)
+    }
 
     const gameManager = await getGameByCode({ code })
     if (!gameManager) {
       throw new HttpJsonError(400, ErrorCode.INVALID_GAME_CODE, { code })
     }
-    if (gameManager.hasUser(user.id)) {
+    if (gameManager.hasUser(userId)) {
       throw new HttpJsonError(400, ErrorCode.USER_ALREADY_IN_GAME)
     }
-    gameManager.addUserPlayer({ nickname, userId: user.id })
+    if (gameManager.gameState.status !== 'NOT_STARTED') {
+      throw new HttpJsonError(400, ErrorCode.GAME_ALREADY_STARTED)
+    }
+    gameManager.addUserPlayer({ nickname, userId })
     await gameManager.save()
     res.json({
       id: gameManager.gameId,

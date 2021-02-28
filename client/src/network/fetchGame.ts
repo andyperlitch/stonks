@@ -1,5 +1,6 @@
+import { io } from 'socket.io-client'
 import { Game } from '../../types/game'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 
 export const useGame = (gameId: string) => {
   const [loading, setLoading] = useState(false)
@@ -7,6 +8,22 @@ export const useGame = (gameId: string) => {
   const [game, setGame] = useState<Game | null>(null)
   const [nickname, setNickname] = useState<string | null>(null)
   const [code, setCode] = useState<string | null>(null)
+
+  const socket = useMemo(() => {
+    const socket = io()
+    socket.on('connect', () => {
+      console.log(`socket.id connected`, socket.id)
+    })
+    socket.on('disconnect', () => {
+      console.log(`socket.id disconnected`, socket.id)
+    })
+    socket.on('game:update', (data: { game: Game; id: string }) => {
+      if (data.id === gameId) {
+        setGame(data.game)
+      }
+    })
+    return socket
+  }, [gameId, setGame])
 
   useEffect(() => {
     setLoading(true)
@@ -33,5 +50,6 @@ export const useGame = (gameId: string) => {
     game,
     nickname,
     code,
+    socket,
   }
 }

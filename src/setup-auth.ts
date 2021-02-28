@@ -1,8 +1,6 @@
 import passport from 'passport'
-import expressSession from 'express-session'
 import { getManager, getRepository } from 'typeorm'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
-import cookieSession from 'cookie-session'
 import { getAppConfig } from './config'
 import { User } from './entity/User'
 import { Express } from 'express'
@@ -60,15 +58,6 @@ export function setupAuth(app: Express) {
       },
     ),
   )
-
-  // set up session cookies
-  app.use(
-    cookieSession({
-      maxAge: 24 * 60 * 60 * 1000,
-      keys: [config.session.cookieKey],
-    }),
-  )
-  app.use(expressSession({ secret: config.session.cookieKey }))
 
   // initialize passport
   app.use(passport.initialize())

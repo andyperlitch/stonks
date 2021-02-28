@@ -16,14 +16,15 @@
 ## TODOs
 
 - [ ] `JoinGame` page
-  - [ ] text area for nickname, text area for code
-  - [ ] submit button
-  - [ ] fetch call for joining a game
+  - [x] text area for nickname, text area for code
+  - [x] submit button
+  - [x] fetch call for joining a game
   - [ ] error handling
-  - [ ] on success, go to `Game` page.
+  - [x] on success, go to `Game` page.
 - [ ] `Game` page
-  - [ ] new fetch call for retrieving game information
+  - [x] new fetch call for retrieving game information
   - [ ] show users, info about game
+    - [ ] show which user is the owner
   - [ ] open socket connection
   - [ ] close socket connection when leaving page
 - [ ] Handle socket.io connections on server

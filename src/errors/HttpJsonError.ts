@@ -11,6 +11,7 @@ const CODE_MESSAGES: {
     `User (${more.userId}) not in game (${more.gameId})`,
   [ErrorCode.USER_ALREADY_IN_GAME]: 'User already in game',
   [ErrorCode.INVALID_GAME_CODE]: 'Game code given is not a known one',
+  [ErrorCode.GAME_ALREADY_STARTED]: 'Game has already begun',
 }
 
 export default class HttpJsonError<T = any> extends Error {

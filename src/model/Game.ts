@@ -158,7 +158,7 @@ export class Game {
 
   toJSON(): types.GameState {
     return {
-      owner: this.owner.name,
+      owner: this.owner?.name || '',
       round: this.round,
       status: this.status,
       roundEndTime: this.roundEndTime,
