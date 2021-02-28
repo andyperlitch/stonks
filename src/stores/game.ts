@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm'
 import { Socket, Server } from 'socket.io'
-import cookieSession from 'cookie-session'
+import { sessionMiddleware } from './../middleware/session'
 import { getAppConfig } from './../config'
 import GameManager from '../model/GameManager'
 import { GameConfig } from '../types/game'
@@ -85,15 +85,9 @@ export const registerSocket = (socket: Socket) => {
   const request = socket.request as any
   // run the request through the cookie session middleware,
   // with a fake response and next function.
-  cookieSession({
-    maxAge: 24 * 60 * 60 * 1000,
-    keys: [config.session.cookieKey],
-  })(request, {} as any, () => {
-    // console.log(`socket.request`, Object.keys(request), request.session)
-    const userId = request.session?.passport?.user
+  sessionMiddleware(config)(request, {} as any, () => {
+    const userId = request.session?.passport?.user || request.sessionID
     userIdToSocket.set(userId, socket)
-
-    console.log(`userId connected:`, userId, request.session, gamesById.size)
 
     // check games for a user's membership
     for (const [id, gameManager] of gamesById) {

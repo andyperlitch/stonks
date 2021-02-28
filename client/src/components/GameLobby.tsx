@@ -92,7 +92,9 @@ export const GameLobby = ({
         {Object.values(game.players).map((player) => {
           return (
             <div key={player.name} className={classes.player}>
-              <h3>{player.name}</h3>
+              <h3>
+                {player.name === nickname && '>'} {player.name}
+              </h3>
             </div>
           )
         })}

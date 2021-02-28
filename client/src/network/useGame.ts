@@ -10,7 +10,7 @@ export const useGame = (gameId: string) => {
   const [code, setCode] = useState<string | null>(null)
 
   const socket = useMemo(() => {
-    const socket = io()
+    const socket = io({})
     socket.on('connect', () => {
       console.log(`socket.id connected`, socket.id)
     })
@@ -18,6 +18,7 @@ export const useGame = (gameId: string) => {
       console.log(`socket.id disconnected`, socket.id)
     })
     socket.on('game:update', (data: { game: Game; id: string }) => {
+      console.log(`game:update`, data.game.players)
       if (data.id === gameId) {
         setGame(data.game)
       }

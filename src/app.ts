@@ -1,7 +1,7 @@
+import { sessionMiddleware } from './middleware/session'
 import { getAppConfig } from './config'
 import express from 'express'
 import bodyParser from 'body-parser'
-import expressSession from 'express-session'
 
 import authRoutes from './routes/auth-routes'
 import gameRoutes from './routes/game-routes'
@@ -18,12 +18,7 @@ export async function initApp() {
 
   const app = express()
 
-  app.use(
-    expressSession({
-      secret: config.session.cookieKey,
-      saveUninitialized: true,
-    }),
-  )
+  app.use(sessionMiddleware(config))
 
   app.use((req, res, next) => {
     console.log('req.session', req.session)

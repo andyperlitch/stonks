@@ -29,3 +29,4 @@ const config = {
 }
 
 export const getAppConfig = () => config
+export type AppConfig = ReturnType<typeof getAppConfig>

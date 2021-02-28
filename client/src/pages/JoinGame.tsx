@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { FormEvent, useCallback, useState } from 'react'
 import { useHistory, useParams } from 'react-router'
 import { createUseStyles } from 'react-jss'
 import TextInput from '../components/TextInput'
@@ -25,17 +25,21 @@ export const JoinGame = () => {
 
   const { joinGame, error, loading } = useJoinGame()
 
-  const onSubmit = useCallback(() => {
-    joinGame(nickname, code).then(({ id }) => {
-      history.push(buildUrl(routes.GAME, { id }))
-    })
-  }, [joinGame, code, history, nickname])
+  const onSubmit = useCallback(
+    (e?: FormEvent) => {
+      if (e) {
+        e.preventDefault()
+      }
+      joinGame(nickname, code).then(({ id }) => {
+        history.push(buildUrl(routes.GAME, { id }))
+      })
+    },
+    [joinGame, code, history, nickname],
+  )
 
-  console.log(`code`, code)
-  console.log(`nickname`, nickname)
   return (
     <div className={classes.container}>
-      <form>
+      <form onSubmit={onSubmit}>
         <TextInput
           name="nickname"
           onChange={setNickname}
@@ -49,7 +53,7 @@ export const JoinGame = () => {
           label="Enter passcode:"
         />
         <Button
-          type="button"
+          type="submit"
           size="lg"
           onClick={onSubmit}
           disabled={Boolean(!code.trim() || !nickname.trim())}

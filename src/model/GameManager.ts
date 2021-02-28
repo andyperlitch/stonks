@@ -63,11 +63,16 @@ export default class GameManager {
   public history: types.GameHistoricalPoint[] = []
 
   constructor() {
-    setInterval(() => {
-      if (this.io && this.gameId && !this.isCompleted()) {
-        this.io.to(this.gameId).emit('game:update', {
-          game: this.gameToJSON(),
-        })
+    const intervalId = setInterval(() => {
+      if (!this.io || !this.gameId) {
+        // still initializing
+        return
+      }
+
+      if (!this.isCompleted()) {
+        this.emitGameUpdate()
+      } else {
+        clearInterval(intervalId)
       }
     }, 2000)
   }

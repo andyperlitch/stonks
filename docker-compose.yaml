@@ -1,18 +1,18 @@
 version: '3'
 services:
-  stonks_redis:
+  redis:
     image: redis:alpine
-    hostname: stonks_redis
-    command: redis-server --requirepass yourenotwrongyourejustanasshole
+    hostname: redis
+    command: redis-server
     ports:
       - '6379:6379'
     volumes:
       - $PWD/.redis-data:/var/lib/redis
     environment:
       - REDIS_REPLICATION_MODE=master
-  stonks_postgres:
+  postgres:
     image: postgres
-    hostname: stonks_postgres
+    hostname: postgres
     volumes:
       - $PWD/.postgres-data:/var/lib/postgresql/data
     environment:
@@ -24,8 +24,8 @@ services:
 
   adminer:
     image: adminer
-    hostname: stonks_adminer
+    hostname: adminer
     ports:
       - '8080:8080'
     depends_on:
-      - stonks_postgres
+      - postgres

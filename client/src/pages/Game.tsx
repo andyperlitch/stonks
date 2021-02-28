@@ -2,7 +2,7 @@ import React from 'react'
 import { createUseStyles } from 'react-jss'
 import { useParams } from 'react-router'
 import GameLobby from '../components/GameLobby'
-import { useGame } from '../network/fetchGame'
+import { useGame } from '../network/useGame'
 
 const useStyles = createUseStyles({
   root: {},
