@@ -6,6 +6,7 @@ const useStyles = createUseStyles(
   {
     root: {
       color: 'white',
+      cursor: 'pointer',
     },
     solid: {
       border: 'none',

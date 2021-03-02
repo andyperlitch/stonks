@@ -62,6 +62,7 @@ export interface GameHistoricalPoint {
 export type PlayersHistoryPoint = { [name: string]: PlayerHistoryPoint }
 export type StonksHistoryPoint = { [ticker: string]: StonkHistoryPoint }
 export interface Game {
+  id: string
   status: GameStatus
   round: number
   roundEndTime: number

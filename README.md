@@ -23,13 +23,15 @@
   - [x] on success, go to `Game` page.
 - [ ] `Game` page
   - [x] new fetch call for retrieving game information
-  - [ ] show users, info about game
+  - [x] show users, info about game
     - [ ] show which user is the owner
-  - [ ] open socket connection
+  - [x] open socket connection
   - [ ] close socket connection when leaving page
 - [x] Handle socket.io connections on server
   - [x] create a socket store
 - [x] Don't require login to join
+- [ ] Show other games the user is in
+- [ ]
 
 ## Nice-to-haves
 

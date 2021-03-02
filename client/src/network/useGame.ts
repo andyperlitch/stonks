@@ -9,7 +9,7 @@ export const useGame = (gameId: string) => {
   const [nickname, setNickname] = useState<string | null>(null)
   const [code, setCode] = useState<string | null>(null)
 
-  const socket = useMemo(() => {
+  const { socket } = useMemo(() => {
     const socket = io({})
     socket.on('connect', () => {
       console.log(`socket.id connected`, socket.id)
@@ -23,14 +23,13 @@ export const useGame = (gameId: string) => {
         setGame(data.game)
       }
     })
-    return socket
+    return { socket }
   }, [gameId, setGame])
 
   useEffect(() => {
     setLoading(true)
     fetch(`/api/games/${gameId}`)
       .then((result) => {
-        console.log('result', result)
         return result
       })
       .then((result) => result.json())

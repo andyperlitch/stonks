@@ -1,6 +1,7 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
 import { Game } from '../../../types/game'
+import { useStartGame } from '../../network/startGame'
 import Button from '../Button'
 
 const useStyles = createUseStyles(
@@ -43,6 +44,9 @@ const useStyles = createUseStyles(
       marginBottom: '20px',
       textAlign: 'center',
     },
+    startError: {
+      color: 'red',
+    },
   },
   { name: 'GameLobby' },
 )
@@ -60,17 +64,12 @@ export interface GameLobbyProps {
    * The entry code of the game (only available if the user is the owner)
    */
   code: string | null
-  /**
-   * The function to start the game
-   */
-  startGame: () => void
 }
-export const GameLobby = ({
-  nickname,
-  game,
-  startGame,
-  code,
-}: GameLobbyProps) => {
+export const GameLobby = ({ nickname, game, code }: GameLobbyProps) => {
+  const { startGame, loading: startingGame, error: startError } = useStartGame()
+  const onStartGame = () => {
+    startGame(game.id)
+  }
   const classes = useStyles()
   return (
     <div className={classes.root}>
@@ -81,9 +80,21 @@ export const GameLobby = ({
         </div>
       )}
       {game.owner === nickname ? (
-        <Button fill="solid" size="lg" onClick={startGame}>
-          Start Game
-        </Button>
+        <div>
+          <Button
+            fill="solid"
+            size="lg"
+            onClick={onStartGame}
+            disabled={startingGame}
+          >
+            Start Game
+          </Button>
+          {startError && (
+            <p className={classes.startError}>
+              {JSON.stringify(startError, null, 2)}
+            </p>
+          )}
+        </div>
       ) : (
         <h1>Waiting to start...</h1>
       )}

@@ -12,6 +12,7 @@ interface InitGameOptions {
   nickname: string
 }
 
+const UPDATE_INTERVAL = 2000
 const COMPLETE_STATUSES: types.GameStatus[] = ['CANCELLED', 'COMPLETE']
 
 const generateEntryCode = async (): Promise<string> => {
@@ -62,20 +63,7 @@ export default class GameManager {
 
   public history: types.GameHistoricalPoint[] = []
 
-  constructor() {
-    const intervalId = setInterval(() => {
-      if (!this.io || !this.gameId) {
-        // still initializing
-        return
-      }
-
-      if (!this.isCompleted()) {
-        this.emitGameUpdate()
-      } else {
-        clearInterval(intervalId)
-      }
-    }, 2000)
-  }
+  constructor() {}
 
   public async initGame({ options, user, nickname }: InitGameOptions) {
     this.gameState = new GameState(options)
@@ -89,8 +77,51 @@ export default class GameManager {
     await this.save()
   }
 
+  public isOwner(userId: string) {
+    const nickname = this.users[userId]
+
+    if (!nickname) {
+      return false
+    }
+
+    return this.gameState.owner.name === nickname
+  }
+
   public get gameId() {
     return this.record?.id
+  }
+
+  public start() {
+    this.gameState.start()
+    // kick off update timer
+    this.runUpdateLoop()
+    // get timer for next round to start
+    this.setTimerForNextRound()
+  }
+
+  private setTimerForNextRound() {
+    if (this.isCompleted()) {
+      return
+    }
+    const timeTilNextRound = this.gameState.roundEndTime - Date.now()
+    if (timeTilNextRound <= 0) {
+      this.gameState.nextRound()
+      this.setTimerForNextRound()
+      return
+    }
+    setTimeout(() => {
+      this.setTimerForNextRound()
+    }, timeTilNextRound)
+  }
+
+  public runUpdateLoop() {
+    this.emitGameUpdate()
+    this.recordStateToHistory()
+    if (this.gameState.status === 'IN_PROGRESS') {
+      setTimeout(() => {
+        this.runUpdateLoop()
+      }, UPDATE_INTERVAL)
+    }
   }
 
   public async save() {
@@ -107,6 +138,7 @@ export default class GameManager {
   public gameToJSON(): types.Game {
     const state = this.gameState.toJSON()
     return {
+      id: this.gameId,
       owner: state.owner,
       status: state.status,
       round: state.round,
@@ -152,6 +184,10 @@ export default class GameManager {
     return COMPLETE_STATUSES.includes(this.gameState.status)
   }
 
+  public isInProgress() {
+    return this.gameState.status === 'IN_PROGRESS'
+  }
+
   public subscribeUserToGame(userId: string, socket: Socket) {
     const nickname = this.users[userId]
     if (!nickname) {
@@ -164,10 +200,14 @@ export default class GameManager {
   }
 
   public emitGameUpdate() {
-    this.io.to(this.gameId).emit('game:update', {
-      id: this.gameId,
-      game: this.gameToJSON(),
-    })
+    if (this.io) {
+      this.io.to(this.gameId).emit('game:update', {
+        id: this.gameId,
+        game: this.gameToJSON(),
+      })
+    } else {
+      console.warn(`GameManager.emitGameUpdate: No socket.io server found`)
+    }
   }
 
   /**

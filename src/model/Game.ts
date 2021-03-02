@@ -81,6 +81,7 @@ export class Game {
    * Starts the game! We need to serialize the start and end dates for this
    */
   start() {
+    this.status = 'IN_PROGRESS'
     this.nextRound()
   }
 

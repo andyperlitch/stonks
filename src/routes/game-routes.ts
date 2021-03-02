@@ -1,9 +1,8 @@
-import { getGameByCode } from './../stores/game'
 import { Router } from 'express'
 import HttpJsonError, { ErrorCode } from '../errors/HttpJsonError'
 import asyncHandler from '../utils/asyncHandler'
 import { User } from '../entity/User'
-import { createGame, getGame } from '../stores/game'
+import { createGame, getGame, getGameByCode } from '../stores/game'
 import { protectedRoute } from '../middleware/protectedRoute'
 
 const router = Router()
@@ -102,6 +101,37 @@ router.post(
     await gameManager.save()
     res.json({
       id: gameManager.gameId,
+    })
+  }),
+)
+
+router.post(
+  '/:id/start',
+  protectedRoute(),
+  asyncHandler(async (req, res, next) => {
+    // get the game data
+    const gameManager = await getGame({ id: req.params.id })
+    // check if game exists
+    if (!gameManager) {
+      throw new HttpJsonError(404, ErrorCode.GAME_NOT_FOUND)
+    }
+
+    // check that this user owns the game
+    const user = req.user as User
+    if (!gameManager.isOwner(user?.id)) {
+      throw new HttpJsonError(403, ErrorCode.USER_NOT_OWNER)
+    }
+
+    // check if the game has started already
+    if (gameManager.gameState.status !== 'NOT_STARTED') {
+      throw new HttpJsonError(400, ErrorCode.GAME_ALREADY_STARTED)
+    }
+
+    // start the game
+    gameManager.start()
+
+    res.json({
+      game: gameManager.gameToJSON(),
     })
   }),
 )

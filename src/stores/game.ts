@@ -35,6 +35,9 @@ const registerGame = (gameManager: GameManager) => {
   gameManager.io = io
   gamesById.set(gameManager.gameId, gameManager)
   idsByCode.set(gameManager.entryCode, gameManager.gameId)
+  if (gameManager.isInProgress()) {
+    gameManager.runUpdateLoop()
+  }
 }
 
 export const getGame = async ({ id }: { id: string }) => {
