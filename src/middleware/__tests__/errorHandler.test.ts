@@ -5,6 +5,6 @@ describe('the errorHandler', () => {
     expect(typeof errorHandler).toBe('function')
   })
   it('sucks', () => {
-    expect('foo').toBe('foo')
+    expect('foo').toBe('bar')
   })
 })
