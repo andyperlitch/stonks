@@ -6,7 +6,8 @@
   "scripts": {
     "debug": "ts-node-dev --project ./tsconfig.json --inspect -- src/index.ts",
     "dev": "ts-node-dev --project ./tsconfig.json src/index.ts",
-    "test": "jest --config=./jest.config.js --watch",
+    "test:watch": "jest --config=./jest.config.js --watch",
+    "test": "jest --config=./jest.config.js --coverage",
     "tsoa": "tsoa spec-and-routes",
     "build:tsoa": "tsoa spec-and-routes",
     "build": "tsc",
