@@ -27,9 +27,9 @@
     - [ ] show which user is the owner
   - [ ] open socket connection
   - [ ] close socket connection when leaving page
-- [ ] Handle socket.io connections on server
-  - [ ] create a socket store
-- [ ] Don't require login to join
+- [x] Handle socket.io connections on server
+  - [x] create a socket store
+- [x] Don't require login to join
 
 ## Nice-to-haves
 

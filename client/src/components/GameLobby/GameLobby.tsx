@@ -1,7 +1,7 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
-import { Game } from '../../types/game'
-import Button from './Button'
+import { Game } from '../../../types/game'
+import Button from '../Button'
 
 const useStyles = createUseStyles(
   {
