@@ -1,0 +1,8 @@
+node_modules
+npm-debug.log
+/coverage
+.env
+.vscode
+.redis-data
+.postgres-data
+.circleci

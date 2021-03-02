@@ -13,6 +13,7 @@
     "build": "tsc",
     "build:debug": "tsc --traceResolution",
     "start": "ts-node src/index.ts",
+    "start:prod": "node build/index.js",
     "docker": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "generate": "graphql-codegen",
