@@ -64,11 +64,15 @@ export type StonksHistoryPoint = { [ticker: string]: StonkHistoryPoint }
 export interface Game {
   id: string
   status: GameStatus
+  /**
+   * Even rounds are open hours, odd are after hours.
+   * -1 means the game has stopped, or has not started.
+   */
   round: number
   roundEndTime: number
   config: GameConfig
   players: GamePlayers
   stonks: GameStonks
-  history: GameHistoricalPoint[]
   owner: string
+  history?: GameHistoricalPoint[]
 }

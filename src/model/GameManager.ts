@@ -144,7 +144,6 @@ export default class GameManager {
       round: state.round,
       roundEndTime: state.roundEndTime,
       config: state.config,
-      history: this.history,
       players: state.players,
       stonks: state.stonks,
     }
