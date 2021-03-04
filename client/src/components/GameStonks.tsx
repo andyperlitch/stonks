@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import { createUseStyles } from 'react-jss'
+import { PlayerPortfolio } from '../../types/game'
 import { useGame } from '../hooks/useGame'
 import { centsToPrice } from '../utils/centsToPrice'
 import Button from './Button'
@@ -45,12 +46,35 @@ const useStyles = createUseStyles(
 
 export const GameStonks = () => {
   const classes = useStyles()
-  const { game } = useGame()
+  const { game, socket, gameId, nickname } = useGame()
   const stonks = useMemo(() => {
-    return Object.values(game?.stonks || {}).sort((a, b) =>
-      a.ticker.localeCompare(b.ticker),
-    )
-  }, [game])
+    const portfolio: PlayerPortfolio =
+      nickname && game ? game.players[nickname].portfolio : {}
+    return Object.values(game?.stonks || {})
+      .sort((a, b) => a.ticker.localeCompare(b.ticker))
+      .map((s) => ({
+        ...s,
+        position: portfolio[s.ticker]?.shares ?? 0,
+        buy: () => {
+          if (socket) {
+            socket.emit('buy', {
+              gameId,
+              ticker: s.ticker,
+              shares: 1,
+            })
+          }
+        },
+        sell: () => {
+          if (socket) {
+            socket.emit('sell', {
+              gameId,
+              ticker: s.ticker,
+              shares: 1,
+            })
+          }
+        },
+      }))
+  }, [game, gameId, socket, nickname])
 
   // for typing... this should always be defined
   if (!game) {
@@ -65,10 +89,18 @@ export const GameStonks = () => {
             <h3 className={classes.ticker}>{stonk.ticker}</h3>
             <h4 className={classes.price}>{centsToPrice(stonk.price)}</h4>
             <div className={classes.actions}>
-              <Button className={classes.buy} disabled={game.round % 2 !== 0}>
+              <Button
+                className={classes.buy}
+                disabled={game.round % 2 !== 0}
+                onClick={stonk.buy}
+              >
                 buy
               </Button>
-              <Button className={classes.sell} disabled={game.round % 2 !== 0}>
+              <Button
+                className={classes.sell}
+                disabled={game.round % 2 !== 0}
+                onClick={stonk.sell}
+              >
                 sell
               </Button>
             </div>

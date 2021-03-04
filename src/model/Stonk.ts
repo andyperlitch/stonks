@@ -4,7 +4,7 @@ export class Stonk {
   /**
    * How much the stock price changes each time a single stock is bought or sold
    */
-  public volatility = 0.08
+  public volatility = 0.5
 
   /**
    * Number of shares outstanding

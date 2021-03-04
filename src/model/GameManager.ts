@@ -97,6 +97,7 @@ export default class GameManager {
     this.runUpdateLoop()
     // get timer for next round to start
     this.setTimerForNextRound()
+    this.save()
   }
 
   private setTimerForNextRound() {
@@ -195,6 +196,24 @@ export default class GameManager {
     this.userSockets[nickname] = socket
     socket.join(this.gameId)
     console.log(`subscribing ${userId} to ${this.gameId}`)
+    socket.on('buy', ({ gameId, ticker, shares }) => {
+      if (gameId !== this.gameId) {
+        return
+      }
+      console.log(
+        `${nickname} issued buy request for ${shares} share(s) of ${ticker}`,
+      )
+      this.gameState.buy(nickname, ticker, shares)
+    })
+    socket.on('sell', ({ gameId, ticker, shares }) => {
+      if (gameId !== this.gameId) {
+        return
+      }
+      console.log(
+        `${nickname} issued sell request for ${shares} share(s) of ${ticker}`,
+      )
+      this.gameState.sell(nickname, ticker, shares)
+    })
     this.emitGameUpdate()
   }
 

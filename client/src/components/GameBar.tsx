@@ -33,7 +33,7 @@ export const GameBar = () => {
   return (
     <div className={classes.root}>
       <span>
-        Day {Math.floor(game.round / 2)} of {game.config.numberOfDays}
+        Day {Math.ceil(game.round / 2)} of {game.config.numberOfDays}
       </span>
       <div
         className={cn(
