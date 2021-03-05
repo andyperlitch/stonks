@@ -49,7 +49,14 @@ export default class GameManager {
   /**
    * The io server object, for use when sending messages
    */
-  public io: Server
+  public get io(): Server {
+    return this._io
+  }
+  public set io(io: Server) {
+    this._io = io
+    this.waitingForIo.forEach((fn) => fn(io))
+  }
+  private _io: Server
   /**
    * The corresponding typeorm instance of the game
    */
@@ -59,9 +66,20 @@ export default class GameManager {
    */
   public users: { [userId: string]: string } = {}
 
+  /**
+   * Maps nicknames to socket connections
+   */
   public userSockets: { [nickname: string]: Socket } = {}
 
+  /**
+   * Holds the history of the game
+   */
   public history: types.GameHistoricalPoint[] = []
+
+  /**
+   * Callbacks to call when io server has been set
+   */
+  private waitingForIo: ((io: Server) => void)[] = []
 
   constructor() {}
 
@@ -224,7 +242,12 @@ export default class GameManager {
         game: this.gameToJSON(),
       })
     } else {
-      console.warn(`GameManager.emitGameUpdate: No socket.io server found`)
+      this.waitingForIo.push((io) => {
+        io.to(this.gameId).emit('game:update', {
+          id: this.gameId,
+          game: this.gameToJSON(),
+        })
+      })
     }
   }
 
