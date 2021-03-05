@@ -1,6 +1,7 @@
-import { sessionMiddleware } from './middleware/session'
-import { getAppConfig } from './config'
 import express from 'express'
+import { sessionMiddleware } from './middleware/session'
+import { staticMiddleware } from './middleware/staticMiddleware'
+import { getAppConfig } from './config'
 import bodyParser from 'body-parser'
 
 import authRoutes from './routes/auth-routes'
@@ -49,6 +50,9 @@ export async function initApp() {
 
   // Game routes
   app.use('/api/games', gameRoutes)
+
+  // Static routes (for serving built UI)
+  app.use(staticMiddleware({}))
 
   // Not found routes
   app.use(errorHandler)

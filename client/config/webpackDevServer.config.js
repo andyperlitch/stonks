@@ -104,6 +104,7 @@ module.exports = function (proxy, allowedHost) {
     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
     proxy,
     before(app, server) {
+      // proxy calls to auth back to the backend server to handle oauth stuff
       app.use(
         '/auth',
         createProxyMiddleware({
