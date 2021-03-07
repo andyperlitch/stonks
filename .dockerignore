@@ -1,8 +1,20 @@
+# git repo
+.git
+
+# dependencies
 node_modules
+client/node_modules
+
+# build directories
+build
+client/build
+
+# other
+coverage
 npm-debug.log
-/coverage
 .env
 .vscode
 .redis-data
 .postgres-data
 .circleci
+

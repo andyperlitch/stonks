@@ -4,12 +4,12 @@ services:
     image: redis:alpine
     hostname: redis
     command: redis-server
-    ports:
-      - '6379:6379'
     volumes:
       - $PWD/.redis-data:/var/lib/redis
     environment:
       - REDIS_REPLICATION_MODE=master
+    networks:
+      - stonknet
   postgres:
     image: postgres
     hostname: postgres
@@ -19,13 +19,22 @@ services:
       POSTGRES_PASSWORD: itreallytiedtheroomtogether
       POSTGRES_USER: localdev
       POSTGRES_DB: stonks
+    networks:
+      - stonknet
+  app:
+    image: stonksapp:dev
+    build:
+      context: .
+      dockerfile: $PWD/.docker/prod/Dockerfile
+    networks:
+      - stonknet
     ports:
-      - '5432:5432'
+      - '4000:4000'
 
-  adminer:
-    image: adminer
-    hostname: adminer
-    ports:
-      - '8080:8080'
-    depends_on:
-      - postgres
+volumes:
+  # This is for the docker-sync container that gets started
+  stonksapp-sync:
+    external: true
+
+networks:
+  stonknet:
