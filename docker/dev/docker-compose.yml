@@ -21,19 +21,41 @@ services:
       POSTGRES_DB: stonks
     networks:
       - stonknet
+  adminer:
+    image: adminer
+    hostname: adminer
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+    networks:
+      - stonknet
   app:
-    image: stonksapp:dev
+    image: stonks_app:local
+    # This will be the human-readable name of the container
+    container_name: stonks_app
+    # This forces the app container to stay running
+    tty: true
+    stdin_open: true
+    working_dir: /root/app
     build:
-      context: .
-      dockerfile: $PWD/.docker/prod/Dockerfile
+      context: $PWD
+      dockerfile: $PWD/docker/dev/Dockerfile
+    volumes:
+      - stonks_app-sync:/root/app:nocopy
+      # dirs to not sync over
+      - /root/app/node_modules/
+      - /root/app/coverage/
+      - /root/app/build/
     networks:
       - stonknet
     ports:
       - '4000:4000'
+      - '9229:9229'
 
 volumes:
   # This is for the docker-sync container that gets started
-  stonksapp-sync:
+  stonks_app-sync:
     external: true
 
 networks:

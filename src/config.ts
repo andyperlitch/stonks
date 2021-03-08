@@ -3,7 +3,7 @@ require('dotenv').config()
 const devConfig = {
   dbConfig: {
     type: 'postgres',
-    host: 'localhost',
+    host: 'postgres',
     port: 5432,
     username: 'localdev',
     // ensures that the inferred type is string, not string | undefined
@@ -31,7 +31,7 @@ const devConfig = {
 const prodConfig = {
   dbConfig: {
     type: 'postgres',
-    host: 'localhost',
+    host: 'postgres',
     port: 5432,
     username: 'localdev',
     // ensures that the inferred type is string, not string | undefined

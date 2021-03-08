@@ -1,0 +1,21 @@
+version: '2'
+syncs:
+  # name of mount
+  stonks_app-sync:
+    src: '.'
+    sync_strategy: native_osx
+    sync_excludes:
+      - .git
+      - node_modules
+      - client
+      - build
+      - /coverage
+      - npm-debug.log
+      - .env
+      - .vscode
+      - .redis-data
+      - .postgres-data
+      - .circleci
+options:
+  compose-file-path: 'docker/dev/docker-compose.yml'
+  verbose: true
