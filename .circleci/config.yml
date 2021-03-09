@@ -16,6 +16,7 @@ jobs:
           dockerfile: ./docker/prod/Dockerfile
       - docker/push:
           image: blandy/stonks
+          tag: $CIRCLE_SHA1,latest
   deploy:
     docker:
       - image: node:14
