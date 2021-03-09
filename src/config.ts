@@ -46,8 +46,7 @@ const prodConfig = {
   },
   auth: {
     google: {
-      client:
-        '991021471135-t2j25if3lpp8ji5691ufqje5ogt3l3ok.apps.googleusercontent.com',
+      client: process.env.GOOGLE_CLIENT_ID || '',
       secret: process.env.GOOGLE_SECRET || '',
     },
   },

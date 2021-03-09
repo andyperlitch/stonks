@@ -8,7 +8,7 @@ import { Express } from 'express'
 export function setupAuth(app: Express) {
   const config = getAppConfig()
 
-  passport.serializeUser<string>((user: any, done) => {
+  passport.serializeUser((user: any, done) => {
     done(null, user.id)
   })
 
