@@ -22,19 +22,11 @@ services:
     networks:
       - stonknet
   app:
-    image: stonks_app:dev
-    build:
-      context: .
-      dockerfile: $PWD/docker/prod/Dockerfile
+    image: blandy/stonks:latest
     networks:
       - stonknet
     ports:
       - '4000:4000'
-
-volumes:
-  # This is for the docker-sync container that gets started
-  stonks_app-sync:
-    external: true
 
 networks:
   stonknet:

@@ -12,7 +12,6 @@ client/build
 # other
 coverage
 npm-debug.log
-.env
 .vscode
 .redis-data
 .postgres-data
