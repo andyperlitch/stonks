@@ -6,12 +6,6 @@ orbs:
 jobs:
   build-and-push:
     executor: docker/docker
-    filters:
-      branches:
-        only:
-          - master
-    requires:
-      - node/test
     steps:
       - checkout
       - docker/check
@@ -23,18 +17,22 @@ jobs:
   deploy:
     docker:
       - image: node:14
-    filters:
-      branches:
-        only:
-          - master
     steps:
       - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "~/stonks/deploy.sh"
-    requires:
-      - build-and-push
 
 workflows:
   build-test-deploy:
     jobs:
       - node/test
-      - build-and-push
-      - deploy
+      - build-and-push:
+          filters:
+            branches:
+              only:
+                - master
+      - deploy:
+          requires:
+            - build-and-push
+          filters:
+            branches:
+              only:
+                - master
