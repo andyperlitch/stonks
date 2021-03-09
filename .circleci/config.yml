@@ -14,9 +14,10 @@ jobs:
       - docker/build:
           image: blandy/stonks
           dockerfile: ./docker/prod/Dockerfile
+          tag: latest
       - docker/push:
           image: blandy/stonks
-          tag: $CIRCLE_SHA1,latest
+          tag: latest
   deploy:
     docker:
       - image: node:14

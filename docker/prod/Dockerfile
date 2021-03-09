@@ -43,5 +43,8 @@ COPY --from=build /app/build ./build
 # Copy over the built client
 COPY --from=build /app/client/build /app/client/build
 
+# Expose the port
+EXPOSE 4000
+
 # Command to be run in production
-CMD ["npm", "run", "start:prod"]
+ENTRYPOINT ["npm", "run", "start:prod"]
