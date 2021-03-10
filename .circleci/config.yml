@@ -22,7 +22,7 @@ jobs:
     docker:
       - image: node:14
     steps:
-      - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "~/stonks/deploy.sh"
+      - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "~/deploy.sh"
 
 workflows:
   build-test-deploy:
