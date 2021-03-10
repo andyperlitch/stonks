@@ -22,7 +22,12 @@ services:
     networks:
       - stonknet
   app:
-    env_file: .env
+    container_name: app
+    env_file: ../../.env
+    environment:
+      - NODE_ENV=production
+    tty: true
+    stdin_open: true
     image: blandy/stonks:latest
     networks:
       - stonknet

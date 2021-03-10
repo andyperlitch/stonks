@@ -8,7 +8,7 @@ export async function setupDB() {
   const dbConnection = await createConnection(
     config.dbConfig as PostgresConnectionOptions,
   )
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production' || process.env.SYNCHRONIZE_DB) {
     await dbConnection.synchronize()
     console.log('Database schema synced')
   }
