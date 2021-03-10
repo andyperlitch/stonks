@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const devConfig = {
+  hostName: 'http://localhost:3000',
   dbConfig: {
     type: 'postgres',
     host: 'postgres',
@@ -29,6 +30,7 @@ const devConfig = {
 }
 
 const prodConfig = {
+  hostName: 'https://stonksgame.xyz',
   dbConfig: {
     type: 'postgres',
     host: 'postgres',

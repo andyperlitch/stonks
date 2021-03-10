@@ -25,7 +25,7 @@ export function setupAuth(app: Express) {
         // options for google strategy
         clientID: config.auth.google.client,
         clientSecret: config.auth.google.secret,
-        callbackURL: '/auth/google/redirect',
+        callbackURL: `${config.hostName}/auth/google/redirect`,
       },
       async (accessToken, refreshToken, profile, done) => {
         // weird typing issue
