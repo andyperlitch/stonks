@@ -33,6 +33,9 @@ export function setupAuth(app: Express) {
         try {
           const userRepo = getRepository(User)
           // check if user already exists in our own db
+          console.log(
+            `check if user already exists in our own db (${profile.id})`,
+          )
           const currentUser = await userRepo.findOne({ googleId: profile.id })
           if (currentUser) {
             // already have this user
