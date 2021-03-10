@@ -38,6 +38,8 @@ services:
     tty: true
     stdin_open: true
     working_dir: /root/app
+    # adds the env file to the container
+    env_file: .env
     build:
       context: $PWD
       dockerfile: $PWD/docker/dev/Dockerfile

@@ -20,13 +20,6 @@ export async function initApp() {
 
   app.use(sessionMiddleware(config))
 
-  app.use((req, res, next) => {
-    console.log('req.session', req.session)
-    console.log('req.cookies', req.cookies)
-    console.log('req.sessionID', req.sessionID)
-    next()
-  })
-
   // setup passport auth
   setupAuth(app)
 

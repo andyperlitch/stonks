@@ -20,7 +20,6 @@ export const staticMiddleware = ({
   let lastCacheTime: number
   let cachingPromise: Promise<string> | null = null
   router.get('*', (req, res, next) => {
-    console.log('req.path', req.path)
     if (cachedHtml && Date.now() - lastCacheTime < indexCacheTime) {
       res.send(cachedHtml)
       return
