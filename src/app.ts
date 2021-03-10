@@ -8,6 +8,7 @@ import authRoutes from './routes/auth-routes'
 import gameRoutes from './routes/game-routes'
 import { setupAuth } from './setup-auth'
 import { setupDB } from './setup-db'
+import { setupGraphql } from './setup-graphql'
 import { errorHandler } from './middleware/errorHandler'
 import { setupGames } from './stores/game'
 
@@ -33,6 +34,9 @@ export async function initApp() {
     }),
   )
   app.use(bodyParser.json())
+
+  // setup graphql server
+  setupGraphql(app)
 
   // Auth routes
   app.use('/auth', authRoutes)
