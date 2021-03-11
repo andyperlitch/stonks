@@ -232,6 +232,16 @@ export default class GameManager {
       )
       this.gameState.sell(nickname, ticker, shares)
     })
+    socket.on('chat', ({ gameId, message }) => {
+      if (gameId !== this.gameId) {
+        return
+      }
+      this.io.to(this.gameId).emit('game:chat', {
+        id: this.gameId,
+        message,
+        nickname,
+      })
+    })
     this.emitGameUpdate()
   }
 

@@ -9,6 +9,10 @@ import React, {
 } from 'react'
 import { Game } from '../../types/game'
 
+interface ChatMessage {
+  nickname: string
+  message: string
+}
 export interface GameContext {
   gameId: string | null
   loading?: boolean
@@ -17,6 +21,7 @@ export interface GameContext {
   nickname: string | null
   code: string | null
   socket: Socket | null
+  chat: ChatMessage[]
 }
 
 const gameContext = createContext<GameContext>({
@@ -27,6 +32,7 @@ const gameContext = createContext<GameContext>({
   nickname: null,
   code: null,
   socket: null,
+  chat: [],
 })
 
 export const GameProvider = ({
@@ -41,6 +47,7 @@ export const GameProvider = ({
   const [game, setGame] = useState<Game | null>(null)
   const [nickname, setNickname] = useState<string | null>(null)
   const [code, setCode] = useState<string | null>(null)
+  const [chat, setChat] = useState<ChatMessage[]>([])
 
   const { socket } = useMemo(() => {
     const socket = io({})
@@ -56,8 +63,19 @@ export const GameProvider = ({
         setGame(data.game)
       }
     })
+    socket.on(
+      'game:chat',
+      (data: { id: string; message: string; nickname: string }) => {
+        console.log(`game:chat`, data.message, chat)
+        const newChat = chat.concat({
+          nickname: data.nickname,
+          message: data.message,
+        })
+        setChat(newChat)
+      },
+    )
     return { socket }
-  }, [gameId, setGame])
+  }, [gameId, setGame, setChat, chat])
 
   useEffect(() => {
     setGame(null)
@@ -87,8 +105,9 @@ export const GameProvider = ({
       nickname,
       code,
       socket,
+      chat,
     }
-  }, [loading, error, game, nickname, code, socket, gameId])
+  }, [loading, error, game, nickname, code, socket, gameId, chat])
 
   return <gameContext.Provider value={value}>{children}</gameContext.Provider>
 }
