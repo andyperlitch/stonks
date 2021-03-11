@@ -8,22 +8,18 @@
 // ====================================================
 
 export interface GetUserInfo_me {
-  __typename: "User";
-  id: string | null;
-  email: string | null;
-  username: string | null;
-  googleId: string | null;
-  thumbnail: string | null;
-  isAuthenticated: boolean;
-  /**
-   * The id of the current user's selected avatar
-   */
-  currentAvatar: string | null;
+  __typename: 'User'
+  id: string | null
+  email: string | null
+  username: string | null
+  googleId: string | null
+  thumbnail: string | null
+  isAuthenticated: boolean
 }
 
 export interface GetUserInfo {
   /**
    * Info about the current user, logged in or not.
    */
-  me: GetUserInfo_me;
+  me: GetUserInfo_me
 }

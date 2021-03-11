@@ -6,5 +6,4 @@ export const resolvers: Resolvers<GraphQLContext> = {
   Query: {
     me: meResolver,
   },
-  Mutation: {},
 }

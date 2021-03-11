@@ -4,7 +4,7 @@ import { Player } from './Player'
 import { generateStonk } from '../utils/generateStonk'
 
 const MAX_PLAYER_COUNT = 50
-const DEFAULT_BUYING_POWER = 1000000
+const DEFAULT_BUYING_POWER = 10000
 const DEFAULT_MARKET_HOURS_DURATION = 30000
 const MAX_MARKET_HOURS_DURATION = 30000 * 60
 const DEFAULT_AFTER_HOURS_DURATION = 60000

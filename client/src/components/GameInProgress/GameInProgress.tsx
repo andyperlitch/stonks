@@ -1,44 +1,61 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
 import { Game } from '../../../types/game'
-import GameBar from '../GameBar'
 import GameStonks from '../GameStonks'
-import PlayerStats from '../PlayerStats'
+import MarketInfo from '../MarketInfo'
+import Nav from '../Nav'
+import Portfolio from '../Portfolio'
+import Leaderboard from '../Leaderboard'
+import GameChat from '../GameChat'
 
-const SIDE_BAR_WIDTH = '30%'
+const LEFT_SIDE_BAR_WIDTH = '20%'
+const RIGHT_SIDE_BAR_WIDTH = '30%'
 const PLAYER_STATS_HEIGHT = '300px'
+const SECOND_ROW_HEIGHT = '300px'
 const TOP_BAR_HEIGHT = '60px'
 
 const useStyles = createUseStyles(
   {
     root: {
       display: 'grid',
-      gridTemplateColumns: `auto ${SIDE_BAR_WIDTH}`,
-      gridTemplateRows: `${TOP_BAR_HEIGHT} auto ${PLAYER_STATS_HEIGHT}`,
+      gridTemplateColumns: `${LEFT_SIDE_BAR_WIDTH} auto ${RIGHT_SIDE_BAR_WIDTH}`,
+      gridTemplateRows: `${TOP_BAR_HEIGHT} ${SECOND_ROW_HEIGHT} auto ${PLAYER_STATS_HEIGHT}`,
       height: '100vh',
     },
     topBar: {
       gridColumnStart: '1',
-      gridColumnEnd: '2',
+      gridColumnEnd: '3',
       gridRowStart: '1',
       gridRowEnd: '2',
     },
-    mainArea: {
+    marketInfo: {
       gridColumnStart: '1',
       gridColumnEnd: '2',
       gridRowStart: '2',
       gridRowEnd: '3',
     },
-    bottomLeft: {
-      gridColumnStart: '1',
-      gridColumnEnd: '2',
-      gridRowStart: '3',
-      gridRowEnd: '4',
-    },
-    rightBar: {
+    portfolio: {
       gridColumnStart: '2',
       gridColumnEnd: '3',
       gridRowStart: '2',
+      gridRowEnd: '3',
+    },
+    leaderboard: {
+      gridColumnStart: '3',
+      gridColumnEnd: '4',
+      gridRowStart: '2',
+      gridRowEnd: '3',
+    },
+    stonks: {
+      gridColumnStart: '1',
+      gridColumnEnd: '3',
+      gridRowStart: '3',
+      gridRowEnd: '4',
+    },
+    chat: {
+      gridColumnStart: '3',
+      gridColumnEnd: '4',
+      gridRowStart: '3',
       gridRowEnd: '4',
     },
   },
@@ -54,16 +71,23 @@ export const GameInProgress = ({ game, nickname }: GameInProgressProps) => {
   return (
     <div className={classes.root}>
       <div className={classes.topBar}>
-        <GameBar />
+        <Nav />
       </div>
-      <div className={classes.mainArea}>
+      <div className={classes.marketInfo}>
+        <MarketInfo game={game} />
+      </div>
+      <div className={classes.portfolio}>
+        <Portfolio game={game} nickname={nickname} />
+        {/* <PlayerStats nickname={nickname} game={game} /> */}
+      </div>
+      <div className={classes.leaderboard}>
+        <Leaderboard game={game} />
+      </div>
+      <div className={classes.chat}>
+        <GameChat nickname={nickname} game={game} />
+      </div>
+      <div className={classes.stonks}>
         <GameStonks />
-      </div>
-      <div className={classes.bottomLeft}>
-        <PlayerStats nickname={nickname} game={game} />
-      </div>
-      <div className={classes.rightBar}>
-        {/* <GameChat nickname={nickname} game={game} /> */}
       </div>
     </div>
   )
