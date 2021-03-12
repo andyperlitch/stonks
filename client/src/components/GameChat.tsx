@@ -1,17 +1,19 @@
 import React, { FormEvent, useState } from 'react'
+import cn from 'classnames'
 import { createUseStyles } from 'react-jss'
-import { Game } from '../../types/game'
 import { useGame } from '../hooks/useGame'
+import Card from './Card'
 import TextInput from './TextInput'
 
 const useStyles = createUseStyles(
   {
-    root: {},
-    chatWindow: {
+    root: {
       display: 'flex',
       flexDirection: 'column',
     },
-    chatMessages: {},
+    chatMessages: {
+      flexGrow: '1',
+    },
     chatMessage: {},
     from: {},
     message: {},
@@ -24,10 +26,9 @@ const useStyles = createUseStyles(
 )
 
 export interface GameChatProps {
-  game: Game
-  nickname: string
+  className?: string
 }
-export const GameChat = ({ game, nickname }: GameChatProps) => {
+export const GameChat = ({ className }: GameChatProps) => {
   const classes = useStyles()
   const { gameId, chat, socket } = useGame()
   const [draft, setDraft] = useState('')
@@ -46,25 +47,22 @@ export const GameChat = ({ game, nickname }: GameChatProps) => {
   }
 
   return (
-    <div className={classes.root}>
-      <h2>Chat</h2>
-      <div className={classes.chatWindow}>
-        <div className={classes.chatMessages}>
-          {chat.map(({ message, nickname }) => {
-            return (
-              <div className={classes.chatMessage}>
-                <div className={classes.from}>{nickname}: </div>
-                <div className={classes.message}>{message}</div>
-              </div>
-            )
-          })}
-        </div>
-        <form className={classes.chatInput} onSubmit={onMessage}>
-          <TextInput name="draft_message" value={draft} onChange={setDraft} />
-          <button type="submit" className={classes.submitBtn} />
-        </form>
+    <Card className={cn(classes.root, className)}>
+      <div className={classes.chatMessages}>
+        {chat.map(({ message, nickname }) => {
+          return (
+            <div className={classes.chatMessage}>
+              <div className={classes.from}>{nickname}: </div>
+              <div className={classes.message}>{message}</div>
+            </div>
+          )
+        })}
       </div>
-    </div>
+      <form className={classes.chatInput} onSubmit={onMessage}>
+        <TextInput name="draft_message" value={draft} onChange={setDraft} />
+        <button type="submit" className={classes.submitBtn} />
+      </form>
+    </Card>
   )
 }
 

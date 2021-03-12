@@ -2,6 +2,7 @@ import React from 'react'
 import { createUseStyles } from 'react-jss'
 import { Player } from '../../types/game'
 import { centsToPrice } from '../utils/centsToPrice'
+import Card from './Card'
 
 const useStyles = createUseStyles(
   {
@@ -19,12 +20,12 @@ export interface LeaderboardItemProps {
 export const LeaderboardItem = ({ player, rank }: LeaderboardItemProps) => {
   const classes = useStyles()
   return (
-    <div className={classes.root}>
+    <Card className={classes.root}>
       <span>{rank}.</span>
       <span>{player.name}</span>
       <span>(graph)</span>
       <span>{centsToPrice(player.totalEquity)}</span>
-    </div>
+    </Card>
   )
 }
 

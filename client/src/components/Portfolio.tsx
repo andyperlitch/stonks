@@ -1,7 +1,9 @@
 import React from 'react'
+import cn from 'classnames'
 import { createUseStyles } from 'react-jss'
 import { Game } from '../../types/game'
 import { centsToPrice } from '../utils/centsToPrice'
+import Card from './Card'
 import PortfolioItem from './PortfolioItem'
 import TotalEquityGraph from './TotalEquityGraph'
 
@@ -37,8 +39,9 @@ const useStyles = createUseStyles(
 export interface PortfolioProps {
   game: Game
   nickname: string
+  className?: string
 }
-export const Portfolio = ({ game, nickname }: PortfolioProps) => {
+export const Portfolio = ({ game, nickname, className }: PortfolioProps) => {
   const classes = useStyles()
 
   const player = game.players[nickname]
@@ -50,7 +53,7 @@ export const Portfolio = ({ game, nickname }: PortfolioProps) => {
   const portfolioItems = Object.keys(player.portfolio)
 
   return (
-    <div className={classes.root}>
+    <Card className={cn(classes.root, className)}>
       <div className={classes.topRow}>
         <div className={classes.topLeft}>
           <h3>Total Equity</h3>
@@ -76,7 +79,7 @@ export const Portfolio = ({ game, nickname }: PortfolioProps) => {
           })}
         </div>
       </div>
-    </div>
+    </Card>
   )
 }
 

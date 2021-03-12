@@ -4,6 +4,7 @@ import { PlayerPortfolio } from '../../types/game'
 import { useGame } from '../hooks/useGame'
 import { centsToPrice } from '../utils/centsToPrice'
 import Button from './Button'
+import Card from './Card'
 
 const useStyles = createUseStyles(
   {
@@ -14,11 +15,8 @@ const useStyles = createUseStyles(
     },
     stonk: {
       width: '23%',
-      boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.1)',
-      margin: '1%',
-      padding: '1rem',
-      backgroundColor: 'rgba(255,255,255,0.03)',
-      borderRadius: '20px',
+      marginRight: '2%',
+      marginBottom: '16px',
     },
     ticker: {
       fontSize: '30px',
@@ -85,7 +83,7 @@ export const GameStonks = () => {
     <div className={classes.root}>
       {stonks.map((stonk) => {
         return (
-          <div className={classes.stonk} key={stonk.ticker}>
+          <Card className={classes.stonk} key={stonk.ticker}>
             <h3 className={classes.ticker}>{stonk.ticker}</h3>
             <h4 className={classes.price}>{centsToPrice(stonk.price)}</h4>
             <div className={classes.actions}>
@@ -104,7 +102,7 @@ export const GameStonks = () => {
                 sell
               </Button>
             </div>
-          </div>
+          </Card>
         )
       })}
     </div>

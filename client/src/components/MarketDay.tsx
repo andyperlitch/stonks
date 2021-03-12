@@ -16,7 +16,7 @@ export const MarketDay = ({ game }: MarketDayProps) => {
   const classes = useStyles()
 
   const totalDays = game.config.numberOfDays
-  const curDay = Math.floor(game.round / 2)
+  const curDay = Math.ceil(game.round / 2)
 
   return (
     <div className={classes.root}>

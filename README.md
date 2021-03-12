@@ -15,25 +15,26 @@
 
 ## TODOs
 
-- [ ] `JoinGame` page
+- [ ] Show other games the user is in
+- [ ] Limit user to just one game at a time
+- [ ] limit chat messages
+- [ ] Figure out why subscribing to games that have ended
+- [ ] Try to reproduce `MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 buy listeners added to [Socket]. Use emitter.setMaxListeners() to increase limit`
+- [ ] show which user is the owner on game page
+- [x] `JoinGame` page
   - [x] text area for nickname, text area for code
   - [x] submit button
   - [x] fetch call for joining a game
-  - [ ] error handling
   - [x] on success, go to `Game` page.
-- [ ] `Game` page
+- [x] `Game` page
   - [x] new fetch call for retrieving game information
   - [x] show users, info about game
-    - [ ] show which user is the owner
   - [x] open socket connection
-  - [ ] close socket connection when leaving page
 - [x] Handle socket.io connections on server
   - [x] create a socket store
 - [x] Don't require login to join
-- [ ] Show other games the user is in
-- [ ]
 
 ## Nice-to-haves
 
-- [ ] redis-based session storage
+- [x] redis-based session storage
 - [ ] better error handling/redirect when oauth fails

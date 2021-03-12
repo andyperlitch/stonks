@@ -21,6 +21,9 @@ const useStyles = createUseStyles(
       gridTemplateColumns: `${LEFT_SIDE_BAR_WIDTH} auto ${RIGHT_SIDE_BAR_WIDTH}`,
       gridTemplateRows: `${TOP_BAR_HEIGHT} ${SECOND_ROW_HEIGHT} auto ${PLAYER_STATS_HEIGHT}`,
       height: '100vh',
+      '& > *': {
+        padding: '16px',
+      },
     },
     topBar: {
       gridColumnStart: '1',
@@ -33,12 +36,16 @@ const useStyles = createUseStyles(
       gridColumnEnd: '2',
       gridRowStart: '2',
       gridRowEnd: '3',
+      display: 'flex',
+      flexDirection: 'column',
     },
     portfolio: {
       gridColumnStart: '2',
       gridColumnEnd: '3',
       gridRowStart: '2',
       gridRowEnd: '3',
+      display: 'flex',
+      flexDirection: 'column',
     },
     leaderboard: {
       gridColumnStart: '3',
@@ -57,6 +64,17 @@ const useStyles = createUseStyles(
       gridColumnEnd: '4',
       gridRowStart: '3',
       gridRowEnd: '4',
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    marketInfoCard: {
+      flexGrow: '1',
+    },
+    portfolioCard: {
+      flexGrow: '1',
+    },
+    chatCard: {
+      flexGrow: '1',
     },
   },
   { name: 'GameInProgress' },
@@ -74,19 +92,27 @@ export const GameInProgress = ({ game, nickname }: GameInProgressProps) => {
         <Nav />
       </div>
       <div className={classes.marketInfo}>
-        <MarketInfo game={game} />
+        <h2>Market Info</h2>
+        <MarketInfo className={classes.marketInfoCard} game={game} />
       </div>
       <div className={classes.portfolio}>
-        <Portfolio game={game} nickname={nickname} />
-        {/* <PlayerStats nickname={nickname} game={game} /> */}
+        <h2>Your Portfolio</h2>
+        <Portfolio
+          className={classes.portfolioCard}
+          game={game}
+          nickname={nickname}
+        />
       </div>
       <div className={classes.leaderboard}>
+        <h2>Leaderboard</h2>
         <Leaderboard game={game} />
       </div>
       <div className={classes.chat}>
-        <GameChat nickname={nickname} game={game} />
+        <h2>Chat</h2>
+        <GameChat className={classes.chatCard} />
       </div>
       <div className={classes.stonks}>
+        <h2>Stonks</h2>
         <GameStonks />
       </div>
     </div>
