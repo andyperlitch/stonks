@@ -19,6 +19,7 @@ const useStyles = createUseStyles(
       marginBottom: '16px',
     },
     ticker: {
+      textDecoration: 'none',
       fontSize: '30px',
     },
     price: {

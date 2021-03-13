@@ -21,6 +21,8 @@
 - [ ] Figure out why subscribing to games that have ended
 - [ ] Try to reproduce `MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 buy listeners added to [Socket]. Use emitter.setMaxListeners() to increase limit`
 - [ ] show which user is the owner on game page
+- [ ] graphic of green "+1" floats away every time you click buy, same with red "-1" for sell
+- [ ] make the buy and sell buttons disabled during after-hours trading
 - [x] `JoinGame` page
   - [x] text area for nickname, text area for code
   - [x] submit button
