@@ -82,5 +82,9 @@ export const rootStyles = {
       '--placeholder-color': 'white',
       '--placeholder-opacity': '1',
     },
+
+    h3: {
+      textDecoration: 'underline',
+    },
   },
 }

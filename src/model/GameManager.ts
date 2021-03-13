@@ -118,19 +118,21 @@ export default class GameManager {
     this.save()
   }
 
-  private setTimerForNextRound() {
+  public setTimerForNextRound() {
     if (this.isCompleted()) {
       return
     }
     const timeTilNextRound = this.gameState.roundEndTime - Date.now()
     if (timeTilNextRound <= 0) {
       this.gameState.nextRound()
+      this.emitGameUpdate()
       this.setTimerForNextRound()
+      this.save()
       return
     }
     setTimeout(() => {
       this.setTimerForNextRound()
-    }, timeTilNextRound)
+    }, timeTilNextRound + 100)
   }
 
   public runUpdateLoop() {

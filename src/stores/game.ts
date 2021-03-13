@@ -36,6 +36,7 @@ const registerGame = (gameManager: GameManager) => {
   gamesById.set(gameManager.gameId, gameManager)
   idsByCode.set(gameManager.entryCode, gameManager.gameId)
   if (gameManager.isInProgress()) {
+    gameManager.setTimerForNextRound()
     gameManager.runUpdateLoop()
   }
 }

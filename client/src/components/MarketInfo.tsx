@@ -10,7 +10,7 @@ const useStyles = createUseStyles(
   {
     root: {
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'row',
       alignItems: 'stretch',
     },
     marketDay: {

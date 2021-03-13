@@ -1,5 +1,7 @@
 export interface GameConfig {
+  /** in milliseconds */
   marketHoursDuration: number
+  /** in milliseconds */
   afterHoursDuration: number
   numberOfDays: number
   maxPlayers: number
@@ -69,6 +71,7 @@ export interface Game {
    * -1 means the game has stopped, or has not started.
    */
   round: number
+  /** timestamp (ms) */
   roundEndTime: number
   config: GameConfig
   players: GamePlayers
