@@ -27,7 +27,7 @@ export const Leaderboard = ({ game }: LeaderboardProps) => {
   return (
     <div className={classes.root}>
       {playersInOrder.map((player, i) => (
-        <LeaderboardItem player={player} rank={i + 1} />
+        <LeaderboardItem key={player.name} player={player} rank={i + 1} />
       ))}
     </div>
   )

@@ -5,6 +5,9 @@ import { PieArcDatum } from 'd3-shape'
 
 const useStyles = createUseStyles(
   {
+    root: {
+      position: 'relative',
+    },
     pie: {},
     fg: {
       filter: 'drop-shadow(0 0 5px rgba(0,0,0,0.5))',
@@ -91,7 +94,6 @@ export const DonutTimer = ({
     if (!ref.current) {
       return
     }
-    console.log('useEffect called')
     const now = new Date()
     const nowMS = now.valueOf()
     const totalMS = endMS - startMS
@@ -181,14 +183,16 @@ export const DonutTimer = ({
   }, [arc, check, bg, fg, startMS, endMS, pie, classes.fg, classes.bg])
 
   return (
-    <svg
-      className={classes.pie}
-      ref={ref}
-      height={outerRadius * 2}
-      width={outerRadius * 2}
-    >
-      <g transform={`translate(${outerRadius}, ${outerRadius})`}></g>
-    </svg>
+    <div className={classes.root}>
+      <svg
+        className={classes.pie}
+        ref={ref}
+        height={outerRadius * 2}
+        width={outerRadius * 2}
+      >
+        <g transform={`translate(${outerRadius}, ${outerRadius})`}></g>
+      </svg>
+    </div>
   )
 }
 
