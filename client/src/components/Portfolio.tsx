@@ -4,33 +4,41 @@ import { createUseStyles } from 'react-jss'
 import { Game } from '../../types/game'
 import { centsToPrice } from '../utils/centsToPrice'
 import Card from './Card'
-import PortfolioItem from './PortfolioItem'
 import TotalEquityGraph from './TotalEquityGraph'
 
 const useStyles = createUseStyles(
   {
     root: {
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'row',
     },
-    topRow: {
-      display: 'flex',
-    },
-    topLeft: {
+    left: {
       display: 'flex',
       flexDirection: 'column',
+      justifyContent: 'flex-start',
+      marginRight: '16px',
+    },
+    totalEquity: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      flexGrow: '1',
+    },
+    buyingPower: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      flexGrow: '1',
     },
     totalEquityValue: {
       fontSize: '35px',
     },
-    buyingPowerValue: {},
-    topRight: {},
-    bottomRow: {
+    buyingPowerValue: {
+      fontSize: '24px',
+    },
+    right: {
       display: 'flex',
       flexDirection: 'column',
-    },
-    positions: {
-      display: 'flex',
     },
   },
   { name: 'Portfolio' },
@@ -48,36 +56,25 @@ export const Portfolio = ({ game, nickname, className }: PortfolioProps) => {
   if (!player) {
     return null
   }
-  const stonks = game.stonks
-  const portfolio = player.portfolio
-  const portfolioItems = Object.keys(player.portfolio)
 
   return (
     <Card className={cn(classes.root, className)}>
-      <div className={classes.topRow}>
-        <div className={classes.topLeft}>
+      <div className={classes.left}>
+        <div className={classes.totalEquity}>
           <h3>Total Equity</h3>
           <div className={classes.totalEquityValue}>
             {centsToPrice(player.totalEquity)}
           </div>
+        </div>
+        <div className={classes.buyingPower}>
           <h4>Buying Power</h4>
           <div className={classes.buyingPowerValue}>
             {centsToPrice(player.buyingPower)}
           </div>
         </div>
-        <div className={classes.topRight}>
-          <TotalEquityGraph game={game} nickname={nickname} />
-        </div>
       </div>
-      <div className={classes.bottomRow}>
-        <h3>Positions</h3>
-        <div className={classes.positions}>
-          {portfolioItems.map((pi) => {
-            const item = portfolio[pi]
-            const stonk = stonks[item.ticker]
-            return <PortfolioItem key={item.ticker} item={item} stonk={stonk} />
-          })}
-        </div>
+      <div className={classes.right}>
+        <TotalEquityGraph game={game} nickname={nickname} />
       </div>
     </Card>
   )

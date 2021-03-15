@@ -4,9 +4,9 @@ import { Game } from '../../types/game'
 import DonutTimer from './DonutTimer'
 
 const OPEN_ELAPSED_COLOR = '#009245'
-const OPEN_REMAINING_COLOR = '#b0b0b0'
+const OPEN_REMAINING_COLOR = '#b0b0b044'
 const CLOSED_ELAPSED_COLOR = '#d62b16'
-const CLOSED_REMAINING_COLOR = '#b0b0b0'
+const CLOSED_REMAINING_COLOR = '#b0b0b044'
 
 const useStyles = createUseStyles(
   {

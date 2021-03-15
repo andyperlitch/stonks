@@ -98,13 +98,6 @@ export const MarketDay = ({ game }: MarketDayProps) => {
                 [classes.futureAfterHrs]: closedRound > game.round,
               })}
             ></div>
-
-            {/* {rounds.map((r) => <div key={r} className={cn({
-              
-              currentAfterHrs: r === game.round,
-              pastAfterHrs: r < game.round,
-              futureAfterHrs: r > game.round
-            })}></div>)} */}
           </div>
         ))}
       </div>

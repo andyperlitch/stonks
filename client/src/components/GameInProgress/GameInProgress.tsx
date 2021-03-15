@@ -10,7 +10,6 @@ import GameChat from '../GameChat'
 
 const LEFT_SIDE_BAR_WIDTH = '20%'
 const RIGHT_SIDE_BAR_WIDTH = '30%'
-const PLAYER_STATS_HEIGHT = '300px'
 const SECOND_ROW_HEIGHT = '300px'
 const TOP_BAR_HEIGHT = '60px'
 
@@ -19,8 +18,8 @@ const useStyles = createUseStyles(
     root: {
       display: 'grid',
       gridTemplateColumns: `${LEFT_SIDE_BAR_WIDTH} auto ${RIGHT_SIDE_BAR_WIDTH}`,
-      gridTemplateRows: `${TOP_BAR_HEIGHT} ${SECOND_ROW_HEIGHT} auto ${PLAYER_STATS_HEIGHT}`,
-      height: '100vh',
+      gridTemplateRows: `${TOP_BAR_HEIGHT} ${SECOND_ROW_HEIGHT} auto`,
+      minHeight: '100vh',
       '& > *': {
         padding: '16px',
       },
