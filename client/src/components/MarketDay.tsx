@@ -12,20 +12,41 @@ const useStyles = createUseStyles(
       justifyContent: 'space-between',
       alignItems: 'center',
     },
+    days: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
     day: {
+      display: 'flex',
+      flexDirection: 'row',
+      width: '30px',
+      justifyContent: 'space-between',
+      marginBottom: '3px',
+    },
+    hoursDot: {
+      borderRadius: '50%',
       width: '10px',
       height: '10px',
-      borderRadius: '50%',
     },
-    pastDay: {
-      background: '#aeaeae',
-    },
-    curDay: {
+    currentOpenHrs: {
+      backgroundColor: '#49d849',
       animation: '$pulse 2s infinite',
-      background: 'white',
     },
-    futureDay: {
-      background: 'rgba(255, 255, 255, 0.3)',
+    pastOpenHrs: {
+      backgroundColor: '#53eb4f54',
+    },
+    futureOpenHrs: {
+      backgroundColor: '#1944178c',
+    },
+    currentAfterHrs: {
+      backgroundColor: '#f82400',
+      animation: '$pulse 2s infinite',
+    },
+    pastAfterHrs: {
+      backgroundColor: '#c2130099',
+    },
+    futureAfterHrs: {
+      backgroundColor: '#650c0056',
     },
     '@keyframes pulse': {
       '0%': {
@@ -50,20 +71,41 @@ export const MarketDay = ({ game }: MarketDayProps) => {
 
   const totalDays = game.config.numberOfDays
   const curDay = Math.floor(game.round / 2) + 1
-  const days = Array.from(Array(totalDays).keys()).map((d) => d + 1)
+  const days = Array.from(Array(totalDays).keys()).map((d) => ({
+    day: d + 1,
+    rounds: [d * 2, d * 2 + 1],
+  }))
   return (
     <div className={classes.root}>
       <h3>Day</h3>
-      <div>
-        {days.map((day) => (
-          <div
-            className={cn(classes.day, {
-              [classes.curDay]: curDay === day,
-              [classes.pastDay]: day < curDay,
-              [classes.futureDay]: day > curDay,
-            })}
-            key={day}
-          ></div>
+      <div className={classes.days}>
+        {days.map(({ day, rounds: [openRound, closedRound] }) => (
+          <div className={classes.day} key={day}>
+            {/* OPEN HOURS DOT */}
+            <div
+              className={cn(classes.hoursDot, {
+                [classes.currentOpenHrs]: openRound === game.round,
+                [classes.pastOpenHrs]: openRound < game.round,
+                [classes.futureOpenHrs]: openRound > game.round,
+              })}
+            ></div>
+
+            {/* AFTER HOURS DOT */}
+            <div
+              className={cn(classes.hoursDot, {
+                [classes.currentAfterHrs]: closedRound === game.round,
+                [classes.pastAfterHrs]: closedRound < game.round,
+                [classes.futureAfterHrs]: closedRound > game.round,
+              })}
+            ></div>
+
+            {/* {rounds.map((r) => <div key={r} className={cn({
+              
+              currentAfterHrs: r === game.round,
+              pastAfterHrs: r < game.round,
+              futureAfterHrs: r > game.round
+            })}></div>)} */}
+          </div>
         ))}
       </div>
       <p>

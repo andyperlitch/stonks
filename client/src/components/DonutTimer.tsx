@@ -15,6 +15,14 @@ const useStyles = createUseStyles(
     bg: {
       filter: 'drop-shadow(0 0 5px rgba(0,0,0,0.5))',
     },
+    text: {
+      position: 'absolute',
+      left: '50%',
+      top: '50%',
+      transform: 'translate(-50%, -50%)',
+      fontWeight: 'bold',
+      fontSize: '21px',
+    },
   },
   { name: 'DonutTimer' },
 )
@@ -40,6 +48,65 @@ function arcTween(arc: d3.Arc<any, Datum>) {
       })
     }
   }
+}
+
+const dayLength = 24 * 60 * 60 * 1000
+const hrLength = 60 * 60 * 1000
+const minLength = 60 * 1000
+const TimeText = ({
+  start,
+  end,
+  className,
+}: {
+  start: Date
+  end: Date
+  className?: string
+}) => {
+  const [tick, setTick] = useState(0)
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (end > new Date()) {
+        clearInterval(intervalId)
+      }
+      setTick(tick + 1)
+    }, 1000)
+    return () => clearInterval(intervalId)
+  }, [end, tick])
+
+  const text = useMemo(() => {
+    const timeLeft = Math.max(
+      Math.min(end.valueOf() - start.valueOf(), end.valueOf() - Date.now()),
+      0,
+    )
+    const days = Math.floor(timeLeft / dayLength)
+    const hours = Math.floor((timeLeft % dayLength) / hrLength)
+    const minutes = Math.floor((timeLeft % hrLength) / minLength)
+    const seconds = Math.floor((timeLeft % minLength) / 1000)
+    let fillAll = false
+    const text = [days, hours, minutes, seconds]
+      .filter((n) => {
+        if (fillAll) {
+          return true
+        }
+        if (n === 0) {
+          return false
+        }
+        fillAll = true
+        return true
+      })
+      .map((num) => num.toString().padStart(2, '0'))
+      .join(':')
+    if (text.length === 0) {
+      return `:00`
+    }
+    if (text.length === 2) {
+      return `:${text}`
+    }
+    return text
+  }, [start, end, tick])
+
+  return <div className={className}>{text}</div>
 }
 
 export interface DonutTimerProps {
@@ -192,6 +259,7 @@ export const DonutTimer = ({
       >
         <g transform={`translate(${outerRadius}, ${outerRadius})`}></g>
       </svg>
+      <TimeText className={classes.text} start={start} end={end} />
     </div>
   )
 }
