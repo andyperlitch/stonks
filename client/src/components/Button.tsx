@@ -7,6 +7,7 @@ const useStyles = createUseStyles(
     root: {
       color: 'white',
       cursor: 'pointer',
+      outline: 'none',
     },
     solid: {
       border: 'none',
@@ -24,6 +25,9 @@ const useStyles = createUseStyles(
     md: {},
     sm: {},
     xs: {},
+    disabled: {
+      cursor: 'not-allowed',
+    },
   },
   { name: 'Button' },
 )
@@ -66,7 +70,7 @@ export const Button = ({
       className={cn(
         classes.root,
         classes[fill],
-        { disabled },
+        { disabled, [classes.disabled]: disabled },
         classes[size],
         className,
       )}

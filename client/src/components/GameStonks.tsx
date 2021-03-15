@@ -32,12 +32,36 @@ const useStyles = createUseStyles(
     },
     buy: {
       marginRight: '1rem',
-      backgroundColor: 'green',
+      backgroundColor: '#288c00',
       flexGrow: '1',
+      '&:hover': {
+        backgroundColor: '#20a900',
+      },
+      '&:active': {
+        backgroundColor: '#45b700',
+      },
+      '&.disabled': {
+        opacity: 0.5,
+      },
+      '&.disabled:hover': {
+        backgroundColor: '#288c00',
+      },
     },
     sell: {
-      backgroundColor: 'red',
+      backgroundColor: '#db0000',
       flexGrow: '1',
+      '&:hover': {
+        backgroundColor: '#f92d2d',
+      },
+      '&:active': {
+        backgroundColor: '#f95757',
+      },
+      '&.disabled': {
+        opacity: 0.5,
+      },
+      '&.disabled:hover': {
+        backgroundColor: '#db0000',
+      },
     },
   },
   { name: 'GameStonks' },
@@ -89,6 +113,7 @@ export const GameStonks = () => {
             <h4 className={classes.price}>{centsToPrice(stonk.price)}</h4>
             <div className={classes.actions}>
               <Button
+                size="md"
                 className={classes.buy}
                 disabled={game.round % 2 !== 0}
                 onClick={stonk.buy}
@@ -96,8 +121,9 @@ export const GameStonks = () => {
                 buy
               </Button>
               <Button
+                size="md"
                 className={classes.sell}
-                disabled={game.round % 2 !== 0}
+                disabled={game.round % 2 !== 0 || stonk.position === 0}
                 onClick={stonk.sell}
               >
                 sell
