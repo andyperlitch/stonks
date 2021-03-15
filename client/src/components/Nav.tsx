@@ -12,7 +12,7 @@ export const Nav = () => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <h1>StonksGame.xyz</h1>
+      <h1>🚀 StonksGame.xyz 🚀</h1>
     </div>
   )
 }

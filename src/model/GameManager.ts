@@ -118,6 +118,11 @@ export default class GameManager {
     this.save()
   }
 
+  public async cancel() {
+    this.gameState.stop('CANCELLED')
+    await this.save()
+  }
+
   public setTimerForNextRound() {
     if (this.isCompleted()) {
       return
@@ -137,7 +142,6 @@ export default class GameManager {
 
   public runUpdateLoop() {
     this.emitGameUpdate()
-    this.recordStateToHistory()
     if (this.gameState.status === 'IN_PROGRESS') {
       setTimeout(() => {
         this.runUpdateLoop()
@@ -168,6 +172,10 @@ export default class GameManager {
       players: state.players,
       stonks: state.stonks,
     }
+  }
+
+  public getGameHistory(): types.GameHistoricalPoint[] {
+    return this.history
   }
 
   public hasUser(userId: string): boolean {
@@ -248,16 +256,20 @@ export default class GameManager {
   }
 
   public emitGameUpdate() {
+    const ts = Date.now()
+    this.recordStateToHistory(ts)
     if (this.io) {
       this.io.to(this.gameId).emit('game:update', {
         id: this.gameId,
         game: this.gameToJSON(),
+        ts,
       })
     } else {
       this.waitingForIo.push((io) => {
         io.to(this.gameId).emit('game:update', {
           id: this.gameId,
           game: this.gameToJSON(),
+          ts,
         })
       })
     }
@@ -266,9 +278,8 @@ export default class GameManager {
   /**
    * Creates a new GameHistoricalPoint and adds it to the history
    */
-  private recordStateToHistory() {
+  private recordStateToHistory(ts: number) {
     const state = this.gameState.toJSON()
-    const ts = Date.now()
     const point: types.GameHistoricalPoint = {
       ts,
       players: Object.values(state.players).reduce((acc, player) => {

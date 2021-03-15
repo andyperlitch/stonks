@@ -65,8 +65,10 @@ router.get(
       })
     }
     const game = gameManager.gameToJSON()
+    const history = gameManager.getGameHistory()
     res.json({
       game,
+      history,
       nickname: gameManager.users[userId],
       code:
         gameManager.users[userId] === game.owner
@@ -129,6 +131,37 @@ router.post(
 
     // start the game
     gameManager.start()
+
+    res.json({
+      game: gameManager.gameToJSON(),
+    })
+  }),
+)
+
+router.post(
+  '/:id/cancel',
+  protectedRoute(),
+  asyncHandler(async (req, res, next) => {
+    // get the game data
+    const gameManager = await getGame({ id: req.params.id })
+    // check if game exists
+    if (!gameManager) {
+      throw new HttpJsonError(404, ErrorCode.GAME_NOT_FOUND)
+    }
+
+    // check that this user owns the game
+    const user = req.user as User
+    if (!gameManager.isOwner(user?.id)) {
+      throw new HttpJsonError(403, ErrorCode.USER_NOT_OWNER)
+    }
+
+    // check that the game is still going
+    if (gameManager.isCompleted()) {
+      throw new HttpJsonError(400, ErrorCode.GAME_ALREADY_OVER)
+    }
+
+    // stop the game
+    await gameManager.cancel()
 
     res.json({
       game: gameManager.gameToJSON(),

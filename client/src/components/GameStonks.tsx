@@ -14,7 +14,6 @@ const useStyles = createUseStyles(
       alignItems: 'space-around',
     },
     stonk: {
-      width: '23%',
       marginRight: '2%',
       marginBottom: '16px',
       display: 'flex',
@@ -85,7 +84,8 @@ const useStyles = createUseStyles(
 
 export const GameStonks = () => {
   const classes = useStyles()
-  const { game, socket, gameId, nickname } = useGame()
+  const { game, socket, gameId, nickname, history } = useGame()
+  console.log(`history`, history)
   const stonks = useMemo(() => {
     const portfolio: PlayerPortfolio =
       nickname && game ? game.players[nickname].portfolio : {}

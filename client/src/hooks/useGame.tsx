@@ -7,7 +7,7 @@ import React, {
   useContext,
   ReactNode,
 } from 'react'
-import { Game } from '../../types/game'
+import * as types from '../../types/game'
 
 interface ChatMessage {
   nickname: string
@@ -17,11 +17,12 @@ export interface GameContext {
   gameId: string | null
   loading?: boolean
   error: Error | null
-  game: Game | null
+  game: types.Game | null
   nickname: string | null
   code: string | null
   socket: Socket | null
   chat: ChatMessage[]
+  history: types.GameHistoricalPoint[]
 }
 
 const gameContext = createContext<GameContext>({
@@ -33,6 +34,7 @@ const gameContext = createContext<GameContext>({
   code: null,
   socket: null,
   chat: [],
+  history: [],
 })
 
 export const GameProvider = ({
@@ -44,7 +46,8 @@ export const GameProvider = ({
 }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
-  const [game, setGame] = useState<Game | null>(null)
+  const [game, setGame] = useState<types.Game | null>(null)
+  const [history, setHistory] = useState<types.GameHistoricalPoint[]>([])
   const [nickname, setNickname] = useState<string | null>(null)
   const [code, setCode] = useState<string | null>(null)
   const [chat, setChat] = useState<ChatMessage[]>([])
@@ -70,11 +73,31 @@ export const GameProvider = ({
     if (!socket) {
       return () => {}
     }
-    const handleGameUpdate = (data: { game: Game; id: string }) => {
-      console.log(`game:update`, data.game)
-      if (data.id === gameId) {
-        setGame(data.game)
+    const handleGameUpdate = ({
+      game,
+      id,
+      ts,
+    }: {
+      game: types.Game
+      id: string
+      ts: number
+    }) => {
+      // console.log(`game:update`, game)
+      if (id === gameId) {
+        setGame(game)
       }
+      const historicalPoint: types.GameHistoricalPoint = {
+        ts,
+        players: Object.values(game.players).reduce((acc, player) => {
+          acc[player.name] = player
+          return acc
+        }, {} as types.PlayersHistoryPoint),
+        stonks: Object.values(game.stonks).reduce((acc, stonk) => {
+          acc[stonk.ticker] = stonk
+          return acc
+        }, {} as types.StonksHistoryPoint),
+      }
+      setHistory(history.concat(historicalPoint))
     }
     const handleChat = (data: {
       id: string
@@ -94,7 +117,7 @@ export const GameProvider = ({
       socket.off('game:update', handleGameUpdate)
       socket.off('game:chat', handleChat)
     }
-  }, [gameId, setGame, setChat, chat, socket])
+  }, [gameId, setGame, setChat, chat, socket, history])
 
   useEffect(() => {
     setGame(null)
@@ -104,10 +127,11 @@ export const GameProvider = ({
         return result
       })
       .then((result) => result.json())
-      .then(({ game, nickname, code }) => {
+      .then(({ game, nickname, code, history }) => {
         setGame(game)
         setNickname(nickname)
         setCode(code)
+        setHistory(history)
       })
       .catch((err) => setError(err))
       .finally(() => {
@@ -125,8 +149,9 @@ export const GameProvider = ({
       code,
       socket,
       chat,
+      history,
     }
-  }, [loading, error, game, nickname, code, socket, gameId, chat])
+  }, [loading, error, game, nickname, code, socket, gameId, chat, history])
 
   return <gameContext.Provider value={value}>{children}</gameContext.Provider>
 }
