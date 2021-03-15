@@ -15,7 +15,9 @@ const useStyles = createUseStyles(
       flexGrow: '1',
     },
     chatMessage: {},
-    from: {},
+    from: {
+      fontWeight: 'bold',
+    },
     message: {},
     chatInput: {},
     submitBtn: {
@@ -34,7 +36,6 @@ export const GameChat = ({ className }: GameChatProps) => {
   const [draft, setDraft] = useState('')
 
   const onMessage = (e: FormEvent<HTMLFormElement>) => {
-    console.log('testing')
     e.preventDefault()
     if (!socket) {
       return
@@ -52,8 +53,8 @@ export const GameChat = ({ className }: GameChatProps) => {
         {chat.map(({ message, nickname }) => {
           return (
             <div className={classes.chatMessage}>
-              <div className={classes.from}>{nickname}: </div>
-              <div className={classes.message}>{message}</div>
+              <span className={classes.from}>{nickname}: </span>
+              <span className={classes.message}>{message}</span>
             </div>
           )
         })}
