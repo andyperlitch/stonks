@@ -48,34 +48,53 @@ export const GameProvider = ({
   const [nickname, setNickname] = useState<string | null>(null)
   const [code, setCode] = useState<string | null>(null)
   const [chat, setChat] = useState<ChatMessage[]>([])
+  const [socket, setSocket] = useState<Socket | null>(null)
 
-  const { socket } = useMemo(() => {
-    const socket = io({})
-    socket.on('connect', () => {
-      console.log(`socket.id connected`, socket.id)
+  // obtain the socket
+  useEffect(() => {
+    const _socket = io({})
+    _socket.on('connect', () => {
+      console.log(`socket.id connected`, _socket.id)
     })
-    socket.on('disconnect', () => {
-      console.log(`socket.id disconnected`, socket.id)
+    _socket.on('disconnect', () => {
+      console.log(`socket.id disconnected`, _socket.id)
     })
-    socket.on('game:update', (data: { game: Game; id: string }) => {
+    setSocket(_socket)
+
+    return () => {
+      _socket.disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!socket) {
+      return () => {}
+    }
+    const handleGameUpdate = (data: { game: Game; id: string }) => {
       console.log(`game:update`, data.game)
       if (data.id === gameId) {
         setGame(data.game)
       }
-    })
-    socket.on(
-      'game:chat',
-      (data: { id: string; message: string; nickname: string }) => {
-        console.log(`game:chat`, data.message, chat)
-        const newChat = chat.concat({
-          nickname: data.nickname,
-          message: data.message,
-        })
-        setChat(newChat)
-      },
-    )
-    return { socket }
-  }, [gameId, setGame, setChat, chat])
+    }
+    const handleChat = (data: {
+      id: string
+      message: string
+      nickname: string
+    }) => {
+      console.log(`game:chat`, data.message, chat)
+      const newChat = chat.concat({
+        nickname: data.nickname,
+        message: data.message,
+      })
+      setChat(newChat)
+    }
+    socket.on('game:update', handleGameUpdate)
+    socket.on('game:chat', handleChat)
+    return () => {
+      socket.off('game:update', handleGameUpdate)
+      socket.off('game:chat', handleChat)
+    }
+  }, [gameId, setGame, setChat, chat, socket])
 
   useEffect(() => {
     setGame(null)
