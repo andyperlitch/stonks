@@ -17,13 +17,29 @@ const useStyles = createUseStyles(
       width: '23%',
       marginRight: '2%',
       marginBottom: '16px',
+      display: 'flex',
+      flexDirection: 'column',
     },
     ticker: {
       textDecoration: 'none',
+      fontSize: '40px',
+    },
+    infoValue: {
       fontSize: '30px',
     },
-    price: {
-      fontSize: '50px',
+    info: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'stretch',
+    },
+    infoColumn: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      alignItems: 'stretch',
+    },
+    infoHeading: {
+      fontSize: '14px',
     },
     actions: {
       display: 'flex',
@@ -109,8 +125,31 @@ export const GameStonks = () => {
       {stonks.map((stonk) => {
         return (
           <Card className={classes.stonk} key={stonk.ticker}>
-            <h3 className={classes.ticker}>{stonk.ticker}</h3>
-            <h4 className={classes.price}>{centsToPrice(stonk.price)}</h4>
+            <div className={classes.info}>
+              <div className={classes.infoColumn}>
+                <h2 className={classes.ticker}>{stonk.ticker}</h2>
+                <div>
+                  <h4 className={classes.infoHeading}>Price</h4>
+                  <div className={classes.infoValue}>
+                    {centsToPrice(stonk.price)}
+                  </div>
+                </div>
+              </div>
+              <div className={classes.infoColumn}>
+                <div>
+                  <h4 className={classes.infoHeading}>Shares</h4>
+                  <div className={classes.infoValue}>
+                    {stonk.position.toLocaleString()}
+                  </div>
+                </div>
+                <div>
+                  <h4 className={classes.infoHeading}>Equity</h4>
+                  <div className={classes.infoValue}>
+                    {centsToPrice(stonk.position * stonk.price)}
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className={classes.actions}>
               <Button
                 size="md"
