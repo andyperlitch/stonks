@@ -1,4 +1,5 @@
 import React from 'react'
+import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
 import { createUseStyles } from 'react-jss'
 import { Game } from '../../../types/game'
 import GameStonks from '../GameStonks'
@@ -7,6 +8,9 @@ import Nav from '../Nav'
 import Portfolio from '../Portfolio'
 import Leaderboard from '../Leaderboard'
 import GameChat from '../GameChat'
+import '@szhsin/react-menu/dist/index.css'
+import '@szhsin/react-menu/dist/theme-dark.css'
+import { useCancelGame } from '../../network/cancelGame'
 
 const LEFT_SIDE_BAR_WIDTH = '20%'
 const RIGHT_SIDE_BAR_WIDTH = '30%'
@@ -29,6 +33,31 @@ const useStyles = createUseStyles(
       gridColumnEnd: '3',
       gridRowStart: '1',
       gridRowEnd: '2',
+    },
+    marketInfoHeading: {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
+    controlMenuBtn: {
+      fontSize: '15px',
+      cursor: 'pointer',
+      backgroundColor: 'transparent',
+      textAlign: 'center',
+      borderRadius: '4px',
+      border: 'none',
+      padding: '0.4rem',
+      '&:hover': {
+        backgroundColor: 'rgb(32.3%, 9.1%, 53%)',
+      },
+    },
+    controlMenu: {
+      fontSize: '11px',
+      padding: '0.25rem',
+      background: 'rgb(28.5%, 17.3%, 38.6%)',
+      color: 'white',
+      '& .rc-menu__item--hover': {
+        backgroundColor: 'rgb(31.5%, 10.1%, 50.7%)',
+      },
     },
     marketInfo: {
       gridColumnStart: '1',
@@ -85,13 +114,30 @@ export interface GameInProgressProps {
 }
 export const GameInProgress = ({ game, nickname }: GameInProgressProps) => {
   const classes = useStyles()
+  const { cancelGame } = useCancelGame()
   return (
     <div className={classes.root}>
       <div className={classes.topBar}>
         <Nav />
       </div>
       <div className={classes.marketInfo}>
-        <h2>Market Info</h2>
+        <h2 className={classes.marketInfoHeading}>
+          <span>Market Info</span>
+          <span>
+            {nickname === game.owner && (
+              <Menu
+                className={classes.controlMenu}
+                menuButton={
+                  <MenuButton className={classes.controlMenuBtn}>⚙️</MenuButton>
+                }
+              >
+                <MenuItem onClick={() => cancelGame(game.id) as any}>
+                  End this game
+                </MenuItem>
+              </Menu>
+            )}
+          </span>
+        </h2>
         <MarketInfo className={classes.marketInfoCard} game={game} />
       </div>
       <div className={classes.portfolio}>

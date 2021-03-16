@@ -9,6 +9,19 @@ export interface GameConfig {
   numberOfStonks: number
 }
 
+export interface Round {
+  id: number
+  day: number
+  /**
+   * This will be undefined until the round starts
+   */
+  startTime?: number
+  /**
+   * This will be undefined until the round starts
+   */
+  endTime?: number
+}
+
 export interface PortfolioItem {
   shares: number
   ticker: string
@@ -59,6 +72,7 @@ export interface GameHistoricalPoint {
   ts: number
   players: PlayersHistoryPoint
   stonks: StonksHistoryPoint
+  round: number
 }
 
 export type PlayersHistoryPoint = { [name: string]: PlayerHistoryPoint }
@@ -71,6 +85,7 @@ export interface Game {
    * -1 means the game has stopped, or has not started.
    */
   round: number
+  rounds: Round[]
   /** timestamp (ms) */
   roundEndTime: number
   config: GameConfig

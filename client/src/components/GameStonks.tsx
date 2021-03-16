@@ -5,26 +5,29 @@ import { useGame } from '../hooks/useGame'
 import { centsToPrice } from '../utils/centsToPrice'
 import Button from './Button'
 import Card from './Card'
+import StonkLineGraph from './StonkLineGraph'
 
 const useStyles = createUseStyles(
   {
     root: {
       display: 'flex',
-      flexWrap: 'wrap',
       alignItems: 'space-around',
+      flexWrap: 'wrap',
     },
     stonk: {
       marginRight: '2%',
+      width: '48%',
       marginBottom: '16px',
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'row',
     },
     ticker: {
       textDecoration: 'none',
-      fontSize: '40px',
+      fontSize: '30px',
+      lineHeight: 1,
     },
     infoValue: {
-      fontSize: '30px',
+      fontSize: '20px',
     },
     info: {
       display: 'flex',
@@ -36,17 +39,23 @@ const useStyles = createUseStyles(
       flexDirection: 'column',
       justifyContent: 'space-between',
       alignItems: 'stretch',
+      marginRight: '1rem',
     },
     infoHeading: {
       fontSize: '14px',
     },
     actions: {
       display: 'flex',
-      width: '100%',
+      flexDirection: 'column',
+      width: '150px',
       alignItems: 'stretch',
+      justifyContent: 'stretch',
+    },
+    stonkGraph: {
+      flexGrow: '2',
+      flexBasis: 'auto',
     },
     buy: {
-      marginRight: '1rem',
       backgroundColor: '#288c00',
       flexGrow: '1',
       '&:hover': {
@@ -63,6 +72,7 @@ const useStyles = createUseStyles(
       },
     },
     sell: {
+      marginTop: '1rem',
       backgroundColor: '#db0000',
       flexGrow: '1',
       '&:hover': {
@@ -85,7 +95,7 @@ const useStyles = createUseStyles(
 export const GameStonks = () => {
   const classes = useStyles()
   const { game, socket, gameId, nickname, history } = useGame()
-  console.log(`history`, history)
+
   const stonks = useMemo(() => {
     const portfolio: PlayerPortfolio =
       nickname && game ? game.players[nickname].portfolio : {}
@@ -150,6 +160,12 @@ export const GameStonks = () => {
                 </div>
               </div>
             </div>
+            <StonkLineGraph
+              game={game}
+              ticker={stonk.ticker}
+              history={history}
+              className={classes.stonkGraph}
+            />
             <div className={classes.actions}>
               <Button
                 size="md"

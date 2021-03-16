@@ -282,6 +282,7 @@ export default class GameManager {
     const state = this.gameState.toJSON()
     const point: types.GameHistoricalPoint = {
       ts,
+      round: state.round,
       players: Object.values(state.players).reduce((acc, player) => {
         acc[player.name] = player
         return acc

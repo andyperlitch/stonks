@@ -1,7 +1,7 @@
 import * as types from '../types/game'
 import { Stonk } from './Stonk'
 import { Player } from './Player'
-import { generateStonk } from '../utils/generateStonk'
+import { generateRounds, generateStonk } from '../utils/generateStonk'
 
 const MAX_PLAYER_COUNT = 50
 const DEFAULT_BUYING_POWER = 10000
@@ -31,6 +31,7 @@ export class Game {
    */
   public round = -1
   public roundEndTime: number
+  public rounds: types.Round[] = []
 
   /**
    * Config options for the game
@@ -62,6 +63,7 @@ export class Game {
       ),
       ...config,
     }
+    this.rounds = generateRounds(this.config.numberOfDays)
   }
 
   initStonks() {
