@@ -96,6 +96,7 @@ export const GameProvider = ({
           acc[stonk.ticker] = stonk
           return acc
         }, {} as types.StonksHistoryPoint),
+        round: game.round
       }
       setHistory(history.concat(historicalPoint))
     }

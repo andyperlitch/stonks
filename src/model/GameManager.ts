@@ -168,6 +168,7 @@ export default class GameManager {
       status: state.status,
       round: state.round,
       roundEndTime: state.roundEndTime,
+      rounds: state.rounds,
       config: state.config,
       players: state.players,
       stonks: state.stonks,

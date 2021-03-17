@@ -104,7 +104,7 @@ const TimeText = ({
       return `:${text}`
     }
     return text
-  }, [start, end, tick])
+  }, [start, end])
 
   return <div className={className}>{text}</div>
 }

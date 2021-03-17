@@ -1,5 +1,5 @@
 import React, { FormEvent, useCallback, useState } from 'react'
-import { useHistory, useParams } from 'react-router'
+import { useHistory } from 'react-router'
 import { createUseStyles } from 'react-jss'
 import TextInput from '../components/TextInput'
 import Button from '../components/Button'

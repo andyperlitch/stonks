@@ -33,6 +33,7 @@ const useStyles = createUseStyles({
     border: '1px solid var(--color-primary)',
     background: 'rgba(0,0,0,0.1)',
     flexGrow: '1',
+    color: 'white',
   },
 })
 

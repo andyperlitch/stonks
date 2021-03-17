@@ -85,6 +85,7 @@ export class Game {
   start() {
     this.status = 'IN_PROGRESS'
     this.rounds = generateRounds(this.config, Date.now())
+    this.nextRound()
   }
 
   /**
@@ -158,8 +159,9 @@ export class Game {
     return {
       owner: this.owner?.name || '',
       round: this.round,
-      status: this.status,
+      rounds: this.rounds,
       roundEndTime: this.roundEndTime,
+      status: this.status,
       config: this.config,
       players: Object.keys(this.players).reduce(
         (acc, p) => ({

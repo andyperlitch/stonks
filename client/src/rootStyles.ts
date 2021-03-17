@@ -65,7 +65,7 @@ export const rootStyles = {
       '--color-light-contrast-rgb': '0,0,0',
       '--color-light-shade': '#d7d8da',
       '--color-light-tint': '#f5f6f9',
-      '--font-family': "'Courier New', 'Poppins', sans-serif", //Font-family so don't have to import everytime
+      '--font-family': "'Courier New', 'Courier', 'Poppins', serif", //Font-family so don't have to import everytime
       '--placeholder-color': 'white',
       '--placeholder-opacity': '1',
     },

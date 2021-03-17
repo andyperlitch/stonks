@@ -54,6 +54,7 @@ export type GameStatus =
   | 'CANCELLED'
 export interface GameState {
   round: number
+  rounds: Round[]
   config: GameConfig
   roundEndTime: number
   status: GameStatus

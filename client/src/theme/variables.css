@@ -3,7 +3,7 @@ http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
 :root {
-  --font-family: 'Courier New', 'Poppins', sans-serif;
+  --font-family: 'Courier New', 'Courier', 'Poppins', serif;
   --background-color: linear-gradient(
     180deg,
     rgba(19, 3, 29, 1) 0%,
