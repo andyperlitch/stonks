@@ -1,7 +1,8 @@
 import * as types from '../types/game'
 import { Stonk } from './Stonk'
 import { Player } from './Player'
-import { generateRounds, generateStonk } from '../utils/generateStonk'
+import { generateStonk } from '../utils/generateStonk'
+import { generateRounds } from '../utils/generateRounds'
 
 const MAX_PLAYER_COUNT = 50
 const DEFAULT_BUYING_POWER = 10000
@@ -63,7 +64,6 @@ export class Game {
       ),
       ...config,
     }
-    this.rounds = generateRounds(this.config.numberOfDays)
   }
 
   initStonks() {
@@ -84,7 +84,7 @@ export class Game {
    */
   start() {
     this.status = 'IN_PROGRESS'
-    this.nextRound()
+    this.rounds = generateRounds(this.config, Date.now())
   }
 
   /**
@@ -97,12 +97,7 @@ export class Game {
     }
 
     this.round += 1
-    const timeTilNextRound =
-      this.round % 2 === 0
-        ? this.config.marketHoursDuration
-        : this.config.afterHoursDuration
-    this.roundEndTime = Date.now() + timeTilNextRound
-    return this.roundEndTime
+    this.roundEndTime = this.rounds[this.round].endTime
   }
 
   /**

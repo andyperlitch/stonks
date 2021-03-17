@@ -12,14 +12,8 @@ export interface GameConfig {
 export interface Round {
   id: number
   day: number
-  /**
-   * This will be undefined until the round starts
-   */
-  startTime?: number
-  /**
-   * This will be undefined until the round starts
-   */
-  endTime?: number
+  startTime: number
+  endTime: number
 }
 
 export interface PortfolioItem {

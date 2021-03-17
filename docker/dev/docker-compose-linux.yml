@@ -1,0 +1,59 @@
+version: '3'
+services:
+  redis:
+    image: redis:alpine
+    hostname: redis
+    command: redis-server
+    volumes:
+      - $PWD/.redis-data:/var/lib/redis
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    networks:
+      - stonknet
+  postgres:
+    image: postgres
+    hostname: postgres
+    volumes:
+      - $PWD/.postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: itreallytiedtheroomtogether
+      POSTGRES_USER: localdev
+      POSTGRES_DB: stonks
+    networks:
+      - stonknet
+  adminer:
+    image: adminer
+    hostname: adminer
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+    networks:
+      - stonknet
+  app:
+    image: stonks_app:local
+    # This will be the human-readable name of the container
+    container_name: stonks_app
+    # This forces the app container to stay running
+    tty: true
+    stdin_open: true
+    working_dir: /root/app
+    # adds the env file to the container
+    env_file: ../../.env
+    build:
+      context: $PWD
+      dockerfile: $PWD/docker/dev/Dockerfile
+    volumes:
+      - $PWD:/root/app
+      # dirs to not sync over
+      - /root/app/node_modules/
+      - /root/app/coverage/
+      - /root/app/build/
+    networks:
+      - stonknet
+    ports:
+      - '4000:4000'
+      - '9229:9229'
+
+networks:
+  stonknet:
