@@ -81,7 +81,8 @@ router.get(
 router.post(
   '/join',
   asyncHandler(async (req, res, next) => {
-    const { nickname, code }: JoinGameBody = req.body
+    const { nickname, code: _code }: JoinGameBody = req.body
+    const code = _code.toUpperCase()
     const user = req.user as User
     let userId: string = user?.id || req.sessionID || ''
 

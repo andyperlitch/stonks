@@ -15,6 +15,9 @@ const useStyles = createUseStyles({
     margin: '20px auto 0',
     textAlign: 'center',
   },
+  joinInput: {
+    textTransform: 'uppercase',
+  },
 })
 
 export const JoinGame = () => {
@@ -45,6 +48,9 @@ export const JoinGame = () => {
           onChange={setNickname}
           value={nickname}
           label="Nickname:"
+          classes={{
+            input: classes.joinInput,
+          }}
         />
         <TextInput
           name="code"

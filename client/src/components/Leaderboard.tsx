@@ -20,7 +20,7 @@ export const Leaderboard = ({ game }: LeaderboardProps) => {
     .sort((a, b) => {
       const aPlayer = players[a]
       const bPlayer = players[b]
-      return aPlayer.totalEquity - bPlayer.totalEquity
+      return bPlayer.totalEquity - aPlayer.totalEquity
     })
     .map((nickname) => players[nickname])
 

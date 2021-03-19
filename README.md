@@ -15,7 +15,8 @@
 
 ## TODOs
 
-- [ ] show graphs of stonks and player's equity
+- [ ] graph of player's equity
+- [ ] outside price movement
 - [ ] Show other games the user is in
 - [ ] countdown to start
 - [ ] a way to return to home screen from join
@@ -27,6 +28,9 @@
 - [ ] Figure out why subscribing to games that have ended
 - [ ] show which user is the owner on game page
 - [ ] graphic of green "+1" floats away every time you click buy, same with red "-1" for sell
+- [x] fix leaderboard sort order
+- [x] force code to be uppercase
+- [x] graphs of stonks
 - [x] Try to reproduce `MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 buy listeners added to [Socket]. Use emitter.setMaxListeners() to increase limit`
 - [x] make the buy and sell buttons disabled during after-hours trading
 - [x] `JoinGame` page
