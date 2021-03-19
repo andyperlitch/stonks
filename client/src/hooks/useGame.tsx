@@ -85,20 +85,20 @@ export const GameProvider = ({
       // console.log(`game:update`, game)
       if (id === gameId) {
         setGame(game)
+        const historicalPoint: types.GameHistoricalPoint = {
+          ts,
+          players: Object.values(game.players).reduce((acc, player) => {
+            acc[player.name] = player
+            return acc
+          }, {} as types.PlayersHistoryPoint),
+          stonks: Object.values(game.stonks).reduce((acc, stonk) => {
+            acc[stonk.ticker] = stonk
+            return acc
+          }, {} as types.StonksHistoryPoint),
+          round: game.round
+        }
+        setHistory(history.concat(historicalPoint))
       }
-      const historicalPoint: types.GameHistoricalPoint = {
-        ts,
-        players: Object.values(game.players).reduce((acc, player) => {
-          acc[player.name] = player
-          return acc
-        }, {} as types.PlayersHistoryPoint),
-        stonks: Object.values(game.stonks).reduce((acc, stonk) => {
-          acc[stonk.ticker] = stonk
-          return acc
-        }, {} as types.StonksHistoryPoint),
-        round: game.round
-      }
-      setHistory(history.concat(historicalPoint))
     }
     const handleChat = (data: {
       id: string

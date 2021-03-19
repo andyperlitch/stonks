@@ -111,8 +111,10 @@ router.post(
   '/:id/start',
   protectedRoute(),
   asyncHandler(async (req, res, next) => {
+    // extract gameId from params
+    const gameId = req.params.id
     // get the game data
-    const gameManager = await getGame({ id: req.params.id })
+    const gameManager = await getGame({ id: gameId })
     // check if game exists
     if (!gameManager) {
       throw new HttpJsonError(404, ErrorCode.GAME_NOT_FOUND)

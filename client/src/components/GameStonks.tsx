@@ -54,6 +54,7 @@ const useStyles = createUseStyles(
     stonkGraph: {
       flexGrow: '2',
       flexBasis: 'auto',
+      padding: '0 10px',
     },
     buy: {
       backgroundColor: '#288c00',

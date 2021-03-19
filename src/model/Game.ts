@@ -198,11 +198,12 @@ export class Game {
       return acc
     }, {} as Players)
 
-    const { round, roundEndTime, status, owner } = gameJson
+    const { round, roundEndTime, status, owner, rounds } = gameJson
     game.round = round
     game.roundEndTime = roundEndTime
     game.status = status
     game.owner = game.players[owner]
+    game.rounds = rounds
 
     return game
   }

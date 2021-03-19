@@ -95,7 +95,7 @@ export const registerSocket = (socket: Socket) => {
 
     // check games for a user's membership
     for (const [id, gameManager] of gamesById) {
-      if (gameManager.hasUser(userId)) {
+      if (gameManager.hasUser(userId) && !gameManager.isCompleted()) {
         console.log(`Game ${id} has user ${userId}. Connecting...`)
         gameManager.subscribeUserToGame(userId, socket)
       }

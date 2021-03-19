@@ -15,7 +15,11 @@ export interface GameCompleteProps {
 }
 export const GameComplete = ({ game }: GameCompleteProps) => {
   const classes = useStyles()
-  return <div className={classes.root}>GAME OVER MAN</div>
+  return (
+    <div className={classes.root}>
+      GAME OVER MAN <a href="/">HOME</a>
+    </div>
+  )
 }
 
 export default GameComplete
