@@ -38,6 +38,40 @@ export interface Stonk {
   ticker: string
   price: number
   outstanding: number
+  volatility: StonkVolatility
+  /**
+   * How often the stock is going up in the market (non-player movement)
+   */
+  bullPercent: number
+  /**
+   * If contains items, these will be used to change the state of the stonk at
+   * a later time.
+   */
+  changeQueue: QueuedStonkChange[]
+}
+
+export interface StonkVolatility {
+  /**
+   * Average percent jump the stock price makes when there is a buy
+   */
+  up: number
+  /**
+   * Average percent jump the stock price makes when there is a sell
+   */
+  down: number
+}
+
+/**
+ * A queued-up object that will change the bullPercent or volatility of this stonk
+ * after `startTime`
+ */
+export interface QueuedStonkChange {
+  volatility?: Partial<StonkVolatility>
+  bullPercent?: number
+  /**
+   * The timestamp after which this stonk change should take effect
+   */
+  startTime: number
 }
 
 export interface StonkHistoryPoint {

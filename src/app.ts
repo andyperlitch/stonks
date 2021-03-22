@@ -1,8 +1,9 @@
 import express from 'express'
+import bodyParser from 'body-parser'
 import { sessionMiddleware } from './middleware/session'
 import { staticMiddleware } from './middleware/staticMiddleware'
 import { getAppConfig } from './config'
-import bodyParser from 'body-parser'
+import { User } from './entity/User'
 
 import authRoutes from './routes/auth-routes'
 import gameRoutes from './routes/game-routes'
@@ -22,7 +23,16 @@ export async function initApp() {
   app.use(sessionMiddleware(config))
 
   // setup passport auth
-  setupAuth(app)
+  // setupAuth(app)
+  app.use((req, res, next) => {
+    const pseudoUser = new User()
+    pseudoUser.id = req.sessionID
+    pseudoUser.email = 'test@stonksgame.xyz'
+    pseudoUser.googleId = req.sessionID
+    pseudoUser.username = 'blandy'
+    req.user = pseudoUser
+    return next()
+  })
 
   // rehydrate ongoing games
   await setupGames()

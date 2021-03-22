@@ -141,12 +141,27 @@ export default class GameManager {
   }
 
   public runUpdateLoop() {
-    this.emitGameUpdate()
     if (this.gameState.status === 'IN_PROGRESS') {
+      this.applyDueStonkChanges()
+      this.doOutsideMarketMovement()
+      this.emitGameUpdate()
       setTimeout(() => {
         this.runUpdateLoop()
       }, UPDATE_INTERVAL)
     }
+  }
+
+  public applyDueStonkChanges() {
+    // apply changes
+    Object.keys(this.gameState.stonks).forEach((ticker) => {
+      const stonk = this.gameState.stonks[ticker]
+      stonk.applyDueChanges()
+    })
+  }
+
+  public doOutsideMarketMovement() {
+    // pick a random number
+    const rando = Math.random()
   }
 
   public async save() {

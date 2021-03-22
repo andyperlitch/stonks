@@ -187,9 +187,7 @@ export class Game {
     const game = new Game(gameJson.config)
 
     game.stonks = Object.values(gameJson.stonks).reduce((acc, s) => {
-      const stonk = (acc[s.ticker] = new Stonk(s.ticker))
-      stonk.price = s.price
-      stonk.outstanding = s.outstanding
+      acc[s.ticker] = Stonk.fromJSON(s)
       return acc
     }, {} as Stonks)
 
