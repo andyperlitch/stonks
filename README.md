@@ -16,6 +16,8 @@
 ## TODOs
 
 - [ ] graph of player's equity
+  - [ ] show graph for open and close hours
+  - [ ] fix bug with large price movement
 - [ ] outside price movement
 - [ ] Show other games the user is in
 - [ ] countdown to start

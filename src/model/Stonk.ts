@@ -1,5 +1,7 @@
 import * as types from '../types/game'
 
+const VOLATILITY_CHANGE_PER_SHARE = 0.0005
+const BULL_PERCENT_PER_SHARE = 0.001
 export class Stonk {
   /**
    * How much the stock price changes each time a single stock is bought or sold
@@ -36,15 +38,23 @@ export class Stonk {
   /**
    * Changes the price based on a buy event
    */
-  public buy(quantity: number) {
+  public buy(quantity: number, isRealPlayer: boolean = false) {
     this.price += this.price * this.volatility.up * quantity
+    if (isRealPlayer) {
+      this.bullPercent += BULL_PERCENT_PER_SHARE * quantity
+      this.volatility.up += VOLATILITY_CHANGE_PER_SHARE * quantity
+    }
   }
 
   /**
    * Changes the price based on a sell event
    */
-  public sell(quantity: number) {
+  public sell(quantity: number, isRealPlayer: boolean = false) {
     this.price -= this.price * this.volatility.down * quantity
+    if (isRealPlayer) {
+      this.bullPercent -= BULL_PERCENT_PER_SHARE * quantity
+      this.volatility.up -= VOLATILITY_CHANGE_PER_SHARE * quantity
+    }
   }
 
   public toJSON(): types.Stonk {
@@ -74,12 +84,12 @@ export class Stonk {
 
   private applyChange(change: types.QueuedStonkChange) {
     if (change.bullPercent) {
-      this.bullPercent = change.bullPercent
+      this.bullPercent += change.bullPercent
     }
     if (change.volatility) {
       this.volatility = {
-        ...this.volatility,
-        ...change.volatility,
+        up: this.volatility.up + (change.volatility.up ?? 0),
+        down: this.volatility.down + (change.volatility.down ?? 0),
       }
     }
   }

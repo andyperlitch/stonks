@@ -7,6 +7,8 @@ import * as types from '../../../types/game'
 import Midline from './Midline'
 import { StonkDataPoint } from './types'
 import Priceline from './Priceline'
+import EndingBellLine from './EndingBellLine'
+import { getDayForRound } from '../../utils/rounds'
 
 const useStyles = createUseStyles(
   {
@@ -62,9 +64,12 @@ export const StonkLineGraph = ({
 
     // filter if there is a round selected
     if (view === 'round') {
-      data = data.filter((d) => d.round === game.round)
-      const roundObj = game.rounds[game.round]
-      xDomain = [new Date(roundObj.startTime), new Date(roundObj.endTime)]
+      // show both market and after hours
+      const [openRound, closeRound] = getDayForRound(game)
+      data = data.filter(
+        (d) => d.round === openRound.id || d.round === closeRound.id,
+      )
+      xDomain = [new Date(openRound.startTime), new Date(closeRound.endTime)]
     } else {
       xDomain = [
         new Date(game.rounds[0].startTime),
@@ -81,7 +86,8 @@ export const StonkLineGraph = ({
       typeof yDomain[0] === 'undefined' ||
       typeof yDomain[1] === 'undefined'
     ) {
-      yDomain[1] = yDomain[0] = 0
+      yDomain[1] = 0
+      yDomain[0] = 100
     }
     const rangeAmount = yDomain[1] ? yDomain[1] - yDomain[0] : 0
     const yPadding = Math.max(100, priceAtOpen * 0.2, rangeAmount * 0.1)
@@ -92,7 +98,6 @@ export const StonkLineGraph = ({
   }, [history, ticker, view])
 
   const { x, y } = useMemo(() => {
-    console.log(`yDomain`, yDomain)
     const x = d3.scaleTime(xDomain, [0, width]) as d3.ScaleTime<number, number>
     const y = d3.scaleLinear(yDomain, [height, 0]) as d3.ScaleLinear<
       number,
@@ -107,6 +112,7 @@ export const StonkLineGraph = ({
       {height && (
         <svg className={classes.svg} width={width}>
           <Midline priceAtOpen={priceAtOpen} y={y} x={x} />
+          <EndingBellLine x={x} y={y} game={game} />
           <Priceline data={data} y={y} x={x} priceAtOpen={priceAtOpen} />
         </svg>
       )}

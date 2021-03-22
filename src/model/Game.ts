@@ -6,9 +6,9 @@ import { generateRounds } from '../utils/generateRounds'
 
 const MAX_PLAYER_COUNT = 50
 const DEFAULT_BUYING_POWER = 10000
-const DEFAULT_MARKET_HOURS_DURATION = 45000
+const DEFAULT_MARKET_HOURS_DURATION = 30000
 const MAX_MARKET_HOURS_DURATION = 30000 * 60
-const DEFAULT_AFTER_HOURS_DURATION = 60000
+const DEFAULT_AFTER_HOURS_DURATION = 20000
 const MAX_AFTER_HOURS_DURATION = 60000 * 60
 const DEFAULT_NUMBER_OF_DAYS = 5
 const MAX_NUMBER_OF_DAYS = 15
@@ -140,7 +140,7 @@ export class Game {
       return false
     }
     player.buy(stonk, shares)
-    stonk.buy(shares)
+    stonk.buy(shares, true)
     return true
   }
 

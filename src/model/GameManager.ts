@@ -121,6 +121,7 @@ export default class GameManager {
   public async cancel() {
     this.gameState.stop('CANCELLED')
     await this.save()
+    this.emitGameUpdate()
   }
 
   public setTimerForNextRound() {

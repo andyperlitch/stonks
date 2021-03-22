@@ -63,7 +63,8 @@ export interface StonkVolatility {
 
 /**
  * A queued-up object that will change the bullPercent or volatility of this stonk
- * after `startTime`
+ * after `startTime`. Note that the values are DELTAS, since the values themselves
+ * might change from other forces
  */
 export interface QueuedStonkChange {
   volatility?: Partial<StonkVolatility>
