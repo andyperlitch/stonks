@@ -5,8 +5,8 @@ export class Stonk {
    * How much the stock price changes each time a single stock is bought or sold
    */
   public volatility: types.StonkVolatility = {
-    up: 0.002,
-    down: 0.002,
+    up: 0.05,
+    down: 0.05,
   }
 
   /**

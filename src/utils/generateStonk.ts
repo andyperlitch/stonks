@@ -16,5 +16,6 @@ function generateTicker() {
 export function generateStonk(): Stonk {
   const ticker = generateTicker()
   const stonk = new Stonk(ticker)
+  stonk.bullPercent = Math.random() * 0.6 + 0.1
   return stonk
 }

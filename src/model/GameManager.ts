@@ -162,6 +162,17 @@ export default class GameManager {
   public doOutsideMarketMovement() {
     // pick a random number
     const rando = Math.random()
+
+    // for each stonk, look at the bullPercent to see if rando is a buy or sell
+    Object.values(this.gameState.stonks).forEach((stonk) => {
+      if (rando <= stonk.bullPercent) {
+        // do a buy
+        stonk.buy(1)
+      } else {
+        // do a sell
+        stonk.sell(1)
+      }
+    })
   }
 
   public async save() {
