@@ -25,7 +25,7 @@ export const GameContainer = () => {
     }
     case 'COMPLETE':
     case 'CANCELLED': {
-      return <GameComplete game={game} nickname={nickname} />
+      return <GameInProgress game={game} nickname={nickname as string} />
     }
   }
 }
