@@ -6,6 +6,7 @@ import { centsToPrice } from '../utils/centsToPrice'
 import Button from './Button'
 import Card from './Card'
 import StonkLineGraph from './StonkLineGraph'
+import StonkPregameInfo from './StonkPregameInfo'
 
 const useStyles = createUseStyles(
   {
@@ -93,7 +94,11 @@ const useStyles = createUseStyles(
   { name: 'GameStonks' },
 )
 
-export const GameStonks = () => {
+interface GameStonksProps {
+  pregame?: boolean
+}
+
+export const GameStonks = ({ pregame = false }: GameStonksProps) => {
   const classes = useStyles()
   const { game, socket, gameId, nickname, history } = useGame()
 
@@ -161,30 +166,36 @@ export const GameStonks = () => {
                 </div>
               </div>
             </div>
-            <StonkLineGraph
-              game={game}
-              ticker={stonk.ticker}
-              history={history}
-              className={classes.stonkGraph}
-            />
-            <div className={classes.actions}>
-              <Button
-                size="md"
-                className={classes.buy}
-                disabled={game.round % 2 !== 0}
-                onClick={stonk.buy}
-              >
-                buy
-              </Button>
-              <Button
-                size="md"
-                className={classes.sell}
-                disabled={game.round % 2 !== 0 || stonk.position === 0}
-                onClick={stonk.sell}
-              >
-                sell
-              </Button>
-            </div>
+            {pregame ? (
+              <StonkPregameInfo game={game} ticker={stonk.ticker} />
+            ) : (
+              <>
+                <StonkLineGraph
+                  game={game}
+                  ticker={stonk.ticker}
+                  history={history}
+                  className={classes.stonkGraph}
+                />
+                <div className={classes.actions}>
+                  <Button
+                    size="md"
+                    className={classes.buy}
+                    disabled={game.round % 2 !== 0}
+                    onClick={stonk.buy}
+                  >
+                    buy
+                  </Button>
+                  <Button
+                    size="md"
+                    className={classes.sell}
+                    disabled={game.round % 2 !== 0 || stonk.position === 0}
+                    onClick={stonk.sell}
+                  >
+                    sell
+                  </Button>
+                </div>
+              </>
+            )}
           </Card>
         )
       })}

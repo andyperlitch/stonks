@@ -22,14 +22,14 @@ const useStyles = createUseStyles(
       flexGrow: '1',
     },
   },
-  { name: 'GameInProgress' },
+  { name: 'GameOver' },
 )
 
-export interface GameInProgressProps {
+export interface GameOverProps {
   game: Game
   nickname: string
 }
-export const GameInProgress = ({ game, nickname }: GameInProgressProps) => {
+export const GameOver = ({ game, nickname }: GameOverProps) => {
   const classes = useStyles()
   return (
     <MainGrid
@@ -72,4 +72,4 @@ export const GameInProgress = ({ game, nickname }: GameInProgressProps) => {
   )
 }
 
-export default GameInProgress
+export default GameOver

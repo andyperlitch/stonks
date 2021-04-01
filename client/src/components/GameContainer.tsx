@@ -1,6 +1,6 @@
 import React from 'react'
 import { useGame } from '../hooks/useGame'
-import GameComplete from './GameComplete'
+import GameOver from './GameOver'
 import GameError from './GameError'
 import GameInProgress from './GameInProgress'
 import GameLoading from './GameLoading'
@@ -25,8 +25,7 @@ export const GameContainer = () => {
     }
     case 'COMPLETE':
     case 'CANCELLED': {
-      console.log('boopp', game.status)
-      return <GameInProgress game={game} nickname={nickname as string} />
+      return <GameOver game={game} nickname={nickname as string} />
     }
   }
 }

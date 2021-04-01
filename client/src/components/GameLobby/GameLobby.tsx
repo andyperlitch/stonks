@@ -1,42 +1,27 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
 import { Game } from '../../../types/game'
-import { useStartGame } from '../../network/startGame'
 import Button from '../Button'
+import GameStonks from '../GameStonks'
+import Nav from '../Nav'
+import Portfolio from '../Portfolio'
+import Leaderboard from '../Leaderboard'
+import GameChat from '../GameChat'
+import MainGrid from '../MainGrid'
+import MarketInfoHeading from '../MarketInfoHeading'
+import { useStartGame } from '../../network/startGame'
+import Card from '../Card'
 
 const useStyles = createUseStyles(
   {
-    root: {
-      display: 'flex',
-      margin: '20px auto 0',
-      flexDirection: 'column',
-      alignItems: 'center',
-      maxWidth: '600px',
-      width: '100%',
+    marketInfoCard: {
+      flexGrow: '1',
     },
-    sectionHeading: {
-      marginTop: '20px',
+    portfolioCard: {
+      flexGrow: '1',
     },
-    players: {
-      width: '100%',
-    },
-    player: {
-      padding: '10px',
-      border: '1px solid var(--color-primary)',
-      marginTop: '10px',
-      width: '100%',
-    },
-    stonks: {
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-    },
-    stonk: {
-      padding: '10px',
-      border: '1px solid var(--color-primary)',
-      marginTop: '10px',
-      width: '33%',
+    chatCard: {
+      flexGrow: '1',
     },
     codeBox: {
       border: '1px solid var(--color-secondary)',
@@ -65,62 +50,76 @@ export interface GameLobbyProps {
    */
   code: string | null
 }
-export const GameLobby = ({ nickname, game, code }: GameLobbyProps) => {
+export const GameLobby = ({ game, nickname, code }: GameLobbyProps) => {
+  const classes = useStyles()
   const { startGame, loading: startingGame, error: startError } = useStartGame()
   const onStartGame = () => {
     startGame(game.id)
   }
-  const classes = useStyles()
   return (
-    <div className={classes.root}>
-      {code && (
-        <div className={classes.codeBox}>
-          <h3>entry code:</h3>
-          <h2>{code}</h2>
-        </div>
-      )}
-      {game.owner === nickname ? (
-        <div>
-          <Button
-            fill="solid"
-            size="lg"
-            onClick={onStartGame}
-            disabled={startingGame}
-          >
-            Start Game
-          </Button>
-          {startError && (
-            <p className={classes.startError}>
-              {JSON.stringify(startError, null, 2)}
-            </p>
-          )}
-        </div>
-      ) : (
-        <h1>Waiting to start...</h1>
-      )}
-      <h2 className={classes.sectionHeading}>Players</h2>
-      <div className={classes.players}>
-        {Object.values(game.players).map((player) => {
-          return (
-            <div key={player.name} className={classes.player}>
-              <h3>
-                {player.name === nickname && '>'} {player.name}
-              </h3>
-            </div>
-          )
-        })}
-      </div>
-      <h2 className={classes.sectionHeading}>Stonks</h2>
-      <div className={classes.stonks}>
-        {Object.values(game.stonks).map((stonk) => {
-          return (
-            <div key={stonk.ticker} className={classes.stonk}>
-              <h3>{stonk.ticker}</h3>
-            </div>
-          )
-        })}
-      </div>
-    </div>
+    <MainGrid
+      topBar={<Nav />}
+      midLeft={
+        <>
+          <MarketInfoHeading game={game} nickname={nickname} />
+          <Card className={classes.marketInfoCard}>
+            {code && (
+              <div className={classes.codeBox}>
+                <h3>entry code:</h3>
+                <h2>{code}</h2>
+              </div>
+            )}
+            {game.owner === nickname ? (
+              <div>
+                <Button
+                  fill="solid"
+                  size="lg"
+                  onClick={onStartGame}
+                  disabled={startingGame}
+                >
+                  Start Game
+                </Button>
+                {startError && (
+                  <p className={classes.startError}>
+                    {JSON.stringify(startError, null, 2)}
+                  </p>
+                )}
+              </div>
+            ) : (
+              <h1>Waiting to start...</h1>
+            )}
+          </Card>
+        </>
+      }
+      midCenter={
+        <>
+          <h2>Your Portfolio</h2>
+          <Portfolio
+            className={classes.portfolioCard}
+            game={game}
+            nickname={nickname}
+          />
+        </>
+      }
+      midRight={
+        <>
+          <h2>Players</h2>
+          <Leaderboard game={game} />
+        </>
+      }
+      bottomLeft={
+        <>
+          <h2>Stonks</h2>
+          <GameStonks pregame />
+        </>
+      }
+      bottomRight={
+        <>
+          <h2>Chat</h2>
+          <GameChat className={classes.chatCard} />
+        </>
+      }
+    />
   )
 }
 

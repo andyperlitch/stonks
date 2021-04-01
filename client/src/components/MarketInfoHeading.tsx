@@ -2,6 +2,8 @@ import React from 'react'
 import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
 import { createUseStyles } from 'react-jss'
 import { Game } from '../../types/game'
+import '@szhsin/react-menu/dist/index.css'
+import '@szhsin/react-menu/dist/theme-dark.css'
 import { useCancelGame } from '../network/cancelGame'
 
 const useStyles = createUseStyles(

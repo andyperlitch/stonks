@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react'
+import HttpJsonError from './HttpJsonError'
 export const useJoinGame = () => {
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
+  const [error, setError] = useState<HttpJsonError | null>(null)
   const joinGame = useCallback(
     (nickname: string, code: string) => {
       setLoading(true)
@@ -13,6 +14,17 @@ export const useJoinGame = () => {
         },
       })
         .then((response) => response.json())
+        .then((data) => {
+          if (data.status >= 400) {
+            throw new HttpJsonError(
+              data.status,
+              data.code,
+              data.message,
+              data.more,
+            )
+          }
+          return data
+        })
         .then((data) => {
           setLoading(false)
           return data as { id: string }

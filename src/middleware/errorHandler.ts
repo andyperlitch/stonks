@@ -2,7 +2,6 @@ import { ErrorRequestHandler } from 'express'
 import HttpJsonError from '../errors/HttpJsonError'
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  console.log(`err instanceof HttpJsonError`, err instanceof HttpJsonError)
   if (err instanceof HttpJsonError) {
     res.status(err.status).json({
       status: err.status,
@@ -13,5 +12,11 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     })
     return
   }
-  res.status(err.status || 500).send(err.message)
+
+  res.status(500).json({
+    status: 500,
+    code: err.code ?? 'UNKNOWN',
+    message: err.message,
+    stack: process.env.NODE_ENV !== 'production' ? err.stack : null,
+  })
 }

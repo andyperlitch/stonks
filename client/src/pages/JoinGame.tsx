@@ -5,6 +5,7 @@ import TextInput from '../components/TextInput'
 import Button from '../components/Button'
 import { useJoinGame } from '../network/joinGame'
 import { buildUrl, routes } from '../routes'
+import FormErrors from '../components/FormErrors'
 
 const useStyles = createUseStyles({
   container: {
@@ -33,9 +34,13 @@ export const JoinGame = () => {
       if (e) {
         e.preventDefault()
       }
-      joinGame(nickname, code).then(({ id }) => {
-        history.push(buildUrl(routes.GAME, { id }))
-      })
+      joinGame(nickname, code)
+        .then(({ id }) => {
+          history.push(buildUrl(routes.GAME, { id }))
+        })
+        .catch((err) => {
+          console.error('Error joining: ', err.message)
+        })
     },
     [joinGame, code, history, nickname],
   )
@@ -48,16 +53,17 @@ export const JoinGame = () => {
           onChange={setNickname}
           value={nickname}
           label="Nickname:"
-          classes={{
-            input: classes.joinInput,
-          }}
         />
         <TextInput
           name="code"
           onChange={setCode}
           value={code}
           label="Enter passcode:"
+          classes={{
+            input: classes.joinInput,
+          }}
         />
+        <FormErrors error={error} />
         <Button
           type="submit"
           size="lg"
