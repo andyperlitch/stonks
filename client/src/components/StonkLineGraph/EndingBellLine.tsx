@@ -2,6 +2,7 @@ import { ScaleLinear, ScaleTime } from 'd3-scale'
 import React from 'react'
 import { createUseStyles } from 'react-jss'
 import * as types from '../../../types/game'
+import { getDayForRound } from '../../utils/rounds'
 
 const useStyles = createUseStyles(
   {
@@ -23,8 +24,7 @@ export const EndingBellLine = ({ game, x, y }: EndingBellLineProps) => {
   const classes = useStyles()
 
   // get the open round object
-  const marketHoursRound =
-    game.rounds[game.round % 2 === 0 ? game.round : game.round - 1]
+  const [marketHoursRound] = getDayForRound(game)
   const xCoord = x(marketHoursRound.endTime)
   const yCoords = y.range()
 

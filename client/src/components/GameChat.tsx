@@ -1,9 +1,10 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useEffect, useRef, useState } from 'react'
 import cn from 'classnames'
 import { createUseStyles } from 'react-jss'
 import { useGame } from '../hooks/useGame'
 import Card from './Card'
 import TextInput from './TextInput'
+import useResizeObserver from 'use-resize-observer'
 
 const useStyles = createUseStyles(
   {
@@ -13,6 +14,7 @@ const useStyles = createUseStyles(
     },
     chatMessages: {
       flexGrow: '1',
+      overflowY: 'scroll',
     },
     chatMessage: {},
     from: {
@@ -34,10 +36,15 @@ export const GameChat = ({ className }: GameChatProps) => {
   const classes = useStyles()
   const { gameId, chat, socket } = useGame()
   const [draft, setDraft] = useState('')
+  const ref = useRef<HTMLDivElement>(null)
+  const { height } = useResizeObserver<HTMLDivElement>({ ref })
 
   const onMessage = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!socket) {
+      return
+    }
+    if (!draft.trim()) {
       return
     }
     socket.emit('chat', {
@@ -47,9 +54,19 @@ export const GameChat = ({ className }: GameChatProps) => {
     setDraft('')
   }
 
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollTop = ref.current.scrollHeight
+    }
+  }, [chat])
+
   return (
     <Card className={cn(classes.root, className)}>
-      <div className={classes.chatMessages}>
+      <div
+        className={classes.chatMessages}
+        ref={ref}
+        style={{ height: height ? `${height}px` : 'auto' }}
+      >
         {chat.map(({ message, nickname }) => {
           return (
             <div className={classes.chatMessage}>

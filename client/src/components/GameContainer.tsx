@@ -25,6 +25,7 @@ export const GameContainer = () => {
     }
     case 'COMPLETE':
     case 'CANCELLED': {
+      console.log('boopp', game.status)
       return <GameInProgress game={game} nickname={nickname as string} />
     }
   }
