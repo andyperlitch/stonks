@@ -5,6 +5,7 @@ import { useGame } from '../hooks/useGame'
 import { centsToPrice } from '../utils/centsToPrice'
 import Button from './Button'
 import Card from './Card'
+import MovingNumber from './MovingNumber'
 import StonkLineGraph from './StonkLineGraph'
 import StonkPregameInfo from './StonkPregameInfo'
 
@@ -147,7 +148,7 @@ export const GameStonks = ({ pregame = false }: GameStonksProps) => {
                 <div>
                   <h4 className={classes.infoHeading}>Price</h4>
                   <div className={classes.infoValue}>
-                    {centsToPrice(stonk.price)}
+                    <MovingNumber numString={centsToPrice(stonk.price)} />
                   </div>
                 </div>
               </div>
@@ -155,13 +156,15 @@ export const GameStonks = ({ pregame = false }: GameStonksProps) => {
                 <div>
                   <h4 className={classes.infoHeading}>Shares</h4>
                   <div className={classes.infoValue}>
-                    {stonk.position.toLocaleString()}
+                    <MovingNumber numString={stonk.position.toLocaleString()} />
                   </div>
                 </div>
                 <div>
                   <h4 className={classes.infoHeading}>Equity</h4>
                   <div className={classes.infoValue}>
-                    {centsToPrice(stonk.position * stonk.price)}
+                    <MovingNumber
+                      numString={centsToPrice(stonk.position * stonk.price)}
+                    />
                   </div>
                 </div>
               </div>

@@ -5,6 +5,7 @@ import { Game } from '../../types/game'
 import { centsToPrice } from '../utils/centsToPrice'
 import Card from './Card'
 import TotalEquityGraph from './TotalEquityGraph'
+import MovingNumber from './MovingNumber'
 
 const useStyles = createUseStyles(
   {
@@ -63,13 +64,13 @@ export const Portfolio = ({ game, nickname, className }: PortfolioProps) => {
         <div className={classes.totalEquity}>
           <h3>Total Equity</h3>
           <div className={classes.totalEquityValue}>
-            {centsToPrice(player.totalEquity)}
+            <MovingNumber numString={centsToPrice(player.totalEquity)} />
           </div>
         </div>
         <div className={classes.buyingPower}>
           <h4>Buying Power</h4>
           <div className={classes.buyingPowerValue}>
-            {centsToPrice(player.buyingPower)}
+            <MovingNumber numString={centsToPrice(player.buyingPower)} />
           </div>
         </div>
       </div>

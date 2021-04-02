@@ -8,6 +8,7 @@ const useStyles = createUseStyles(
       color: 'white',
       cursor: 'pointer',
       outline: 'none',
+      borderRadius: '3px',
     },
     solid: {
       border: 'none',

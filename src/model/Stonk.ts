@@ -1,7 +1,7 @@
 import * as types from '../types/game'
 
-const VOLATILITY_CHANGE_PER_SHARE = 0.0005
-const BULL_PERCENT_PER_SHARE = 0.001
+const VOLATILITY_CHANGE_PER_SHARE = 0.0002
+const BULL_PERCENT_PER_SHARE = 0.0005
 export class Stonk {
   /**
    * How much the stock price changes each time a single stock is bought or sold
@@ -51,6 +51,7 @@ export class Stonk {
    */
   public sell(quantity: number, isRealPlayer: boolean = false) {
     this.price -= this.price * this.volatility.down * quantity
+    this.price = Math.max(this.price, 1)
     if (isRealPlayer) {
       this.bullPercent -= BULL_PERCENT_PER_SHARE * quantity
       this.volatility.up -= VOLATILITY_CHANGE_PER_SHARE * quantity
