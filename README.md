@@ -35,6 +35,7 @@
 - [ ] ended game view
   - [ ] entire-game view
   - [ ] current round view
+- [ ] limit nickname length
 - [ ] Limit user to just one game at a time
 - [ ] Show other games the user is in
 - [ ] better error handling/redirect when oauth fails

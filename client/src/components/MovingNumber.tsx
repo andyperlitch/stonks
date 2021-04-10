@@ -72,15 +72,18 @@ export const MovingNumber = React.memo(({ numString }: MovingNumberProps) => {
     d3.select(ref.current)
       .selectAll<HTMLDivElement, CharData>(`div.${classes.position}`)
       .data(charData, (d) => d.id)
-      .join((enter) => {
-        const char = enter.append('div').classed(classes.position, true)
-        //   .classed(classes.charPos, (d) => !d.isNumber)
-        //   .classed(classes.numberPos, (d) => d.isNumber)
-
+      .join(
+        (enter) => enter.append('div').classed(classes.position, true),
+        (update) => update,
+        (exit) => {
+          console.log(`exit`, exit)
+          exit.remove()
+        },
+      )
+      .call((char) => {
         char
-          //   .filter((d) => d.isNumber)
           .selectAll(`div.${classes.number}`)
-          .data([
+          .data((d) => [
             '9',
             '8',
             '7',
@@ -91,26 +94,20 @@ export const MovingNumber = React.memo(({ numString }: MovingNumberProps) => {
             '2',
             '1',
             '0',
-            // To
-            '',
+            d.char,
           ])
           .join(
-            (enter) =>
-              enter
-                .append('div')
-                .classed(classes.nonNumberChar, (d) => d === '')
-                .text((d) => d),
+            (enter) => enter.append('div').classed(classes.number, true),
             (update) => update,
             (exit) => exit.remove(),
           )
-
-        char.filter((d) => !d.isNumber).text((d) => d.char)
-
-        return char
+          .text((d) => d)
       })
-      .filter((d) => d.isNumber)
       .transition()
-      .style('top', (d) => `-${(9 - Number(d.char)) * HEIGHT}em`)
+      .style(
+        'top',
+        (d) => `-${(d.isNumber ? 9 - Number(d.char) : 10) * HEIGHT}em`,
+      )
   }, [numString, classes, charData])
 
   return <div ref={ref} className={classes.root}></div>
