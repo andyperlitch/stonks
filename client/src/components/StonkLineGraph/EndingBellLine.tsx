@@ -1,5 +1,5 @@
-import { ScaleLinear, ScaleTime } from 'd3-scale'
-import React from 'react'
+import * as d3 from 'd3'
+import React, { useEffect, useRef } from 'react'
 import { createUseStyles } from 'react-jss'
 import * as types from '../../../types/game'
 import { getDayForRound } from '../../utils/rounds'
@@ -7,8 +7,8 @@ import { getDayForRound } from '../../utils/rounds'
 const useStyles = createUseStyles(
   {
     line: {
-      stroke: 'white',
-      strokeDasharray: '4 2',
+      stroke: 'rgba(255,255,255,0.3)',
+      strokeDasharray: '1 4',
       strokeWidth: '1px',
     },
   },
@@ -17,26 +17,28 @@ const useStyles = createUseStyles(
 
 export interface EndingBellLineProps {
   game: types.Game
-  x: ScaleTime<number, number>
-  y: ScaleLinear<number, number>
+  x: d3.ScaleTime<number, number>
+  y: d3.ScaleLinear<number, number>
 }
 export const EndingBellLine = ({ game, x, y }: EndingBellLineProps) => {
   const classes = useStyles()
+  const ref = useRef<SVGLineElement>(null)
 
-  // get the open round object
-  const [marketHoursRound] = getDayForRound(game)
-  const xCoord = x(marketHoursRound.endTime)
-  const yCoords = y.range()
+  useEffect(() => {
+    // get the open round object
+    const [marketHoursRound] = getDayForRound(game)
+    const xCoord = x(marketHoursRound.endTime)
+    const yCoords = y.range()
+    d3.select(ref.current)
+      .datum({ xCoord, yCoords })
+      .transition()
+      .attr('x1', (d) => d.xCoord)
+      .attr('x2', (d) => d.xCoord)
+      .attr('y1', (d) => d.yCoords[0])
+      .attr('y2', (d) => d.yCoords[1])
+  }, [x, y])
 
-  return (
-    <line
-      className={classes.line}
-      x1={xCoord}
-      y1={yCoords[0]}
-      x2={xCoord}
-      y2={yCoords[1]}
-    />
-  )
+  return <line className={classes.line} ref={ref} />
 }
 
 export default EndingBellLine

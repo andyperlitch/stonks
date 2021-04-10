@@ -19,9 +19,13 @@ const useStyles = createUseStyles(
       justifyContent: 'flex-start',
       alignItems: 'stretch',
     },
+    svgContainer: {
+      flexGrow: 1,
+    },
     svg: {
       width: '100%',
     },
+    controls: {},
   },
   { name: 'StonkLineGraph' },
 )
@@ -103,20 +107,21 @@ export const StonkLineGraph = ({
       number,
       number
     >
-    console.log(`y.range()`, y.range())
     return { x, y }
   }, [xDomain, yDomain, width, height])
 
   return (
-    <div className={cn(classes.root, className)} ref={ref}>
-      {height && (
-        <svg className={classes.svg} width={width}>
-          <Midline priceAtOpen={priceAtOpen} y={y} x={x} />
-          <EndingBellLine x={x} y={y} game={game} />
-          <Priceline data={data} y={y} x={x} priceAtOpen={priceAtOpen} />
-        </svg>
-      )}
-      <div>
+    <div className={cn(classes.root, className)}>
+      <div className={classes.svgContainer} ref={ref}>
+        {height && (
+          <svg className={classes.svg} width={width}>
+            <Midline priceAtOpen={priceAtOpen} y={y} x={x} />
+            <EndingBellLine x={x} y={y} game={game} />
+            <Priceline data={data} y={y} x={x} priceAtOpen={priceAtOpen} />
+          </svg>
+        )}
+      </div>
+      <div className={classes.controls}>
         {view === 'round' ? (
           <span>round</span>
         ) : (
