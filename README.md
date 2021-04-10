@@ -10,30 +10,38 @@
 
 ## Bugs
 
-- [ ] layout not scrolling on home page (ionic-related)
 - [ ] "undefined" as a key in the users
+- [x] layout not scrolling on home page (ionic-related)
 
 ## TODOs
 
+### Bugs
+
+- [ ] fix the MovingNumber component
+- [ ] Figure out why subscribing to games that have ended
+- [x] fix domain bug in stonk line graph
+- [x] fix leaderboard sort order
+- [x] force code to be uppercase
+- [x] Try to reproduce `MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 buy listeners added to [Socket]. Use emitter.setMaxListeners() to increase limit`
+
+### Features
+
 - [ ] graph of player's equity
-  - [ ] show graph for open and close hours
-  - [ ] fix bug with large price movement
-- [ ] outside price movement
-- [ ] Show other games the user is in
 - [ ] countdown to start
 - [ ] a way to return to home screen from join
+- [ ] limit chat messages
+- [ ] show which user is the owner on game page
+- [ ] graphic of green "+1" floats away every time you click buy, same with red "-1" for sell
 - [ ] ended game view
   - [ ] entire-game view
   - [ ] current round view
 - [ ] Limit user to just one game at a time
-- [ ] limit chat messages
-- [ ] Figure out why subscribing to games that have ended
-- [ ] show which user is the owner on game page
-- [ ] graphic of green "+1" floats away every time you click buy, same with red "-1" for sell
-- [x] fix leaderboard sort order
-- [x] force code to be uppercase
+- [ ] Show other games the user is in
+- [ ] better error handling/redirect when oauth fails
+- [ ] animation for loading screen
+- [ ] fake company summaries for each stonk before the game has started
+- [x] outside price movement
 - [x] graphs of stonks
-- [x] Try to reproduce `MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 buy listeners added to [Socket]. Use emitter.setMaxListeners() to increase limit`
 - [x] make the buy and sell buttons disabled during after-hours trading
 - [x] `JoinGame` page
   - [x] text area for nickname, text area for code
@@ -47,8 +55,9 @@
 - [x] Handle socket.io connections on server
   - [x] create a socket store
 - [x] Don't require login to join
-
-## Nice-to-haves
-
 - [x] redis-based session storage
-- [ ] better error handling/redirect when oauth fails
+
+### Tasks
+
+- [ ] Terms of Service
+- [ ]

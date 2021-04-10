@@ -13,13 +13,12 @@ const useStyles = createUseStyles(
       height: `${HEIGHT}em`,
       overflow: 'hidden',
     },
-    charPos: {},
-    numberPos: {},
     position: {
       height: `${HEIGHT}em`,
       lineHeight: `${HEIGHT}em`,
       position: 'relative',
     },
+    nonNumberChar: {},
     char: {},
     number: {
       height: `${HEIGHT}em`,
@@ -42,7 +41,7 @@ const NUMBERS = {
 }
 
 interface CharData {
-  id: string
+  id: number
   char: string
   isNumber: boolean
 }
@@ -60,7 +59,7 @@ export const MovingNumber = React.memo(({ numString }: MovingNumberProps) => {
     const charData: CharData[] = chars.map((c, i) => {
       const isNumber = NUMBERS.hasOwnProperty(c)
       return {
-        id: `${isNumber ? 'num' : 'char'}-${chars.length - i}`,
+        id: chars.length - i,
         char: c,
         isNumber,
       }
@@ -74,21 +73,32 @@ export const MovingNumber = React.memo(({ numString }: MovingNumberProps) => {
       .selectAll<HTMLDivElement, CharData>(`div.${classes.position}`)
       .data(charData, (d) => d.id)
       .join((enter) => {
-        const char = enter
-          .append('div')
-          .classed(classes.position, true)
-          .classed(classes.charPos, (d) => !d.isNumber)
-          .classed(classes.numberPos, (d) => d.isNumber)
+        const char = enter.append('div').classed(classes.position, true)
+        //   .classed(classes.charPos, (d) => !d.isNumber)
+        //   .classed(classes.numberPos, (d) => d.isNumber)
 
         char
-          .filter((d) => d.isNumber)
+          //   .filter((d) => d.isNumber)
           .selectAll(`div.${classes.number}`)
-          .data([9, 8, 7, 6, 5, 4, 3, 2, 1, 0])
+          .data([
+            '9',
+            '8',
+            '7',
+            '6',
+            '5',
+            '4',
+            '3',
+            '2',
+            '1',
+            '0',
+            // To
+            '',
+          ])
           .join(
             (enter) =>
               enter
                 .append('div')
-                .classed(classes.number, true)
+                .classed(classes.nonNumberChar, (d) => d === '')
                 .text((d) => d),
             (update) => update,
             (exit) => exit.remove(),

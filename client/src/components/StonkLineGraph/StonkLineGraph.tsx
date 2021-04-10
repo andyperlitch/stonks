@@ -97,6 +97,7 @@ export const StonkLineGraph = ({
     const yPadding = Math.max(100, priceAtOpen * 0.2, rangeAmount * 0.1)
     yDomain[0] -= yPadding
     yDomain[1] += yPadding
+    console.log(`yDomain`, yDomain)
 
     return { data, yDomain, xDomain, priceAtOpen }
   }, [history, ticker, view])
