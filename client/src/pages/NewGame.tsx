@@ -3,6 +3,7 @@ import { createUseStyles } from 'react-jss'
 import { useHistory } from 'react-router'
 import Button from '../components/Button'
 import PlayerColorInput from '../components/PlayerColorInput'
+import PlayerAvatarInput from '../components/PlayerAvatarInput'
 import RadioInput, { RadioInputOption } from '../components/RadioInput'
 import TextInput from '../components/TextInput'
 import { useNumberAsString } from '../hooks/useNumberAsString'
@@ -59,6 +60,7 @@ export const NewGame = () => {
   const [numberOfDays, setNumberOfDays] = useNumberAsString(5)
   const [nickname, setNickname] = useState('')
   const [playerColor, setPlayerColor] = useState('')
+  const [playerAvatar, setPlayerAvatar] = useState('')
 
   const {
     createGame,
@@ -122,6 +124,7 @@ export const NewGame = () => {
           onChange={setNickname}
         />
         <PlayerColorInput value={playerColor} onChange={setPlayerColor} />
+        <PlayerAvatarInput value={playerAvatar} onChange={setPlayerAvatar} />
         <Button
           fill="solid"
           size="lg"

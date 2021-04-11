@@ -2,28 +2,29 @@ import React from 'react'
 import cn from 'classnames'
 import { createUseStyles } from 'react-jss'
 import RadioInput, { RadioInputOption } from './RadioInput'
-import { PLAYER_COLORS } from '../consts/playerColors'
+import { PLAYER_AVATARS } from '../consts/playerAvatars'
 
-const COLOR_OPTION_SIZE = 30
-const COLOR_OPTION_PADDING = 8
-const COLORS_PER_ROW = 6
+const AVATAR_OPTION_SIZE = 40
+const AVATAR_OPTION_PADDING = 8
+const AVATARS_PER_ROW = 5
 
 const useStyles = createUseStyles(
   {
     choice: {
-      height: `${COLOR_OPTION_SIZE}px`,
-      width: `${COLOR_OPTION_SIZE}px`,
+      backgroundSize: 'contain',
+      height: `${AVATAR_OPTION_SIZE}px`,
+      width: `${AVATAR_OPTION_SIZE}px`,
       borderRadius: '50%',
     },
     disabled: {},
     optionsContainer: {
       width: `${
-        (COLOR_OPTION_SIZE + COLOR_OPTION_PADDING * 2 + 2) * COLORS_PER_ROW
+        (AVATAR_OPTION_SIZE + AVATAR_OPTION_PADDING * 2 + 2) * AVATARS_PER_ROW
       }px`,
       flexWrap: 'wrap',
     },
     optionLabel: {
-      padding: `${COLOR_OPTION_PADDING}px`,
+      padding: `${AVATAR_OPTION_PADDING}px`,
     },
   },
   { name: 'PlayerColorInput' },
@@ -40,14 +41,14 @@ export const PlayerColorInput = ({
   taken = [],
 }: PlayerColorInputProps) => {
   const classes = useStyles()
-  const COLOR_OPTIONS: RadioInputOption[] = PLAYER_COLORS.map((color) => ({
-    value: color,
+  const AVATAR_OPTIONS: RadioInputOption[] = PLAYER_AVATARS.map((avatar) => ({
+    value: avatar,
     label: (
       <div
         className={cn(classes.choice, {
-          [classes.disabled]: taken.includes(color),
+          [classes.disabled]: taken.includes(avatar),
         })}
-        style={{ backgroundColor: color }}
+        style={{ backgroundImage: `url(/assets/avatars/${avatar}.png)` }}
       ></div>
     ),
   }))
@@ -58,11 +59,11 @@ export const PlayerColorInput = ({
         optionLabel: classes.optionLabel,
       }}
       variant="compact"
-      name="playerColor"
-      label="Your Color"
+      name="playerAvatar"
+      label="Your Avatar"
       value={value}
       onChange={onChange}
-      options={COLOR_OPTIONS}
+      options={AVATAR_OPTIONS}
       optionIdPrefix="playerColor"
     />
   )
