@@ -6,6 +6,8 @@ import Button from '../components/Button'
 import { useJoinGame } from '../network/joinGame'
 import { buildUrl, routes } from '../routes'
 import FormErrors from '../components/FormErrors'
+import PlayerColorInput from '../components/PlayerColorInput'
+import PlayerAvatarInput from '../components/PlayerAvatarInput'
 
 const useStyles = createUseStyles({
   container: {
@@ -13,7 +15,7 @@ const useStyles = createUseStyles({
     flexDirection: 'column',
     width: '100%',
     maxWidth: '300px',
-    margin: '20px auto 0',
+    margin: '20px auto 20px',
     textAlign: 'center',
   },
   joinInput: {
@@ -24,6 +26,8 @@ const useStyles = createUseStyles({
 export const JoinGame = () => {
   const classes = useStyles()
   const [nickname, setNickname] = useState('')
+  const [playerColor, setPlayerColor] = useState('')
+  const [playerAvatar, setPlayerAvatar] = useState('')
   const [code, setCode] = useState('')
   const history = useHistory()
 
@@ -34,7 +38,7 @@ export const JoinGame = () => {
       if (e) {
         e.preventDefault()
       }
-      joinGame(nickname, code)
+      joinGame({ nickname, code, playerAvatar, playerColor })
         .then(({ id }) => {
           history.push(buildUrl(routes.GAME, { id }))
         })
@@ -42,18 +46,12 @@ export const JoinGame = () => {
           console.error('Error joining: ', err.message)
         })
     },
-    [joinGame, code, history, nickname],
+    [joinGame, code, history, nickname, playerAvatar, playerColor],
   )
 
   return (
     <div className={classes.container}>
       <form onSubmit={onSubmit}>
-        <TextInput
-          name="nickname"
-          onChange={setNickname}
-          value={nickname}
-          label="Nickname:"
-        />
         <TextInput
           name="code"
           onChange={setCode}
@@ -63,12 +61,23 @@ export const JoinGame = () => {
             input: classes.joinInput,
           }}
         />
+        <hr />
+        <TextInput
+          name="nickname"
+          onChange={setNickname}
+          value={nickname}
+          label="Your Nickname"
+        />
+        <PlayerColorInput value={playerColor} onChange={setPlayerColor} />
+        <PlayerAvatarInput value={playerAvatar} onChange={setPlayerAvatar} />
         <FormErrors error={error} />
         <Button
           type="submit"
           size="lg"
           onClick={onSubmit}
-          disabled={Boolean(!code.trim() || !nickname.trim())}
+          disabled={Boolean(
+            !code.trim() || !nickname.trim() || !playerAvatar || !playerColor,
+          )}
         >
           Join Game
         </Button>

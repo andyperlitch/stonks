@@ -86,5 +86,9 @@ export const rootStyles = {
     h3: {
       textDecoration: 'underline',
     },
+
+    hr: {
+      borderColor: 'var(--color-primary)',
+    },
   },
 }

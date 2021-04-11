@@ -4,11 +4,21 @@ export const useJoinGame = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<HttpJsonError | null>(null)
   const joinGame = useCallback(
-    (nickname: string, code: string) => {
+    ({
+      nickname,
+      code,
+      playerColor,
+      playerAvatar,
+    }: {
+      nickname: string
+      code: string
+      playerColor: string
+      playerAvatar: string
+    }) => {
       setLoading(true)
       return fetch(`/api/games/join`, {
         method: 'POST',
-        body: JSON.stringify({ nickname, code }),
+        body: JSON.stringify({ nickname, code, playerColor, playerAvatar }),
         headers: {
           'Content-Type': 'application/json',
         },
