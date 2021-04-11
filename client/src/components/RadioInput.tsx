@@ -55,7 +55,7 @@ const useCompactStyles = createUseStyles({
     },
   },
   selected: {
-    backgroundColor: 'rgba(55,28,112,0.64)',
+    backgroundColor: 'rgba(130, 79, 237, 0.78)',
     '&:hover': {
       backgroundColor: 'rgba(55,28,112,0.64)',
     },

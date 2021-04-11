@@ -8,6 +8,8 @@ export const useCreateGame = () => {
       numberOfDays: number
       numberOfStonks: number
       nickname: string
+      playerColor: string
+      playerAvatar: string
     }) => {
       setLoading(true)
       return fetch('/api/games', {

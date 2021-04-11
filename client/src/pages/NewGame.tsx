@@ -17,6 +17,7 @@ const useStyles = createUseStyles({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: '32px',
+    paddingBottom: '32px',
   },
   form: {
     display: 'flex',
@@ -73,10 +74,21 @@ export const NewGame = () => {
       numberOfDays,
       numberOfStonks,
       nickname,
+      playerColor,
+      playerAvatar,
     }).then((game) => {
       history.push(buildUrl(routes.GAME, { id: game.id }))
     })
-  }, [maxPlayers, numberOfDays, numberOfStonks, nickname, createGame, history])
+  }, [
+    maxPlayers,
+    numberOfDays,
+    numberOfStonks,
+    nickname,
+    createGame,
+    history,
+    playerColor,
+    playerAvatar,
+  ])
 
   const onSubmit = useCallback(
     (e: FormEvent) => {
@@ -129,7 +141,7 @@ export const NewGame = () => {
           fill="solid"
           size="lg"
           onClick={onStartGame}
-          disabled={creatingGame || !nickname}
+          disabled={creatingGame || !nickname || !playerColor || !playerAvatar}
           type="button"
         >
           Start Game

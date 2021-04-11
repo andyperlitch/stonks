@@ -15,16 +15,26 @@ const userIdToSocket = new Map<string, Socket>()
 let io: Server
 
 export const createGame = async ({
-  options: { nickname, ...options },
+  options: { nickname, playerAvatar, playerColor, ...options },
   user,
 }: {
-  options: Partial<GameConfig> & { nickname: string }
+  options: Partial<GameConfig> & {
+    nickname: string
+    playerColor: string
+    playerAvatar: string
+  }
   user: any
 }) => {
   const gameManager = new GameManager()
   gameManager.userIdToSocket = userIdToSocket
   gameManager.io = io
-  await gameManager.initGame({ options, user, nickname })
+  await gameManager.initGame({
+    options,
+    user,
+    nickname,
+    playerColor,
+    playerAvatar,
+  })
   registerGame(gameManager)
 
   return gameManager

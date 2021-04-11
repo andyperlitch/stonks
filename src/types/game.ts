@@ -25,6 +25,8 @@ export type PlayerPortfolio = {
 }
 export interface Player {
   name: string
+  color: string
+  avatar: string
   portfolio: PlayerPortfolio
   buyingPower: number
   totalEquity: number

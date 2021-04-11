@@ -10,6 +10,8 @@ interface InitGameOptions {
   options: Partial<types.GameConfig>
   user: User
   nickname: string
+  playerColor: string
+  playerAvatar: string
 }
 
 const UPDATE_INTERVAL = 2000
@@ -83,11 +85,19 @@ export default class GameManager {
 
   constructor() {}
 
-  public async initGame({ options, user, nickname }: InitGameOptions) {
+  public async initGame({
+    options,
+    user,
+    nickname,
+    playerAvatar,
+    playerColor,
+  }: InitGameOptions) {
     this.gameState = new GameState(options)
     this.gameState.initStonks()
     this.addUserPlayer({
       nickname,
+      avatar: playerAvatar,
+      color: playerColor,
       userId: user.id,
       isOwner: true,
     })
@@ -216,10 +226,14 @@ export default class GameManager {
 
   public addUserPlayer({
     nickname,
+    avatar,
+    color,
     userId,
     isOwner = false,
   }: {
     nickname: string
+    avatar: string
+    color: string
     userId: string
     isOwner?: boolean
   }) {
@@ -228,7 +242,7 @@ export default class GameManager {
         `Cannot add a player with the same nickname (${nickname})`,
       )
     }
-    this.gameState.addPlayer(nickname, isOwner)
+    this.gameState.addPlayer({ nickname, avatar, color }, isOwner)
     this.users[userId] = nickname
     const socket = this.userIdToSocket.get(userId)
     if (socket) {

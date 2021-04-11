@@ -6,17 +6,27 @@ import { createGame, getGame, getGameByCode } from '../stores/game'
 import { protectedRoute } from '../middleware/protectedRoute'
 
 const router = Router()
-interface NewGameBody {
+
+interface PlayerFields {
+  nickname: string
+  playerColor: string
+  playerAvatar: string
+}
+
+interface NewGameBody extends PlayerFields {
   maxPlayers: number
   numberOfDays: number
   numberOfStonks: number
-  nickname: string
 }
-
-interface JoinGameBody {
-  nickname: string
+interface JoinGameBody extends PlayerFields {
   code: string
 }
+
+const REQUIRED_PLAYER_FIELDS: (keyof PlayerFields)[] = [
+  'nickname',
+  'playerColor',
+  'playerAvatar',
+]
 
 /**
  * Create a new game
@@ -26,12 +36,13 @@ router.post(
   protectedRoute(),
   asyncHandler(async (req, res) => {
     const options: NewGameBody = req.body
-
-    if (!options.nickname) {
-      throw new HttpJsonError(400, ErrorCode.INVALID_FIELD, {
-        field: 'nickname',
-      })
-    }
+    REQUIRED_PLAYER_FIELDS.forEach((field) => {
+      if (!options[field]) {
+        throw new HttpJsonError(400, ErrorCode.INVALID_FIELD, {
+          field,
+        })
+      }
+    })
 
     const gameManager = await createGame({ options, user: req.user })
 
@@ -81,7 +92,12 @@ router.get(
 router.post(
   '/join',
   asyncHandler(async (req, res, next) => {
-    const { nickname, code: _code }: JoinGameBody = req.body
+    const {
+      nickname,
+      playerColor,
+      playerAvatar,
+      code: _code,
+    }: JoinGameBody = req.body
     const code = _code.toUpperCase()
     const user = req.user as User
     let userId: string = user?.id || req.sessionID || ''
@@ -89,6 +105,14 @@ router.post(
     if (userId === '') {
       throw new HttpJsonError(500, ErrorCode.SESSION_ID_NOT_SET)
     }
+
+    REQUIRED_PLAYER_FIELDS.forEach((field) => {
+      if (!req.body[field]) {
+        throw new HttpJsonError(400, ErrorCode.INVALID_FIELD, {
+          field,
+        })
+      }
+    })
 
     const gameManager = await getGameByCode({ code })
     if (!gameManager) {
@@ -100,7 +124,12 @@ router.post(
     if (gameManager.gameState.status !== 'NOT_STARTED') {
       throw new HttpJsonError(400, ErrorCode.GAME_ALREADY_STARTED)
     }
-    gameManager.addUserPlayer({ nickname, userId })
+    gameManager.addUserPlayer({
+      nickname,
+      userId,
+      color: playerColor,
+      avatar: playerAvatar,
+    })
     await gameManager.save()
     res.json({
       id: gameManager.gameId,

@@ -115,15 +115,24 @@ export class Game {
     return this.players[playerName]
   }
 
-  addPlayer(playerName: string, isOwner = false) {
-    this.players[playerName] = new Player({
-      name: playerName,
+  addPlayer(
+    {
+      nickname,
+      color,
+      avatar,
+    }: { nickname: string; color: string; avatar: string },
+    isOwner = false,
+  ) {
+    this.players[nickname] = new Player({
+      name: nickname,
+      color,
+      avatar,
       buyingPower: this.config.defaultBuyingPower,
     })
     if (isOwner) {
-      this.owner = this.players[playerName]
+      this.owner = this.players[nickname]
     }
-    return this.players[playerName]
+    return this.players[nickname]
   }
 
   getPlayerEquity(playerName: string): number {

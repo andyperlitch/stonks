@@ -3,6 +3,8 @@ import { Stonk } from './Stonk'
 
 export class Player {
   public name: string
+  public color: string
+  public avatar: string
   public portfolio: types.PlayerPortfolio = {}
   public buyingPower: number = 0 // in cents
 
@@ -26,15 +28,32 @@ export class Player {
       shares: (this.portfolio[stonk.ticker]?.shares || 0) - shares,
     }
   }
-  public toJSON(): Pick<types.Player, 'name' | 'portfolio' | 'buyingPower'> {
+  public toJSON(): Pick<
+    types.Player,
+    'name' | 'color' | 'avatar' | 'portfolio' | 'buyingPower'
+  > {
     return {
       name: this.name,
+      color: this.color,
+      avatar: this.avatar,
       portfolio: this.portfolio,
       buyingPower: this.buyingPower,
     }
   }
-  constructor({ name, buyingPower }: { name: string; buyingPower: number }) {
+  constructor({
+    name,
+    buyingPower,
+    color,
+    avatar,
+  }: {
+    name: string
+    buyingPower: number
+    color: string
+    avatar: string
+  }) {
     this.name = name
     this.buyingPower = buyingPower
+    this.color = color
+    this.avatar = avatar
   }
 }
