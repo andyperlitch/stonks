@@ -6,12 +6,13 @@ export interface RadioInputOption {
   value: string
   label: ReactNode
   id?: string
+  disabled?: boolean
 }
 
 export interface RadioInputProps {
   variant: 'compact' | 'stack'
   name: string
-  value: string
+  value?: string
   label?: ReactNode
   onChange: (val: string) => void
   optionIdPrefix: string
@@ -118,6 +119,7 @@ const RadioInput = ({
                 name={name}
                 id={optId}
                 checked={opt.value === value}
+                disabled={opt.disabled}
                 value={opt.value}
                 onChange={(e) => {
                   onChange((e.target as any).value)

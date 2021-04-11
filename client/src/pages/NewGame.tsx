@@ -2,14 +2,12 @@ import React, { FormEvent, useCallback, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import { useHistory } from 'react-router'
 import Button from '../components/Button'
+import PlayerColorInput from '../components/PlayerColorInput'
 import RadioInput, { RadioInputOption } from '../components/RadioInput'
 import TextInput from '../components/TextInput'
 import { useNumberAsString } from '../hooks/useNumberAsString'
 import { useCreateGame } from '../network/createGame'
 import { buildUrl, routes } from '../routes'
-
-const COLOR_OPTION_SIZE = 30
-const COLOR_OPTION_PADDING = 8
 
 const useStyles = createUseStyles({
   container: {
@@ -26,18 +24,6 @@ const useStyles = createUseStyles({
   },
   fieldset: {
     border: 'none',
-  },
-  colorChoice: {
-    height: `${COLOR_OPTION_SIZE}px`,
-    width: `${COLOR_OPTION_SIZE}px`,
-    borderRadius: '50%',
-  },
-  colorOptionsContainer: {
-    width: `${(COLOR_OPTION_SIZE + COLOR_OPTION_PADDING * 2 + 2) * 6}px`,
-    flexWrap: 'wrap',
-  },
-  colorOptionLabel: {
-    padding: `${COLOR_OPTION_PADDING}px`,
   },
 })
 
@@ -65,39 +51,14 @@ const DAYS_OPTIONS: RadioInputOption[] = [
   { value: '10', label: '10' },
 ]
 
-const PLAYER_COLORS: string[] = [
-  '#d13726', // red
-  '#d6652d', // orange
-  '#f1af00', // gold
-  '#f7ed1e', // yellow
-  '#83a630', // frog green
-  '#38a630', // grass green
-  '#30a68c', // teal
-  '#1d8ecf', // steel blue
-  '#462cc7', // indigo
-  '#924ee6', // violet
-  '#cf48e0', // pink
-  '#fb12d8', // rose
-]
-
 export const NewGame = () => {
   const classes = useStyles()
-  // need classes here, so this has to be in the component itself
-  const COLOR_OPTIONS: RadioInputOption[] = PLAYER_COLORS.map((color) => ({
-    value: color,
-    label: (
-      <div
-        className={classes.colorChoice}
-        style={{ backgroundColor: color }}
-      ></div>
-    ),
-  }))
   const history = useHistory()
   const [maxPlayers, setMaxPlayers] = useNumberAsString(8)
   const [numberOfStonks, setNumberOfStonks] = useNumberAsString(6)
   const [numberOfDays, setNumberOfDays] = useNumberAsString(5)
   const [nickname, setNickname] = useState('')
-  const [playerColor, setPlayerColor] = useState(COLOR_OPTIONS[0].value)
+  const [playerColor, setPlayerColor] = useState('')
 
   const {
     createGame,
@@ -160,19 +121,7 @@ export const NewGame = () => {
           label="Your Nickname"
           onChange={setNickname}
         />
-        <RadioInput
-          classes={{
-            optionsContainer: classes.colorOptionsContainer,
-            optionLabel: classes.colorOptionLabel,
-          }}
-          variant="compact"
-          name="playerColor"
-          label="Your Color"
-          value={playerColor}
-          onChange={setPlayerColor}
-          options={COLOR_OPTIONS}
-          optionIdPrefix="playerColor"
-        />
+        <PlayerColorInput value={playerColor} onChange={setPlayerColor} />
         <Button
           fill="solid"
           size="lg"
