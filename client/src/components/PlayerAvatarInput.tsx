@@ -3,6 +3,7 @@ import cn from 'classnames'
 import { createUseStyles } from 'react-jss'
 import RadioInput, { RadioInputOption } from './RadioInput'
 import { PLAYER_AVATARS } from '../consts/playerAvatars'
+import { getAvatarUrl } from '../utils/getAvatarUrl'
 
 const AVATAR_OPTION_SIZE = 40
 const AVATAR_OPTION_PADDING = 8
@@ -48,7 +49,7 @@ export const PlayerColorInput = ({
         className={cn(classes.choice, {
           [classes.disabled]: taken.includes(avatar),
         })}
-        style={{ backgroundImage: `url(/assets/avatars/${avatar}.png)` }}
+        style={{ backgroundImage: `url(${getAvatarUrl(avatar)})` }}
       ></div>
     ),
   }))
