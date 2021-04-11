@@ -76,7 +76,6 @@ export const MovingNumber = React.memo(({ numString }: MovingNumberProps) => {
         (enter) => enter.append('div').classed(classes.position, true),
         (update) => update,
         (exit) => {
-          console.log(`exit`, exit)
           exit.remove()
         },
       )

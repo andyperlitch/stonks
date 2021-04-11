@@ -41,7 +41,6 @@ export const Priceline = ({ data, x, y, priceAtOpen }: PricelineProps) => {
   }, [x, y])
 
   useEffect(() => {
-    console.log(`data.length`, data.length)
     if (!g.current || !data.length) {
       return
     }
