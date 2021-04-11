@@ -17,8 +17,9 @@
 
 ### Bugs
 
-- [ ] fix the MovingNumber component
 - [ ] Figure out why subscribing to games that have ended
+- [x] timer skipping numbers
+- [x] fix the MovingNumber component
 - [x] fix domain bug in stonk line graph
 - [x] fix leaderboard sort order
 - [x] force code to be uppercase
@@ -26,6 +27,7 @@
 
 ### Features
 
+- [ ] user avatar
 - [ ] graph of player's equity
 - [ ] countdown to start
 - [ ] a way to return to home screen from join

@@ -12,13 +12,14 @@ export interface RadioInputProps {
   variant: 'compact' | 'stack'
   name: string
   value: string
-  label?: string
+  label?: ReactNode
   onChange: (val: string) => void
   optionIdPrefix: string
   options: RadioInputOption[]
   classes?: {
     fieldset?: string
     label?: string
+    optionsContainer?: string
     input?: string
     error?: string
     optionLabel?: string
@@ -97,7 +98,9 @@ const RadioInput = ({
       {label && (
         <label className={cn(classes.label, userClasses.label)}>{label}</label>
       )}
-      <div className={classes.optionsContainer}>
+      <div
+        className={cn(classes.optionsContainer, userClasses.optionsContainer)}
+      >
         {options.map((opt) => {
           const optId = `${optionIdPrefix}-${opt.id || opt.value}`
           return (
@@ -108,7 +111,7 @@ const RadioInput = ({
                 [classes.selected]: value === opt.value,
               })}
             >
-              <span>{opt.label}</span>
+              {opt.label}
               <input
                 className={cn(classes.input, userClasses.input)}
                 type="radio"
