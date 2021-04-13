@@ -59,6 +59,7 @@
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.3.3",
+    "random": "^3.0.3",
     "redis": "^3.0.2",
     "reflect-metadata": "^0.1.10",
     "socket.io": "^3.1.1",

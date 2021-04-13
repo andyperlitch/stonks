@@ -1,6 +1,7 @@
 import { Socket, Server } from 'socket.io'
 import randomString from 'crypto-random-string'
 import { getRepository } from 'typeorm'
+import random from 'random'
 import { User } from './../entity/User'
 import { Game as GameRecord } from './../entity/Game'
 import * as types from '../types/game'
@@ -172,7 +173,7 @@ export default class GameManager {
 
   public doOutsideMarketMovement() {
     // pick a random number
-    const rando = Math.random()
+    const rando = random.float(0, 1)
 
     // for each stonk, look at the bullPercent to see if rando is a buy or sell
     Object.values(this.gameState.stonks).forEach((stonk) => {

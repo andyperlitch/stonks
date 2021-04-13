@@ -27,8 +27,6 @@
 
 ### Features
 
-- [ ] user avatar
-- [ ] graph of player's equity
 - [ ] countdown to start
 - [ ] a way to return to home screen from join
 - [ ] limit chat messages
@@ -43,6 +41,8 @@
 - [ ] better error handling/redirect when oauth fails
 - [ ] animation for loading screen
 - [ ] fake company summaries for each stonk before the game has started
+- [x] user avatar
+- [x] graph of player's equity
 - [x] outside price movement
 - [x] graphs of stonks
 - [x] make the buy and sell buttons disabled during after-hours trading
