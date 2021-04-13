@@ -6,6 +6,7 @@ import { centsToPrice } from '../utils/centsToPrice'
 import Card from './Card'
 import TotalEquityGraph from './TotalEquityGraph'
 import MovingNumber from './MovingNumber'
+import { useGame } from '../hooks/useGame'
 
 const useStyles = createUseStyles(
   {
@@ -40,18 +41,23 @@ const useStyles = createUseStyles(
     right: {
       display: 'flex',
       flexDirection: 'column',
+      flexGrow: 1,
     },
   },
   { name: 'Portfolio' },
 )
 
 export interface PortfolioProps {
-  game: Game
-  nickname: string
   className?: string
 }
-export const Portfolio = ({ game, nickname, className }: PortfolioProps) => {
+export const Portfolio = ({ className }: PortfolioProps) => {
   const classes = useStyles()
+
+  const { nickname, game, history } = useGame()
+
+  if (!game || !nickname) {
+    return null
+  }
 
   const player = game.players[nickname]
   if (!player) {
@@ -75,7 +81,9 @@ export const Portfolio = ({ game, nickname, className }: PortfolioProps) => {
         </div>
       </div>
       <div className={classes.right}>
-        <TotalEquityGraph game={game} nickname={nickname} />
+        {game.status !== 'NOT_STARTED' && (
+          <TotalEquityGraph game={game} nickname={nickname} history={history} />
+        )}
       </div>
     </Card>
   )

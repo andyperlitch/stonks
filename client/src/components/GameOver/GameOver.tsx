@@ -43,11 +43,7 @@ export const GameOver = ({ game, nickname }: GameOverProps) => {
       midCenter={
         <>
           <h2>Your Portfolio</h2>
-          <Portfolio
-            className={classes.portfolioCard}
-            game={game}
-            nickname={nickname}
-          />
+          <Portfolio className={classes.portfolioCard} />
         </>
       }
       midRight={

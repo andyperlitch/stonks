@@ -94,11 +94,7 @@ export const GameLobby = ({ game, nickname, code }: GameLobbyProps) => {
       midCenter={
         <>
           <h2>Your Portfolio</h2>
-          <Portfolio
-            className={classes.portfolioCard}
-            game={game}
-            nickname={nickname}
-          />
+          <Portfolio className={classes.portfolioCard} />
         </>
       }
       midRight={
