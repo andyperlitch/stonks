@@ -295,6 +295,23 @@ export default class GameManager {
         nickname,
       })
     })
+    socket.on('starting', ({ gameId, startTime }) => {
+      if (gameId !== this.gameId) {
+        return
+      }
+      this.io.to(this.gameId).emit('starting', {
+        id: this.gameId,
+        startTime,
+      })
+    })
+    socket.on('cancelStart', ({ gameId }) => {
+      if (gameId !== this.gameId) {
+        return
+      }
+      this.io.to(this.gameId).emit('cancelStart', {
+        id: this.gameId,
+      })
+    })
     this.emitGameUpdate()
   }
 

@@ -81,10 +81,7 @@ router.get(
       game,
       history,
       nickname: gameManager.users[userId],
-      code:
-        gameManager.users[userId] === game.owner
-          ? gameManager.entryCode
-          : undefined,
+      code: gameManager.entryCode,
     })
   }),
 )

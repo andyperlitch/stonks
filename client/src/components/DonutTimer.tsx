@@ -250,7 +250,7 @@ export const DonutTimer = ({
   }, [arc, check, bg, fg, startMS, endMS, pie, classes.fg, classes.bg])
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{ width: `${outerRadius * 2}px` }}>
       <svg
         className={classes.pie}
         ref={ref}
