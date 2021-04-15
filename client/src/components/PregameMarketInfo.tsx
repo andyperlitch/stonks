@@ -93,13 +93,13 @@ export const PregameMarketInfo = ({ className }: PregameMarketInfoProps) => {
         setStarting(startTime)
       }
     }
-    socket.on('starting', handleStartingEvent)
+    socket.on('game:starting', handleStartingEvent)
     const handleCancelStart = ({ id }) => {
       if (game && id === game.id) {
         setStarting(null)
       }
     }
-    socket.on('cancelStart', handleCancelStart)
+    socket.on('game:cancelStart', handleCancelStart)
     return () => {
       socket.off('starting', handleStartingEvent)
       socket.off('cancelStart', handleCancelStart)

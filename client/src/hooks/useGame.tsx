@@ -12,6 +12,7 @@ import * as types from '../../types/game'
 interface ChatMessage {
   nickname: string
   message: string
+  ts: number
 }
 export interface GameContext {
   gameId: string | null
@@ -95,7 +96,7 @@ export const GameProvider = ({
             acc[stonk.ticker] = stonk
             return acc
           }, {} as types.StonksHistoryPoint),
-          round: game.round
+          round: game.round,
         }
         setHistory(history.concat(historicalPoint))
       }
@@ -104,11 +105,12 @@ export const GameProvider = ({
       id: string
       message: string
       nickname: string
+      ts: number
     }) => {
-      console.log(`game:chat`, data.message, chat)
       const newChat = chat.concat({
         nickname: data.nickname,
         message: data.message,
+        ts: data.ts,
       })
       setChat(newChat)
     }

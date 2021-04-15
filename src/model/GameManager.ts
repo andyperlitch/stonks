@@ -285,7 +285,7 @@ export default class GameManager {
       )
       this.gameState.sell(nickname, ticker, shares)
     })
-    socket.on('chat', ({ gameId, message }) => {
+    socket.on('chat', ({ gameId, message, ts }) => {
       if (gameId !== this.gameId) {
         return
       }
@@ -293,13 +293,14 @@ export default class GameManager {
         id: this.gameId,
         message,
         nickname,
+        ts,
       })
     })
     socket.on('starting', ({ gameId, startTime }) => {
       if (gameId !== this.gameId) {
         return
       }
-      this.io.to(this.gameId).emit('starting', {
+      this.io.to(this.gameId).emit('game:starting', {
         id: this.gameId,
         startTime,
       })
@@ -308,7 +309,7 @@ export default class GameManager {
       if (gameId !== this.gameId) {
         return
       }
-      this.io.to(this.gameId).emit('cancelStart', {
+      this.io.to(this.gameId).emit('game:cancelStart', {
         id: this.gameId,
       })
     })
