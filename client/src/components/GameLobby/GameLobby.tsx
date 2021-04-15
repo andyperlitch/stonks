@@ -24,13 +24,27 @@ const useStyles = createUseStyles(
       flexGrow: '1',
     },
     codeBox: {
-      border: '1px solid var(--color-secondary)',
+      background: 'var(--color-secondary)',
+      color: 'black',
       padding: '20px',
       marginBottom: '20px',
       textAlign: 'center',
+      width: '200px',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      borderRadius: '10px',
     },
+    code: {
+      fontWeight: 'bold',
+    },
+
     startError: {
       color: 'red',
+    },
+    startGameBtnContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   },
   { name: 'GameLobby' },
@@ -66,11 +80,11 @@ export const GameLobby = ({ game, nickname, code }: GameLobbyProps) => {
             {code && (
               <div className={classes.codeBox}>
                 <h3>entry code:</h3>
-                <h2>{code}</h2>
+                <h2 className={classes.code}>{code}</h2>
               </div>
             )}
             {game.owner === nickname ? (
-              <div>
+              <div className={classes.startGameBtnContainer}>
                 <Button
                   fill="solid"
                   size="lg"

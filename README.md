@@ -39,8 +39,9 @@
 - [ ] Limit user to just one game at a time
 - [ ] Show other games the user is in
 - [ ] better error handling/redirect when oauth fails
-- [ ] animation for loading screen
 - [ ] fake company summaries for each stonk before the game has started
+- [ ] animation for loading screen
+- [ ] error display
 - [x] user avatar
 - [x] graph of player's equity
 - [x] outside price movement
