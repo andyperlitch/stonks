@@ -8,6 +8,7 @@ import { buildUrl, routes } from '../routes'
 import FormErrors from '../components/FormErrors'
 import PlayerColorInput from '../components/PlayerColorInput'
 import PlayerAvatarInput from '../components/PlayerAvatarInput'
+import { Link } from 'react-router-dom'
 
 const useStyles = createUseStyles({
   container: {
@@ -20,6 +21,15 @@ const useStyles = createUseStyles({
   },
   joinInput: {
     textTransform: 'uppercase',
+  },
+  joinBtn: {
+    display: 'block',
+    width: '100%',
+  },
+  goBack: {
+    marginLeft: '10px',
+    display: 'block',
+    padding: '10px',
   },
 })
 
@@ -72,6 +82,7 @@ export const JoinGame = () => {
         <PlayerAvatarInput value={playerAvatar} onChange={setPlayerAvatar} />
         <FormErrors error={error} />
         <Button
+          className={classes.joinBtn}
           type="submit"
           size="lg"
           onClick={onSubmit}
@@ -81,6 +92,9 @@ export const JoinGame = () => {
         >
           Join Game
         </Button>
+        <Link to="/" className={classes.goBack}>
+          Go Back
+        </Link>
       </form>
     </div>
   )

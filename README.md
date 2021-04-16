@@ -27,9 +27,6 @@
 
 ### Features
 
-- [ ] countdown to start
-- [ ] a way to return to home screen from join
-- [ ] limit chat messages
 - [ ] show which user is the owner on game page
 - [ ] graphic of green "+1" floats away every time you click buy, same with red "-1" for sell
 - [ ] ended game view
@@ -42,6 +39,9 @@
 - [ ] fake company summaries for each stonk before the game has started
 - [ ] animation for loading screen
 - [ ] error display
+- [x] a way to return to home screen from join
+- [x] limit chat messages
+- [x] countdown to start
 - [x] user avatar
 - [x] graph of player's equity
 - [x] outside price movement

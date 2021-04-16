@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import cn from 'classnames'
 import { createUseStyles } from 'react-jss'
+import { Link } from 'react-router-dom'
 
 const useStyles = createUseStyles(
   {
@@ -57,13 +58,14 @@ export const Button = ({
   const classes = useStyles()
   if (type === 'link' || href) {
     return (
-      <a
-        href={href || ''}
-        className={cn(classes.root, classes[fill], classes[size], className)}
-        onClick={disabled || !onClick ? () => {} : onClick}
-      >
-        {children}
-      </a>
+      <Link to={href || ''}>
+        <a
+          className={cn(classes.root, classes[fill], classes[size], className)}
+          onClick={disabled || !onClick ? () => {} : onClick}
+        >
+          {children}
+        </a>
+      </Link>
     )
   }
   return (

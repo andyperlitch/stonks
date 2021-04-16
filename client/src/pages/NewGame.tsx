@@ -9,6 +9,7 @@ import TextInput from '../components/TextInput'
 import { useNumberAsString } from '../hooks/useNumberAsString'
 import { useCreateGame } from '../network/createGame'
 import { buildUrl, routes } from '../routes'
+import { Link } from 'react-router-dom'
 
 const useStyles = createUseStyles({
   container: {
@@ -26,6 +27,11 @@ const useStyles = createUseStyles({
   },
   fieldset: {
     border: 'none',
+  },
+  goBack: {
+    display: 'block',
+    textAlign: 'center',
+    padding: '10px',
   },
 })
 
@@ -146,6 +152,9 @@ export const NewGame = () => {
         >
           Start Game
         </Button>
+        <Link to="/" className={classes.goBack}>
+          Go Back
+        </Link>
       </form>
     </div>
   )

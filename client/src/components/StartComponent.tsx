@@ -36,6 +36,9 @@ const useStyles = createUseStyles({
   },
   ctaButton: {
     minWidth: '200px',
+    '&:last-child': {
+      marginLeft: '10px',
+    },
   },
 })
 
