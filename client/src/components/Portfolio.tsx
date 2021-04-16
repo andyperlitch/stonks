@@ -6,6 +6,7 @@ import Card from './Card'
 import TotalEquityGraph from './TotalEquityGraph'
 import MovingNumber from './MovingNumber'
 import { useGame } from '../hooks/useGame'
+import UpDownPrice from './UpDownPrice'
 
 const useStyles = createUseStyles(
   {
@@ -69,7 +70,7 @@ export const Portfolio = ({ className }: PortfolioProps) => {
         <div className={classes.totalEquity}>
           <h3>Total Equity</h3>
           <div className={classes.totalEquityValue}>
-            <MovingNumber numString={centsToPrice(player.totalEquity)} />
+            <UpDownPrice cents={player.totalEquity} />
           </div>
         </div>
         <div className={classes.buyingPower}>

@@ -8,6 +8,7 @@ import Card from './Card'
 import MovingNumber from './MovingNumber'
 import StonkLineGraph from './StonkLineGraph'
 import StonkPregameInfo from './StonkPregameInfo'
+import UpDownPrice from './UpDownPrice'
 
 const useStyles = createUseStyles(
   {
@@ -148,7 +149,7 @@ export const GameStonks = ({ pregame = false }: GameStonksProps) => {
                 <div>
                   <h4 className={classes.infoHeading}>Price</h4>
                   <div className={classes.infoValue}>
-                    <MovingNumber numString={centsToPrice(stonk.price)} />
+                    <UpDownPrice cents={stonk.price} />
                   </div>
                 </div>
               </div>
@@ -162,9 +163,7 @@ export const GameStonks = ({ pregame = false }: GameStonksProps) => {
                 <div>
                   <h4 className={classes.infoHeading}>Equity</h4>
                   <div className={classes.infoValue}>
-                    <MovingNumber
-                      numString={centsToPrice(stonk.position * stonk.price)}
-                    />
+                    <UpDownPrice cents={stonk.position * stonk.price} />
                   </div>
                 </div>
               </div>
