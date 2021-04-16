@@ -9,12 +9,31 @@ const useStyles = createUseStyles(
       alignItems: 'center',
       height: '100%',
       width: '100%',
+      paddingTop: '20px',
     },
     rocket: {
+      animation: '$shake 0.2s infinite',
       fontSize: '100px',
     },
     brrr: {
       fontSize: '50px',
+    },
+    '@keyframes shake': {
+      '0%': {
+        transform: 'translate3D(0,0,0)',
+      },
+      '20%': {
+        transform: 'translate3D(-5px,5px,0)',
+      },
+      '40%': {
+        transform: 'translate3D(0px,5px,0)',
+      },
+      '60%': {
+        transform: 'translate3D(-5px,0px,0)',
+      },
+      '80%': {
+        transform: 'translate3D(0px,-5px,0)',
+      },
     },
   },
   { name: 'GameLoading' },

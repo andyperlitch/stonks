@@ -27,6 +27,7 @@
 
 ### Features
 
+- [ ] animation for loading screen
 - [ ] graphic of green "+1" floats away every time you click buy, same with red "-1" for sell
 - [ ] ended game view
   - [ ] entire-game view
@@ -35,7 +36,6 @@
 - [ ] Show other games the user is in
 - [ ] better error handling/redirect when oauth fails
 - [ ] fake company summaries for each stonk before the game has started
-- [ ] animation for loading screen
 - [ ] error display
 - [x] limit nickname length
 - [x] show which user is the owner on game page
