@@ -36,8 +36,13 @@ const useStyles = createUseStyles(
 export interface LeaderboardItemProps {
   player: Player
   rank: number
+  host: string
 }
-export const LeaderboardItem = ({ player, rank }: LeaderboardItemProps) => {
+export const LeaderboardItem = ({
+  player,
+  rank,
+  host,
+}: LeaderboardItemProps) => {
   const classes = useStyles()
   return (
     <Card className={classes.root}>
@@ -45,6 +50,7 @@ export const LeaderboardItem = ({ player, rank }: LeaderboardItemProps) => {
         <span>{rank}.</span>
         <PlayerIcon className={classes.playerIcon} player={player} size={30} />
         <span className={classes.playerName}>{player.name}</span>
+        {host === player.name ? '(host)' : null}
       </div>
       <div className={classes.right}>
         <span>{centsToPrice(player.totalEquity)}</span>
