@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import * as d3 from 'd3'
 import useResizeObserver from 'use-resize-observer'
 import { createUseStyles } from 'react-jss'

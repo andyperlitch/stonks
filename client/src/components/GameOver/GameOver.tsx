@@ -2,13 +2,13 @@ import React from 'react'
 import { createUseStyles } from 'react-jss'
 import { Game } from '../../../types/game'
 import GameStonks from '../GameStonks'
-import MarketInfo from '../MarketInfo'
 import Nav from '../Nav'
 import Portfolio from '../Portfolio'
 import Leaderboard from '../Leaderboard'
 import GameChat from '../GameChat'
 import MainGrid from '../MainGrid'
 import MarketInfoHeading from '../MarketInfoHeading'
+import PostgameMarketInfo from '../PostgameMarketInfo'
 
 const useStyles = createUseStyles(
   {
@@ -37,7 +37,7 @@ export const GameOver = ({ game, nickname }: GameOverProps) => {
       midLeft={
         <>
           <MarketInfoHeading game={game} nickname={nickname} />
-          <MarketInfo className={classes.marketInfoCard} game={game} />
+          <PostgameMarketInfo className={classes.marketInfoCard} />
         </>
       }
       midCenter={

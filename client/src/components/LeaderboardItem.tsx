@@ -1,4 +1,5 @@
 import React from 'react'
+import cn from 'classnames'
 import { createUseStyles } from 'react-jss'
 import { Player } from '../../types/game'
 import { centsToPrice } from '../utils/centsToPrice'
@@ -14,6 +15,11 @@ const useStyles = createUseStyles(
       paddingTop: '5px',
       paddingBottom: '5px',
       marginBottom: '5px',
+    },
+    winner: {
+      backgroundColor: '#e1c62d',
+      color: 'black',
+      fontWeight: 'bolder',
     },
     left: {
       display: 'flex',
@@ -37,15 +43,17 @@ export interface LeaderboardItemProps {
   player: Player
   rank: number
   host: string
+  winner?: boolean
 }
 export const LeaderboardItem = ({
   player,
   rank,
   host,
+  winner = false,
 }: LeaderboardItemProps) => {
   const classes = useStyles()
   return (
-    <Card className={classes.root}>
+    <Card className={cn(classes.root, { [classes.winner]: winner })}>
       <div className={classes.left}>
         <span>{rank}.</span>
         <PlayerIcon className={classes.playerIcon} player={player} size={30} />

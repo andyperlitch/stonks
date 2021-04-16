@@ -104,7 +104,7 @@ export const PregameMarketInfo = ({ className }: PregameMarketInfoProps) => {
       socket.off('starting', handleStartingEvent)
       socket.off('cancelStart', handleCancelStart)
     }
-  }, [socket])
+  }, [socket, game])
 
   if (!game) {
     return (

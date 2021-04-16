@@ -169,7 +169,7 @@ export const GameStonks = ({ pregame = false }: GameStonksProps) => {
                 </div>
               </div>
             </div>
-            {pregame ? (
+            {pregame || game.status === 'CANCELLED' ? (
               <StonkPregameInfo game={game} ticker={stonk.ticker} />
             ) : (
               <>

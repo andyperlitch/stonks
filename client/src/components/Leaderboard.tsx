@@ -28,6 +28,7 @@ export const Leaderboard = ({ game }: LeaderboardProps) => {
     <div className={classes.root}>
       {playersInOrder.map((player, i) => (
         <LeaderboardItem
+          winner={game.status === 'COMPLETE' ? i === 0 : false}
           key={player.name}
           player={player}
           rank={i + 1}

@@ -5,6 +5,7 @@ import { Game } from '../../types/game'
 import '@szhsin/react-menu/dist/index.css'
 import '@szhsin/react-menu/dist/theme-dark.css'
 import { useCancelGame } from '../network/cancelGame'
+import { gameIsOver } from '../utils/gameIsOver'
 
 const useStyles = createUseStyles(
   {
@@ -52,7 +53,7 @@ export const MarketInfoHeading = ({
       <h2 className={classes.marketInfoHeading}>
         <span>Market Info</span>
         <span>
-          {nickname === game.owner && (
+          {nickname === game.owner && !gameIsOver(game) && (
             <Menu
               className={classes.controlMenu}
               menuButton={

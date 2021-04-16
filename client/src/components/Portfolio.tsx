@@ -1,7 +1,6 @@
 import React from 'react'
 import cn from 'classnames'
 import { createUseStyles } from 'react-jss'
-import { Game } from '../../types/game'
 import { centsToPrice } from '../utils/centsToPrice'
 import Card from './Card'
 import TotalEquityGraph from './TotalEquityGraph'
@@ -81,7 +80,7 @@ export const Portfolio = ({ className }: PortfolioProps) => {
         </div>
       </div>
       <div className={classes.right}>
-        {game.status !== 'NOT_STARTED' && (
+        {game.status !== 'NOT_STARTED' && game.status !== 'CANCELLED' && (
           <TotalEquityGraph game={game} nickname={nickname} history={history} />
         )}
       </div>

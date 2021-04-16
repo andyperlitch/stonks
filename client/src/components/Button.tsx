@@ -58,13 +58,12 @@ export const Button = ({
   const classes = useStyles()
   if (type === 'link' || href) {
     return (
-      <Link to={href || ''}>
-        <a
-          className={cn(classes.root, classes[fill], classes[size], className)}
-          onClick={disabled || !onClick ? () => {} : onClick}
-        >
-          {children}
-        </a>
+      <Link
+        to={href || ''}
+        className={cn(classes.root, classes[fill], classes[size], className)}
+        onClick={disabled || !onClick ? () => {} : onClick}
+      >
+        {children}
       </Link>
     )
   }
