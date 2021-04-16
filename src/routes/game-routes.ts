@@ -4,6 +4,7 @@ import asyncHandler from '../utils/asyncHandler'
 import { User } from '../entity/User'
 import { createGame, getGame, getGameByCode } from '../stores/game'
 import { protectedRoute } from '../middleware/protectedRoute'
+import { MAX_NAME_LENGTH, MIN_NAME_LENGTH } from '../consts/validation'
 
 const router = Router()
 
@@ -120,6 +121,12 @@ router.post(
     }
     if (gameManager.gameState.status !== 'NOT_STARTED') {
       throw new HttpJsonError(400, ErrorCode.GAME_ALREADY_STARTED)
+    }
+    if (
+      nickname.length > MAX_NAME_LENGTH ||
+      nickname.length < MIN_NAME_LENGTH
+    ) {
+      throw new HttpJsonError(400, ErrorCode.USER_NAME_INVALID)
     }
     gameManager.addUserPlayer({
       nickname,

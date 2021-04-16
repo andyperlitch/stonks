@@ -13,6 +13,8 @@ export interface TextInputProps {
     label?: string
     input?: string
   }
+  minLength?: number
+  maxLength?: number
 }
 
 const useStyles = createUseStyles({
@@ -38,7 +40,16 @@ const useStyles = createUseStyles({
 })
 
 const TextInput = React.memo(
-  ({ onChange, value, label, error, classes = {}, name }: TextInputProps) => {
+  ({
+    onChange,
+    value,
+    label,
+    error,
+    classes = {},
+    name,
+    maxLength = undefined,
+    minLength = undefined,
+  }: TextInputProps) => {
     const defaultClasses = useStyles()
 
     const handleChange = useCallback(
@@ -65,6 +76,8 @@ const TextInput = React.memo(
           onChange={handleChange}
           value={value}
           autoComplete="off"
+          maxLength={maxLength}
+          minLength={minLength}
         />
       </fieldset>
     )

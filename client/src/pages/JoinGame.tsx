@@ -9,6 +9,7 @@ import FormErrors from '../components/FormErrors'
 import PlayerColorInput from '../components/PlayerColorInput'
 import PlayerAvatarInput from '../components/PlayerAvatarInput'
 import { Link } from 'react-router-dom'
+import { MAX_NAME_LENGTH, MIN_NAME_LENGTH } from '../consts/validation'
 
 const useStyles = createUseStyles({
   container: {
@@ -77,6 +78,8 @@ export const JoinGame = () => {
           onChange={setNickname}
           value={nickname}
           label="Your Nickname"
+          maxLength={MAX_NAME_LENGTH}
+          minLength={MIN_NAME_LENGTH}
         />
         <PlayerColorInput value={playerColor} onChange={setPlayerColor} />
         <PlayerAvatarInput value={playerAvatar} onChange={setPlayerAvatar} />

@@ -27,18 +27,18 @@
 
 ### Features
 
-- [ ] show which user is the owner on game page
 - [ ] graphic of green "+1" floats away every time you click buy, same with red "-1" for sell
 - [ ] ended game view
   - [ ] entire-game view
   - [ ] current round view
-- [ ] limit nickname length
 - [ ] Limit user to just one game at a time
 - [ ] Show other games the user is in
 - [ ] better error handling/redirect when oauth fails
 - [ ] fake company summaries for each stonk before the game has started
 - [ ] animation for loading screen
 - [ ] error display
+- [x] limit nickname length
+- [x] show which user is the owner on game page
 - [x] a way to return to home screen from join
 - [x] limit chat messages
 - [x] countdown to start
