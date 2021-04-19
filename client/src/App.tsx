@@ -21,6 +21,7 @@ import './theme/base.css'
 import { AuthProvider } from './auth/AuthProvider'
 import { NetworkProvider } from './network/NetworkProvider'
 import JoinGame from './pages/JoinGame'
+import Footer from './components/Footer'
 
 /* Set up theme */
 const useTheme = createUseStyles(rootStyles)
@@ -48,6 +49,7 @@ const App = () => {
             />
             <Route exact path={routes.LOGIN} render={() => <Login />} />
           </Router>
+          <Footer />
         </ThemeProvider>
       </AuthProvider>
     </NetworkProvider>

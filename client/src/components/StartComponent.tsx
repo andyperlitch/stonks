@@ -12,11 +12,8 @@ const useStyles = createUseStyles({
   },
   container: {
     textAlign: 'center',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: '50%',
-    transform: 'translateY(-50%)',
+    paddingTop: '30vh',
+    paddingBottom: '30vh',
     '& strong': {
       fontSize: '20px',
       lineHeight: '26px',
