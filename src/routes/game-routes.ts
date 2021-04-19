@@ -128,6 +128,9 @@ router.post(
     ) {
       throw new HttpJsonError(400, ErrorCode.USER_NAME_INVALID)
     }
+    if (gameManager.gameState.players[nickname]) {
+      throw new HttpJsonError(400, ErrorCode.USER_NAME_TAKEN)
+    }
     gameManager.addUserPlayer({
       nickname,
       userId,
